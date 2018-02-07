@@ -21,7 +21,7 @@ class Akun extends CI_Controller {
             $config = array(
                 array(
                     'field' => 'id',
-                    'label' => 'nis/nip',
+                    'label' => 'Username',
                     'rules' => 'required',
                     'errors' => array(
                         'required' => '%s tidak boleh kosong',),

@@ -95,20 +95,23 @@
                         <li>
                             <a href="<?php echo base_url();?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
-                        <?php if(!empty($this->session->userdata('id'))){?>
+                        
                         <li>
                             <a href="#"><i class="fa fa-book fa-fw"></i> Koleksi Pustaka<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
+                            	<?php if(!empty($this->session->userdata('id'))){?>
                             	<?php if($this->session->userdata('level')=='admin'){ ?>
                                 <li>
                                     <a href="#">Kelola Koleksi</a>
                                 </li>
-                                <?php }?>
+                                <?php
+                                }}?>
                                 <li>
                                     <a href="#">Lihat Koleksi</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
+                        <?php if(!empty($this->session->userdata('id'))){?>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-list fa-fw"></i> Peminjaman<span class="fa arrow"></span></a>
@@ -130,6 +133,9 @@
                             <ul class="nav nav-second-level">
                             	<li>
                                     <a href="#">Kelola Anggota</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url('Anggota/tambahAnggota');?>">Tambah Anggota</a>
                                 </li>
                             </ul>
                             <?php }?>
