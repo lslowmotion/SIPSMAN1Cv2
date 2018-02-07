@@ -62,25 +62,25 @@
 				</ul>
 			<?php }else{?>
 			<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-					Login	
+					Login
                     <i class="fa fa-sign-in fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-user">
+                    <ul class="dropdown-menu">
 						
-								<div class="panel-body">
-									<form method="post" action="<?php echo base_url('Akun/login');?>" >
-										<div class="input-group">
-											<span class="input-group-addon" id="basic-addon1"><i class="fa fa-user "></i></span>
+								
+									<form class="col-md-12" method="post" action="<?php echo base_url('Akun/login');?>" >
+										<div class="form-group">
+											<label for="id">Username</label>
 											<input class="form-control" placeholder="NIP/NIS"  name="id" type="text" />
 										</div>
-										<div class="input-group">
-											<span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
+										<div class="form-group">
+											<label for="password">Password</label>
 											<input class="form-control" placeholder="password" name="password" type="password" />
 										</div>
 										<input type="hidden" name="submit" value=TRUE />
 										<button type="submit" class="form-control btn-primary"><i class="fa fa-chevron-right "></i> Login</button>
 									</form>
-								</div>
+								
 						
                     </ul>
 				<?php }?>
@@ -95,30 +95,53 @@
                         <li>
                             <a href="<?php echo base_url();?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
+                        
                         <li>
                             <a href="#"><i class="fa fa-book fa-fw"></i> Koleksi Pustaka<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
+                            	<?php if(!empty($this->session->userdata('id'))){?>
+                            	<?php if($this->session->userdata('level')=='admin'){ ?>
                                 <li>
                                     <a href="#">Kelola Koleksi</a>
                                 </li>
+                                <?php
+                                }}?>
                                 <li>
                                     <a href="#">Lihat Koleksi</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
+                        <?php if(!empty($this->session->userdata('id'))){?>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-list fa-fw"></i> Peminjaman<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
+                            	<?php if($this->session->userdata('level')=='admin'){ ?>
                                 <li>
                                     <a href="#">Kelola Peminjaman</a>
                                 </li>
+                                <?php }?>
                                 <li>
                                     <a href="#">Status Peminjaman</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                         <li>
+                         	<?php if($this->session->userdata('level')=='admin'){ ?>
+                            <a href="#"><i class="fa fa-book fa-fw"></i> Keanggotaan<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                            	<li>
+                                    <a href="#">Kelola Anggota</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url('Anggota/tambahAnggota');?>">Tambah Anggota</a>
+                                </li>
+                            </ul>
+                            <?php }?>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <?php }?>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

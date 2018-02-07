@@ -8,10 +8,9 @@ class Akun extends CI_Controller {
         //lempar ke form login
         if (empty($this->session->userdata('id'))){
             $this->load->view('head');
-            $this->load->view('dashboard');
-            /* menunggu FormLogin dibuat 
-             $this->load->view('FormLogin');
-             */
+           /* debugging gagal login 
+            $this->load->view('dashboard');*/
+            $this->load->view('FormLogin');
             $this->load->view('foot');
         }else{
             redirect(base_url());
@@ -22,7 +21,7 @@ class Akun extends CI_Controller {
             $config = array(
                 array(
                     'field' => 'id',
-                    'label' => 'nis/nip',
+                    'label' => 'Username',
                     'rules' => 'required',
                     'errors' => array(
                         'required' => '%s tidak boleh kosong',),
@@ -63,13 +62,13 @@ class Akun extends CI_Controller {
                         redirect(base_url());
                     }elseif ($level=='anggota'){
                         
-                        //debugging level anggota
+                        /*debugging level anggota
                         $this->session->set_userdata('id',$id);
                         $this->session->set_userdata('id_name',$id);
                         $this->session->set_userdata('level',$level);
-                        redirect(base_url());
+                        redirect(base_url());*/
                         
-                        /* menunggu model AnggotaM dibuat
+              
                         $this->load->model('AnggotaM');
                         $name=$this->AnggotaM->login($id);
                         foreach ($name as $row){
@@ -79,7 +78,7 @@ class Akun extends CI_Controller {
                         $this->session->set_userdata('id_name',$name);
                         $this->session->set_userdata('level',$level);
                         redirect(base_url());
-                        */
+                        
                     }
                 }else{
                     $this->session->set_flashdata(
