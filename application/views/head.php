@@ -132,7 +132,7 @@
                             <a href="#"><i class="fa fa-book fa-fw"></i> Keanggotaan<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                             	<li>
-                                    <a href="#">Kelola Anggota</a>
+                                    <a href="<?php echo base_url('Anggota');?>">Kelola Anggota</a>
                                 </li>
                                 <li>
                                     <a href="<?php echo base_url('Anggota/tambahAnggota');?>">Tambah Anggota</a>

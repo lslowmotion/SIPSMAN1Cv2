@@ -7,11 +7,42 @@ class Anggota extends CI_Controller{
         }
         $this->load->model('AnggotaM');
     }
+    
     function index(){
+        //cek otoritas
+        if($this->session->userdata('level')!='admin'){
+            redirect(base_url());
+        }
+        //fetch daftar anggota
+        $data['daftar_anggota'] = $this->AnggotaM->getDaftarAnggota();
+        //tampilkan daftar anggota
         $this->load->view('head');
-        $this->load->view('Anggota');
+        $this->load->view('DaftarAnggota',$data);
         $this->load->view('foot');
+        /* $this->load->view('head');
+        $this->load->view('Anggota');
+        $this->load->view('foot'); */
     }
+    
+    function dataAnggota(){
+        //cek otoritas
+        if($this->session->userdata('level')!='admin'){
+            redirect(base_url());
+        }
+        //ambil no induk dari segmen ke 3 URI
+        $no_induk = $this->uri->segment('3');
+        //fetch data anggota
+        $data['data_anggota'] = $this->AnggotaM->getDataAnggota($no_induk);
+        //tampilkan data anggota
+        if(empty($data['data_anggota'])){
+            redirect(base_url('Anggota'));
+        }else{
+            $this->load->view('head');
+            $this->load->view('DataAnggota',$data);
+            $this->load->view('foot');
+        }
+    }
+    
     function tambahAnggota(){
         //cek otoritas
         if($this->session->userdata('level')!='admin'){
@@ -99,11 +130,13 @@ class Anggota extends CI_Controller{
                     redirect(base_url('Anggota/tambahAnggota'));
                 }
             }
+            
+        //jika tidak submit, cukup tampilkan
         }else{
              $this->load->view('head');
              $this->load->view('FormTambahAnggota');
              $this->load->view('foot');
         }
-        
     }
+    
 }
