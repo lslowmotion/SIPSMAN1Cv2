@@ -104,7 +104,7 @@
         <h4 class="modal-title" id="myModalLabel">Reset Password</h4>
       </div>
       <div class="modal-body">
-      Apakah anda yakin ingin mereset password ?
+      Apakah anda yakin ingin mereset password?
       Password yang direset akan disamakan dengan no induk. Segera ganti password untuk keamanan akun!  
       </div>
       <div class="modal-footer">

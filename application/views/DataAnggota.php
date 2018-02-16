@@ -54,7 +54,7 @@
     						</td>
     						<td></td>
     						<td>
-    							<a href="<?php echo base_url('Anggota/editAnggota/'.$data_anggota->no_induk);?>#">
+    							<a href="<?php echo base_url('Anggota/editAnggota/'.$data_anggota->no_induk);?>">
     								<button class="form-control btn-primary">
     									Edit Data
     								</button>

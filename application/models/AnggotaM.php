@@ -68,7 +68,7 @@ class AnggotaM extends CI_Model{
         $data = $this->db->escape_str($data);
         //flush
         $this->db->flush_cache();
-        $this->db->where('no_induk',$data['no-induk']);
+        $this->db->where('no_induk',$data['no_induk']);
         if(!$this->db->update('anggota',$data)){
             $query=$this->db->error();
             return $query['code'];
