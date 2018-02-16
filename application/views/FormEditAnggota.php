@@ -12,35 +12,36 @@
 					echo $this->session->flashdata('message');
 				}
 			?>
-			<form class="form-horizontal" action="<?php echo base_url('anggota/tambahanggota');?>" method="post">
+			<?php if (isset($data_anggota)){?>
+			<form class="form-horizontal" action="<?php echo base_url('anggota/editanggota/'.$data_anggota->no_induk);?>" method="post">
 			<div class="form-group">
 				<label class="control-label col-md-2" for="nama">Nama:</label>
 				<div class="col-md-10" >
-					<input class="form-control nama" placeholder="Nama"  name="nama" type="text" />
+					<input value="<?php echo $data_anggota->nama;?>" class="form-control nama" placeholder="Nama"  name="nama" type="text" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-md-2" for="no-induk">No Induk:</label>
 				<div class="col-md-10" >
-					<input class="form-control num" placeholder="No Induk"  name="no-induk" type="text" />
+					<input value="<?php echo $data_anggota->no_induk;?>" class="form-control num" placeholder="No Induk"  name="no-induk" type="text" readonly />
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-md-2" for="alamat">Alamat:</label>
 				<div class="col-md-10" >
-					<input class="form-control alphanumspsy" placeholder="Alamat"  name="alamat" type="text" />
+					<input value="<?php echo $data_anggota->alamat;?>" class="form-control alphanumspsy" placeholder="Alamat"  name="alamat" type="text" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-md-2" for="email">Email:</label>
 				<div class="col-md-10" >
-					<input class="form-control" placeholder="Email"  name="email" type="email" />
+					<input value="<?php echo $data_anggota->email;?>" class="form-control" placeholder="Email"  name="email" type="email" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-md-2" for="no-telepon">No Telepon:</label>
 				<div class="col-md-10" >
-					<input class="form-control num" placeholder="No Telepon"  name="no-telepon" type="text" />
+					<input value="<?php echo $data_anggota->telepon;?>" class="form-control num" placeholder="No Telepon"  name="no-telepon" type="text" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -50,6 +51,7 @@
 				</div>
 			</div>
 			</form>
+			<?php }?>
 		</div>
 	</div>
 </body>

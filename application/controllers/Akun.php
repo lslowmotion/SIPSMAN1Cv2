@@ -3,6 +3,7 @@ class Akun extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('AkunM');
     }
     public function index()  {
         //lempar ke form login
@@ -16,6 +17,7 @@ class Akun extends CI_Controller {
             redirect(base_url());
         }
     }
+    
     function login(){
         if(!empty($this->input->post('submit'))){
             $config = array(
@@ -48,7 +50,7 @@ class Akun extends CI_Controller {
                     'id' => $this->input->post('id'),
                     'password' => $this->input->post('password')
                 );
-                $this->load->model('AkunM');
+                //$this->load->model('AkunM');
                 $login_r=$this->AkunM->login($login_s);
                 if (!empty($login_r)){
                     foreach ($login_r as $row){
@@ -94,6 +96,7 @@ class Akun extends CI_Controller {
             redirect(base_url('akun'));
         }
     }
+    
     function logout(){
         $this->session->unset_userdata('id');
         $this->session->unset_userdata('id_name');
@@ -105,5 +108,18 @@ class Akun extends CI_Controller {
 			</div>'
             );
         redirect(base_url());
-    }   
+    }
+    
+    function resetPassword(){
+        $id = $this->input->post('id');
+        $url=$this->input->post('url');
+        $this->AkunM->resetPassword($id);
+        $this->session->set_flashdata(
+            'message',
+            '<div class="alert alert-success" role="alert">
+				Password dari: '.$id.' berhasil direset
+			</div>'
+        );
+        redirect($url);
+    }
 }
