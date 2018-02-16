@@ -39,12 +39,11 @@
 								<td><?php echo $row->alamat;?></td>
 								<td>
 									<a href="<?php echo base_url('Anggota/dataAnggota/'.$row->no_induk);?>"><button type="button" class="btn btn-primary">Detail</button></a>
-									<?php 
-									//if($this->session->userdata('level')=='admin'){?>
+									
 									<!-- Button trigger modal -->
-									<!-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-nip="<?php echo $row->nip; ?>" data-nama="<?php echo $row->nama; ?>" data-url="<?php echo current_url();?>">Hapus</button>
-									<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#resetModal" data-nip="<?php echo $row->nip; ?>" data-nama="<?php echo $row->nama; ?>" data-url="<?php echo current_url();?>">Reset Password</button>
-									--><?php //}?>
+									<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal" data-no-induk="<?php echo $row->no_induk; ?>" data-nama="<?php echo $row->nama; ?>" data-url="<?php echo current_url();?>">Hapus</button>
+									<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#resetModal" data-no-induk="<?php echo $row->no_induk; ?>" data-nama="<?php echo $row->nama; ?>" data-url="<?php echo current_url();?>">Reset Password</button>
+									
 								</td>
 							</tr>
 						<?php 
@@ -72,8 +71,8 @@
 		</div>
 	
 </body>
-<!-- Modal --><!--
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- Modal -->
+<div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -81,12 +80,12 @@
         <h4 class="modal-title" id="myModalLabel">Hapus Data</h4>
       </div>
       <div class="modal-body">
-      Apakah anda yakin ingin menghapus data <span class="nama"></span>(<span class="nip"></span>) ?
+      Apakah anda yakin ingin menghapus data <span class="nama"></span>(<span class="no-induk"></span>) ?
       Semua data yang berhubungan dengan akun yang bersangkutan juga akan dihapus 
       </div>
       <div class="modal-footer">
-      <form action="<?php //echo base_url('guru/deleteguru'); ?>#" method="post">
-      	<input type="hidden" class="nip" name="nip"/>
+      <form action="<?php echo base_url('Anggota/hapusAnggota'); ?>" method="post">
+      	<input type="hidden" class="no-induk" name="no-induk"/>
       	<input type="hidden" class="url" name="url"/>
         <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
         <button type="submit" class="btn btn-danger">Hapus Data</button>
@@ -94,9 +93,9 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>
 <!-- /.Modal -->
-<!-- Modal --><!-- 
+<!-- Modal -->
 <div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -106,11 +105,11 @@
       </div>
       <div class="modal-body">
       Apakah anda yakin ingin mereset password ?
-      Password yang direset akan disamakan dengan NIP. Segera ganti password untuk keamanan akun!  
+      Password yang direset akan disamakan dengan no induk. Segera ganti password untuk keamanan akun!  
       </div>
       <div class="modal-footer">
-      <form action="<?php //echo base_url('akun/resetpassword'); ?>#" method="post">
-      	<input type="hidden" class="nip" name="id"/>
+      <form action="<?php echo base_url('Akun/resetPassword'); ?>" method="post">
+      	<input type="hidden" class="no-induk" name="id"/>
       	<input type="hidden" class="url" name="url"/>
         <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
         <button type="submit" class="btn btn-warning">Reset Password</button>
@@ -118,7 +117,7 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>
 <!-- /.Modal -->
 <!-- /.Tabel akun -->
 <!-- jQuery -->
@@ -132,32 +131,32 @@ $(document).ready( function () {
 	$('#dataTables-example').DataTable({
 		"lengthChange": false
 	});
-	/* $('#deleteModal').on('show.bs.modal', function (event) {
+	 $('#hapusModal').on('show.bs.modal', function (event) {
 		  var button = $(event.relatedTarget) // Button that triggered the modal
-		  var nip = button.data('nip') // Extract info from data-* attributes
+		  var no-induk = button.data('no-induk') // Extract info from data-* attributes
 		  var nama = button.data('nama')
 		  var url = button.data('url') 
 		  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
 		  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
 		  var modal = $(this)
 		  modal.find('.nama').text(nama)
-		  modal.find('.nip').text(nip)
-		  modal.find('input','.nip').val(nip)
+		  modal.find('.no-induk').text(no-induk)
+		  modal.find('input','.induk').val(induk)
 		  modal.find('.url').val(url)
 		})
 	$('#resetModal').on('show.bs.modal', function (event) {
 		  var button = $(event.relatedTarget) // Button that triggered the modal
-		  var nip = button.data('nip') // Extract info from data-* attributes
+		  var no-induk = button.data('no-induk') // Extract info from data-* attributes
 		  var nama = button.data('nama')
 		  var url = button.data('url') 
 		  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
 		  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
 		  var modal = $(this)
 		  modal.find('.nama').text(nama)
-		  modal.find('.nip').text(nip)
-		  modal.find('input','.nip').val(nip)
+		  modal.find('.no-induk').text(no-induk)
+		  modal.find('input','.no-induk').val(no-induk)
 		  modal.find('.url').val(url)
-		}) */
+		}) 
 });
 </script>
 

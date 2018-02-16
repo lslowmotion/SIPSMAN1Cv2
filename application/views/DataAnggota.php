@@ -45,9 +45,21 @@
     						<td><?php echo $data_anggota->telepon;?></td>
     					</tr>
     					<tr>
-    						<td><a href="<?php echo base_url('Anggota');?>#"><button class="form-control btn-danger"> Kembali ke Daftar Anggota</button></a></td>
+    						<td>
+    							<a href="<?php echo base_url('Anggota');?>#">
+    								<button class="form-control btn-danger">
+    									Kembali ke Daftar Anggota
+    								</button>
+    							</a>
+    						</td>
     						<td></td>
-    						<td><a href="<?php /* echo base_url('guru/editguru/'.$data_guru->nip); */?>#"><button class="form-control btn-primary"> Edit Data</button></a></td>
+    						<td>
+    							<a href="<?php echo base_url('Anggota/editAnggota/'.$data_anggota->no_induk);?>#">
+    								<button class="form-control btn-primary">
+    									Edit Data
+    								</button>
+    							</a>
+							</td>
     					</tr>
     				</table>
     				<?php }?>

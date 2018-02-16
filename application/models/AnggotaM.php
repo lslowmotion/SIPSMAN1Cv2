@@ -60,4 +60,30 @@ class AnggotaM extends CI_Model{
         $query = $this->db->get();
         return $query->row();
     }
+    
+    function editAnggota($data){
+        //cleaning query from XSS
+        $data = $this->security->xss_clean($data);
+        //cleaning query from SQL injection
+        $data = $this->db->escape_str($data);
+        //flush
+        $this->db->flush_cache();
+        $this->db->where('no_induk',$data['no-induk']);
+        if(!$this->db->update('anggota',$data)){
+            $query=$this->db->error();
+            return $query['code'];
+        }else {
+            $query='0';
+            return $query;
+        }
+    }
+    
+    function hapusAnggota($no_induk){
+        //flush
+        $this->db->flush_cache();
+        //set query
+        $this->db->where('no_induk',$no_induk);
+        //execute query
+        $this->db->delete('anggota');
+    }
 }
