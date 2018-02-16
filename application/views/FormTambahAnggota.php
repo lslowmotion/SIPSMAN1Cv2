@@ -12,7 +12,7 @@
 					echo $this->session->flashdata('message');
 				}
 			?>
-			<form class="form-horizontal" action="<?php echo base_url('Anggota/tambahAnggota');?>" method="post">
+			<form class="form-horizontal" action="<?php echo base_url('anggota/tambahanggota');?>" method="post">
 			<div class="form-group">
 				<label class="control-label col-md-2" for="nama">Nama:</label>
 				<div class="col-md-10" >

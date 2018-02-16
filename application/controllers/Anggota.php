@@ -29,7 +29,7 @@ class Anggota extends CI_Controller{
         $data['data_anggota'] = $this->AnggotaM->getDataAnggota($no_induk);
         //tampilkan data anggota
         if(empty($data['data_anggota'])){
-            redirect(base_url('Anggota'));
+            redirect(base_url('anggota'));
         }else{
             $this->load->view('head');
             $this->load->view('DataAnggota',$data);
@@ -88,7 +88,7 @@ class Anggota extends CI_Controller{
                     '<div class="alert alert-danger" role="alert">'
                         .validation_errors().
                     '</div>');
-                redirect(base_url('Anggota/tambahAnggota'));
+                redirect(base_url('anggota/tambahanggota'));
             }else{
                 $no_induk = $this->input->post('no-induk');
                 $nama = $this->input->post('nama');
@@ -119,14 +119,14 @@ class Anggota extends CI_Controller{
                         '</b><br>No induk: <b>'
                             .$no_induk.
                         '</b><br>telah ditambahkan </div>');
-                    redirect(base_url('Anggota/tambahAnggota'));
+                    redirect(base_url('anggota/tambahanggota'));
                 //gagal memasukkan data
                 }else{
                     $this->session->set_flashdata('message',
                         '<div class="alert alert-danger" role="alert">
                             <strong>Terjadi kesalahan</strong>, silahkan masukan <strong>no induk</strong> yang belum digunakan.
                         </div>');
-                    redirect(base_url('Anggota/tambahAnggota'));
+                    redirect(base_url('anggota/tambahanggota'));
                 }
             }
             
@@ -144,7 +144,7 @@ class Anggota extends CI_Controller{
         
         //pengecekan adanya segmen ke-3 URI, jika tidak ada lempar ke ../Anggota
         if(empty($no_induk)){
-            redirect(base_url('Anggota'));
+            redirect(base_url('anggota'));
         //jika ada, cek data POST
         }else{
             
@@ -216,9 +216,9 @@ class Anggota extends CI_Controller{
                     if($result=='0'){
                         $this->session->set_flashdata('message',
                             '<div class="alert alert-success" role="alert">'
-                                .$no_induk.' Telah diedit 
+                                .$no_induk.' telah diedit 
                             </div>');
-                        redirect(base_url('Anggota/dataAnggota/'.$no_induk));
+                        redirect(base_url('anggota/dataanggota/'.$no_induk));
                     //gagal memasukkan data ke dalam db
                     }else{
                         $this->session->set_flashdata('message',
@@ -234,7 +234,7 @@ class Anggota extends CI_Controller{
             }else{
                 $data['data_anggota'] = $this->AnggotaM->getDataAnggota($no_induk);
                 if(empty($data['data_anggota'])){
-                    redirect(base_url('Anggota/daftarAnggota'));
+                    redirect(base_url('anggota/daftaranggota'));
                 }else{
                     $this->load->view('head');
                     $this->load->view('FormEditAnggota',$data);
@@ -250,10 +250,10 @@ class Anggota extends CI_Controller{
         $this->AkunM->hapusAkun($no_induk);
         $this->AnggotaM->hapusAnggota($no_induk);
         $this->session->set_flashdata('message',
-            '<div class="alert alert-success" role="alert">Data dengan no induk = '
+            '<div class="alert alert-success" role="alert">Data dengan no induk '
                 .$no_induk.' telah dihapus
             </div>');
-        redirect(base_url('Anggota'));
+        redirect(base_url('anggota'));
     }
     
    /*  function debugHapusAnggota(){

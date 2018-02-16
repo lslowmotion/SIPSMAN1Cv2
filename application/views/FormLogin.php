@@ -18,7 +18,7 @@
 				<div class="panel panel-info" >
 				<div class="panel-heading ">Login untuk menggunakan Sistem Informasi Perpustakaan SMA Negeri 1 Cilacap</div>
 				<div class="panel-body">
-					<form method="post" action="<?php echo base_url('Akun/login');?>" >
+					<form method="post" action="<?php echo base_url('akun/login');?>" >
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1"><i class="fa fa-user "></i></span>
 							<input class="form-control" placeholder="nip / nis"  name="id" type="text" />

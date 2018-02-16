@@ -58,7 +58,7 @@
 				<ul class="dropdown-menu dropdown-user">
 					<li><a href="#"><i class="fa fa-key fa-fw"></i> Ganti Password</a></li>
 					<li class="divider"></li>
-					<li><a href="<?php echo base_url('Akun/logout')?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
+					<li><a href="<?php echo base_url('akun/logout')?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
 				</ul>
 			<?php }else{?>
 			<a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -68,7 +68,7 @@
                     <ul class="dropdown-menu">
 						
 								
-									<form class="col-md-12" method="post" action="<?php echo base_url('Akun/login');?>" >
+									<form class="col-md-12" method="post" action="<?php echo base_url('akun/login');?>" >
 										<div class="form-group">
 											<label for="id">Username</label>
 											<input class="form-control" placeholder="NIP/NIS"  name="id" type="text" />
@@ -132,10 +132,10 @@
                             <a href="#"><i class="fa fa-book fa-fw"></i> Keanggotaan<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                             	<li>
-                                    <a href="<?php echo base_url('Anggota');?>">Kelola Anggota</a>
+                                    <a href="<?php echo base_url('anggota');?>">Kelola Anggota</a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo base_url('Anggota/tambahAnggota');?>">Tambah Anggota</a>
+                                    <a href="<?php echo base_url('anggota/tambahanggota');?>">Tambah Anggota</a>
                                 </li>
                             </ul>
                             <?php }?>

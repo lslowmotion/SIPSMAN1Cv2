@@ -38,7 +38,7 @@
 								<td><?php echo $row->nama;?></td>
 								<td><?php echo $row->alamat;?></td>
 								<td>
-									<a href="<?php echo base_url('Anggota/dataAnggota/'.$row->no_induk);?>"><button type="button" class="btn btn-primary">Detail</button></a>
+									<a href="<?php echo base_url('anggota/dataanggota/'.$row->no_induk);?>"><button type="button" class="btn btn-primary">Detail</button></a>
 									
 									<!-- Button trigger modal -->
 									<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal" data-no-induk="<?php echo $row->no_induk; ?>" data-nama="<?php echo $row->nama; ?>" data-url="<?php echo current_url();?>">Hapus</button>
@@ -55,7 +55,7 @@
 						<tfoot>
 					<tr>
 					<td>
-					<a href="<?php echo base_url('Anggota/tambahAnggota');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah Anggota</button></a>
+					<a href="<?php echo base_url('anggota/tambahanggota');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah Anggota</button></a>
 					</td>
 					<td></td>
 					<td></td>
@@ -84,7 +84,7 @@
       Semua data yang berhubungan dengan akun yang bersangkutan juga akan dihapus 
       </div>
       <div class="modal-footer">
-      <form action="<?php echo base_url('Anggota/hapusAnggota'); ?>" method="post">
+      <form action="<?php echo base_url('anggota/hapusanggota'); ?>" method="post">
       	<input type="hidden" class="no-induk" name="no-induk"/>
       	<input type="hidden" class="url" name="url"/>
         <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
@@ -108,7 +108,7 @@
       Password yang direset akan disamakan dengan no induk. Segera ganti password untuk keamanan akun!  
       </div>
       <div class="modal-footer">
-      <form action="<?php echo base_url('Akun/resetPassword'); ?>" method="post">
+      <form action="<?php echo base_url('akun/resetpassword'); ?>" method="post">
       	<input type="hidden" class="no-induk" name="id"/>
       	<input type="hidden" class="url" name="url"/>
         <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>

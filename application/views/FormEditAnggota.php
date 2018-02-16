@@ -13,7 +13,7 @@
 				}
 			?>
 			<?php if (isset($data_anggota)){?>
-			<form class="form-horizontal" action="<?php echo base_url('Anggota/editAnggota/'.$data_anggota->no_induk);?>" method="post">
+			<form class="form-horizontal" action="<?php echo base_url('anggota/editanggota/'.$data_anggota->no_induk);?>" method="post">
 			<div class="form-group">
 				<label class="control-label col-md-2" for="nama">Nama:</label>
 				<div class="col-md-10" >
