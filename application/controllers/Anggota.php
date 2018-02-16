@@ -255,4 +255,10 @@ class Anggota extends CI_Controller{
             </div>');
         redirect(base_url('Anggota'));
     }
+    
+   /*  function debugHapusAnggota(){
+        $this->load->model('AkunM');
+        $this->AkunM->hapusAkun('10898');
+        $this->AnggotaM->hapusAnggota('10898');
+    } */
 }

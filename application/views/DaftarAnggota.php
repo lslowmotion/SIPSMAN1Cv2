@@ -80,7 +80,7 @@
         <h4 class="modal-title" id="myModalLabel">Hapus Data</h4>
       </div>
       <div class="modal-body">
-      Apakah anda yakin ingin menghapus data <span class="nama"></span>(<span class="no-induk"></span>) ?
+      Apakah anda yakin ingin menghapus data <span class="nama"></span> (<span class="no-induk"></span>)?
       Semua data yang berhubungan dengan akun yang bersangkutan juga akan dihapus 
       </div>
       <div class="modal-footer">
@@ -133,30 +133,30 @@ $(document).ready( function () {
 	});
 	 $('#hapusModal').on('show.bs.modal', function (event) {
 		  var button = $(event.relatedTarget) // Button that triggered the modal
-		  var no-induk = button.data('no-induk') // Extract info from data-* attributes
+		  var no_induk = button.data('no-induk') // Extract info from data-* attributes
 		  var nama = button.data('nama')
 		  var url = button.data('url') 
 		  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
 		  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
 		  var modal = $(this)
 		  modal.find('.nama').text(nama)
-		  modal.find('.no-induk').text(no-induk)
-		  modal.find('input','.induk').val(induk)
+		  modal.find('.no-induk').text(no_induk)
+		  modal.find('input','.no-induk').val(no_induk)
 		  modal.find('.url').val(url)
-		})
+		});
 	$('#resetModal').on('show.bs.modal', function (event) {
 		  var button = $(event.relatedTarget) // Button that triggered the modal
-		  var no-induk = button.data('no-induk') // Extract info from data-* attributes
+		  var no_induk = button.data('no-induk') // Extract info from data-* attributes
 		  var nama = button.data('nama')
 		  var url = button.data('url') 
 		  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
 		  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
 		  var modal = $(this)
 		  modal.find('.nama').text(nama)
-		  modal.find('.no-induk').text(no-induk)
-		  modal.find('input','.no-induk').val(no-induk)
+		  modal.find('.no-induk').text(no_induk)
+		  modal.find('input','.no-induk').val(no_induk)
 		  modal.find('.url').val(url)
-		}) 
+		}); 
 });
 </script>
 
