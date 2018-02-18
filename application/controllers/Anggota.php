@@ -4,7 +4,7 @@ class Anggota extends CI_Controller{
         parent::__construct();
         //cek otoritas
         if($this->session->userdata('level') != 'admin'){
-            redirect(base_url());
+            redirect(base_url('akun'));
         }
         //load model AnggotaM
         $this->load->model('AnggotaM');
