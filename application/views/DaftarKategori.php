@@ -56,7 +56,7 @@
             					</td>
             					<td></td>
             					<td></td>
-            					<td></td>
+            					
         					</tr>
     					</tfoot>
     					<?php }?>
