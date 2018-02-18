@@ -99,28 +99,29 @@
                         <li>
                             <a href="#"><i class="fa fa-book fa-fw"></i> Koleksi Pustaka<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                            	<?php if(!empty($this->session->userdata('id'))){?>
-                            	<?php if($this->session->userdata('level')=='admin'){ ?>
-                                <li>
-                                    <a href="#">Tambah Kategori</a>
-                                </li>
-                                <li>
-                                    <a href="#">Daftar Kategori</a>
-                                </li>
-                                <li>
-                                    <a href="#">Tambah Koleksi</a>
-                                </li>
-                                <?php
-                                }}?>
                                 <li>
                                     <a href="<?php echo base_url('pustaka')?>">Lihat Koleksi</a>
                                 </li>
+                            	
+                            	<?php if($this->session->userdata('level')=='admin'){ ?>
+                                <li>
+                                    <a href="#">Tambah Koleksi</a>
+                                </li>
+                                <?php }?>
+                                <li>
+                                    <a href="<?php echo base_url('kategori')?>">Daftar Kategori</a>
+                                </li>
+                                <?php if($this->session->userdata('level')=='admin'){ ?>
+                                <li>
+                                    <a href="#">Tambah Kategori</a>
+                                </li>
+                                <?php }?>
                             </ul>
                             <!-- /.nav-second-level -->
                         <?php if(!empty($this->session->userdata('id'))){?>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-list fa-fw"></i> Peminjaman<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-calendar fa-fw"></i> Peminjaman<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                             	<?php if($this->session->userdata('level')=='admin'){ ?>
                                 <li>
@@ -135,7 +136,7 @@
                         </li>
                          <li>
                          	<?php if($this->session->userdata('level')=='admin'){ ?>
-                            <a href="#"><i class="fa fa-book fa-fw"></i> Keanggotaan<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-users fa-fw"></i> Keanggotaan<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                             	<li>
                                     <a href="<?php echo base_url('anggota');?>">Kelola Anggota</a>

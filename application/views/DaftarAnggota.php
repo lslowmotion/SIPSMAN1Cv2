@@ -17,7 +17,7 @@
 			<div class="row">
 			<div class="col-md-12">
 					<form>
-					<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+					<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-anggota">
 						<thead>
 							<tr>
 								<th>No Induk</th>
@@ -128,7 +128,7 @@
 
 <script>
 $(document).ready( function () {
-	$('#dataTables-example').DataTable({
+	$('#dataTables-anggota').DataTable({
 		"lengthChange": false
 	});
 	 $('#hapusModal').on('show.bs.modal', function (event) {
