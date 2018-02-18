@@ -102,12 +102,18 @@
                             	<?php if(!empty($this->session->userdata('id'))){?>
                             	<?php if($this->session->userdata('level')=='admin'){ ?>
                                 <li>
-                                    <a href="#">Kelola Koleksi</a>
+                                    <a href="#">Tambah Kategori</a>
+                                </li>
+                                <li>
+                                    <a href="#">Daftar Kategori</a>
+                                </li>
+                                <li>
+                                    <a href="#">Tambah Koleksi</a>
                                 </li>
                                 <?php
                                 }}?>
                                 <li>
-                                    <a href="#">Lihat Koleksi</a>
+                                    <a href="<?php echo base_url('pustaka')?>">Lihat Koleksi</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

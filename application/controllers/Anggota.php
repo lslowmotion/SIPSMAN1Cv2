@@ -17,9 +17,6 @@ class Anggota extends CI_Controller{
         $this->load->view('head');
         $this->load->view('DaftarAnggota',$data);
         $this->load->view('foot');
-        /* $this->load->view('head');
-        $this->load->view('Anggota');
-        $this->load->view('foot'); */
     }
     
     function dataAnggota(){
