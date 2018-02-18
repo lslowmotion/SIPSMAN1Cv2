@@ -47,10 +47,11 @@ class Anggota extends CI_Controller{
                 array(
                     'field' => 'no-induk',
                     'label' => 'No Induk',
-                    'rules' => 'required|numeric',
+                    'rules' => 'required|numeric|max_length[18]',
                     'errors' => array(
                         'required' => '%s tidak boleh kosong',
-                        'numeric' => '%s harus berupa angka'
+                        'numeric' => '%s harus berupa angka',
+                        'max_length' => '%s tidak boleh lebih dari 18 karakter'
                     ),
                 ),
                 array(

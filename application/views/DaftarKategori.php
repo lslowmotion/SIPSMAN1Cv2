@@ -1,5 +1,5 @@
-<body>
 <link href="<?php echo base_url('assets/DataTables-1.10.12/css/dataTables.bootstrap.min.css')?>" rel="stylesheet"/>
+<body>
 <!-- Tabel akun -->
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -17,13 +17,13 @@
 			<div class="row">
 			<div class="col-md-12">
 					<form>
-					<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-pustaka">
+					<table class="table table-striped table-bordered table-hover" id="dataTables-kategori">
 						<thead>
 							<tr>
-								<th>Kode Klasifikasi</th>
+								<th width="16%">Kode Klasifikasi</th>
 								<th>Nama Kategori</th>
 								
-								<th>Menu</th>
+								<th width="13%">Menu</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -38,7 +38,7 @@
 								<td><?php echo $row->nama_kategori;?></td>
 								
 								<td>
-									<a href="<?php echo base_url('pustaka/index/'.$row->kode_klasifikasi);?>"><button type="button" class="btn btn-primary"><i class="fa fa-search"></i> Cari Koleksi</button></a>
+									<a href="<?php echo base_url('pustaka/index/'.$row->kode_klasifikasi);?>"><button type="button" class="btn btn-primary center-block"><i class="fa fa-search"></i> Cari Koleksi</button></a>
 									
 								</td>
 							</tr>
@@ -78,7 +78,7 @@
 
 <script>
 $(document).ready( function () {
-	$('#dataTables-pustaka').DataTable({
+	$('#dataTables-kategori').DataTable({
 		"lengthChange": false
 	});
 });

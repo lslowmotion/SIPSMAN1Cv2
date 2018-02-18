@@ -4,7 +4,7 @@ class PustakaM extends CI_Model{
         //flush
         $this->db->flush_cache();
         //set query
-        $this->db->select('judul,pengarang,sampul');
+        $this->db->select('judul,pengarang,sampul,ketersediaan');
         $this->db->from('pustaka');
         //execute query
         $query = $this->db->get();
@@ -15,7 +15,7 @@ class PustakaM extends CI_Model{
         //flush
         $this->db->flush_cache();
         //set query
-        $this->db->select('judul,pengarang,sampul');
+        $this->db->select('judul,pengarang,sampul,ketersediaan');
         $this->db->where('kode_klasifikasi',$data);
         $this->db->from('pustaka');
         //execute query

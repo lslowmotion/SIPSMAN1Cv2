@@ -1,5 +1,5 @@
-<body>
 <link href="<?php echo base_url('assets/DataTables-1.10.12/css/dataTables.bootstrap.min.css')?>" rel="stylesheet"/>
+<body>
 <!-- Tabel akun -->
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -17,13 +17,14 @@
 			<div class="row">
 			<div class="col-md-12">
 					<form>
-					<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-pustaka">
+					<table class="table table-striped table-bordered table-hover" id="dataTables-pustaka">
 						<thead>
 							<tr>
 								<th>Judul</th>
 								<th>Pengarang</th>
 								<th>Sampul</th>
-								<th>Menu</th>
+								<th>Ketersediaan</th>
+								<th width="10%">Menu</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -43,8 +44,9 @@
 								    echo base_url();
 								    echo $row->sampul;
 							    ?>" alt="<?php echo $row->judul;?>" style="width:80px;"></a></td>
+								<td><?php echo $row->ketersediaan;?> eksemplar</td>
 								<td>
-									<a href="#<?php /* echo base_url('anggota/dataanggota/'.$row->no_induk); */?>"><button type="button" class="btn btn-primary">Detail</button></a>
+									<a href="#<?php /* echo base_url('anggota/dataanggota/'.$row->no_induk); */?>"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail</button></a>
 									
 									<!-- Button trigger modal --><!-- 
 									<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal" data-no-induk="<?php // echo $row->no_induk;  ?>" data-nama="<?php // echo $row->nama;  ?>" data-url="<?php // echo current_url(); ?>">Hapus</button>
@@ -64,6 +66,7 @@
             					<td>
             					<a href="#<?php //echo base_url('anggota/tambahanggota');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah Koleksi</button></a>
             					</td>
+            					<td></td>
             					<td></td>
             					<td></td>
             					<td></td>
@@ -138,11 +141,7 @@
       <div class="modal-body">
           <img class="sampul center-block" alt="Sampul">
       </div>
-      <div class="modal-footer">
       
-        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-      
-      </div>
     </div>
   </div>
 </div>

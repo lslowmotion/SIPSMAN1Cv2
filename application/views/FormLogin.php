@@ -19,16 +19,18 @@
 				<div class="panel-heading ">Login untuk menggunakan Sistem Informasi Perpustakaan SMA Negeri 1 Cilacap</div>
 				<div class="panel-body">
 					<form method="post" action="<?php echo base_url('akun/login');?>" >
-						<div class="input-group">
-							<span class="input-group-addon" id="basic-addon1"><i class="fa fa-user "></i></span>
-							<input class="form-control" placeholder="nip / nis"  name="id" type="text" />
+						<div class="form-group">
+							<label class="control-label" for="id">Username:</label>
+							<input class="form-control" placeholder="NIP/NIS"  name="id" type="text" />
 						</div>
-						<div class="input-group">
-							<span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
-							<input class="form-control" placeholder="password" name="password" type="password" />
+						<div class="form-group">
+							<label class="control-label" for="password">Password:</label>
+							<input class="form-control" placeholder="Password" name="password" type="password" />
 						</div>
+						<div class="form-group">
 							<input type=hidden name="submit" value=TRUE>
-							<button type="submit" id="submit" class="form-control btn-primary"><i class="fa fa-chevron-right "></i> Login</button>
+							<button type="submit" id="submit" class="form-control btn-primary">Login</button>
+						</div>
 					</form>
 				</div>
 				</div>

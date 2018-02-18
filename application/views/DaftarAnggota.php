@@ -1,5 +1,5 @@
-<body>
 <link href="<?php echo base_url('assets/DataTables-1.10.12/css/dataTables.bootstrap.min.css')?>" rel="stylesheet"/>
+<body>
 <!-- Tabel akun -->
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -17,13 +17,13 @@
 			<div class="row">
 			<div class="col-md-12">
 					<form>
-					<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-anggota">
+					<table class="table table-striped table-bordered table-hover" id="dataTables-anggota">
 						<thead>
 							<tr>
-								<th>No Induk</th>
+								<th width="16%">No Induk</th>
 								<th>Nama</th>
 								<th>Alamat</th>
-								<th>Menu</th>
+								<th width="33%">Menu</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -38,11 +38,11 @@
 								<td><?php echo $row->nama;?></td>
 								<td><?php echo $row->alamat;?></td>
 								<td>
-									<a href="<?php echo base_url('anggota/dataanggota/'.$row->no_induk);?>"><button type="button" class="btn btn-primary">Detail</button></a>
+									<a href="<?php echo base_url('anggota/dataanggota/'.$row->no_induk);?>"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail</button></a>
 									
 									<!-- Button trigger modal -->
-									<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal" data-no-induk="<?php echo $row->no_induk; ?>" data-nama="<?php echo $row->nama; ?>" data-url="<?php echo current_url();?>">Hapus</button>
-									<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#resetModal" data-no-induk="<?php echo $row->no_induk; ?>" data-nama="<?php echo $row->nama; ?>" data-url="<?php echo current_url();?>">Reset Password</button>
+									<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal" data-no-induk="<?php echo $row->no_induk; ?>" data-nama="<?php echo $row->nama; ?>" data-url="<?php echo current_url();?>"><i class="fa fa-trash"></i> Hapus</button>
+									<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#resetModal" data-no-induk="<?php echo $row->no_induk; ?>" data-nama="<?php echo $row->nama; ?>" data-url="<?php echo current_url();?>"><i class="fa fa-refresh"></i> Reset Password</button>
 									
 								</td>
 							</tr>
@@ -88,7 +88,7 @@
       	<input type="hidden" class="no-induk" name="no-induk"/>
       	<input type="hidden" class="url" name="url"/>
         <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-danger">Hapus Data</button>
+        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus Data</button>
        </form>
       </div>
     </div>
@@ -112,7 +112,7 @@
       	<input type="hidden" class="no-induk" name="id"/>
       	<input type="hidden" class="url" name="url"/>
         <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-warning">Reset Password</button>
+        <button type="submit" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset Password</button>
       </form>
       </div>
     </div>

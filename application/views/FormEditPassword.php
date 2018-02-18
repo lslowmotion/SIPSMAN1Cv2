@@ -14,30 +14,34 @@
 				}
 			?>
 			<div class="row">
-					<form method="post" class="col-md-4" action="<?php echo base_url('akun/editpassword');?>" >
+				<div class="col-md-12">
+					<form method="post" class="form-horizontal" action="<?php echo base_url('akun/editpassword');?>" >
 						<div class="form-group">
-							<label>Password Lama</label>
-							<div class="input-group col-md-12">
+							<label class="control-label col-md-3" for="password-lama">Password Lama:</label>
+							<div class="col-md-9">
 								<input class="form-control" placeholder="Password lama"  name="password-lama" type="password" />
 							</div>
 						</div>
 						<div class="form-group">
-							<label>Password Baru</label>
-							<div class="input-group col-md-12">
+							<label class="control-label col-md-3" for="password-baru">Password Baru:</label>
+							<div class="col-md-9">
 								<input class="form-control" placeholder="Password baru" name="password-baru" type="password" />
 							</div>
 						</div>
 						<div class="form-group">
-							<label>Konfirmasi Password Baru</label>
-							<div class="input-group col-md-12">
+							<label class="control-label col-md-3" for="konfirmasi-password-baru">Konfirmasi Password Baru:</label>
+							<div class="col-md-9">
 								<input class="form-control" placeholder="Konfimasi password baru" name="konfirmasi-password-baru" type="password" />
 							</div>
 						</div>
 						<div class="form-group">
 							<input type=hidden name="submit" value=TRUE>
-							<button type="submit" class="form-control btn-primary col-md-6">Ganti Password</button>
+							<div class="col-md-2 col-md-offset-3">
+								<button type="submit" class="form-control btn-primary col-md-6">Ubah Password</button>
+							</div>
 						</div>
 					</form>	
+				</div>
 			</div>
 		</div>
 	</div>
