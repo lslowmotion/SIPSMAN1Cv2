@@ -16,6 +16,10 @@ class Kategori extends CI_Controller{
     }
     
     function tambahKategori(){
+        //cek otoritas
+        if($this->session->userdata('level') != 'admin'){
+            redirect(base_url('akun'));
+        }
         if(!empty($this->input->post('submit'))){
             //konfigurasi validasi data masukan
             $config = array(

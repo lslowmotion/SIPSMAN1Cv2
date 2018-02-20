@@ -18,13 +18,13 @@
         			<div class="form-group">
         				<label class="control-label col-md-3" for="kode-klasifikasi">Kode Klasifikasi DDC:</label>
         				<div class="col-md-9" >
-        					<input class="form-control numd" placeholder="Kode klasifikasi DDC (Dewey Decimal Classification)"  name="kode-klasifikasi" type="text" autocomplete="off"/>
+        					<input class="form-control numdot" placeholder="Kode klasifikasi DDC (Dewey Decimal Classification)"  name="kode-klasifikasi" type="text" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
         				<label class="control-label col-md-3" for="no-induk">Nama Kategori:</label>
         				<div class="col-md-9" >
-        					<input class="form-control alphaspsym" placeholder="Nama kategori"  name="nama-kategori" type="text" autocomplete="off"/>
+        					<input class="form-control alphaspcomma" placeholder="Nama kategori"  name="nama-kategori" type="text" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
