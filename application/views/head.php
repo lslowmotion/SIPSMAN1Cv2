@@ -115,7 +115,7 @@
                                 </li>
                                 <?php if($this->session->userdata('level')=='admin'){ ?>
                                 <li>
-                                    <a href="#">Tambah Kategori</a>
+                                    <a href="<?php echo base_url('kategori/tambahkategori')?>">Tambah Kategori</a>
                                 </li>
                                 <?php }?>
                             </ul>

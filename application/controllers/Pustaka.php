@@ -9,14 +9,15 @@ class Pustaka extends CI_Controller{
     function index(){
         //ambil kode kategori dari segmen 2 URI
         $kode = $this->uri->segment('3');
-        $data['daftar_pustaka'] = $this->PustakaM->getDaftarPustakabyKategori($kode);
-        if(empty($data['daftar_pustaka'])){
+        
+        if(empty($kode)){
             //fetch daftar koleksi pustaka
             $data['daftar_pustaka'] = $this->PustakaM->getDaftarPustaka();
             $this->load->view('head');
             $this->load->view('DaftarPustaka',$data);
             $this->load->view('foot');
         }else{
+            $data['daftar_pustaka'] = $this->PustakaM->getDaftarPustakabyKategori($kode);
             $this->load->view('head');
             $this->load->view('DaftarPustaka',$data);
             $this->load->view('foot');
@@ -79,12 +80,12 @@ class Pustaka extends CI_Controller{
                     //'rules' => 'required',
                     'errors' => array('required' => '%s tidak boleh kosong')
                 ),
-                array(
+                /*array(
                     'field' => 'sampul',
                     'label' => 'Sampul',
                     //'rules' => 'required',
-                    'errors' => array('required' => '%s tidak boleh kosong')
-                ),
+                    'errors' => array('required' => 'Harus memilih file %s untuk di-upload')
+                ),*/
                 array(
                     'field' => 'jumlah',
                     'label' => 'Jumlah',
@@ -194,4 +195,5 @@ class Pustaka extends CI_Controller{
             $this->load->view('foot');
         }
     }
+    
 }

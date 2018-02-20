@@ -46,7 +46,7 @@ class Anggota extends CI_Controller{
                 ),
                 array(
                     'field' => 'no-induk',
-                    'label' => 'No Induk',
+                    'label' => 'No induk',
                     'rules' => 'required|numeric|max_length[18]',
                     'errors' => array(
                         'required' => '%s tidak boleh kosong',
@@ -68,13 +68,13 @@ class Anggota extends CI_Controller{
                 ),
                 array(
                     'field' => 'no-telepon',
-                    'label' => 'No Telepon',
+                    'label' => 'No telepon',
                     'rules' => 'required|numeric',
                     'errors' => array(
                         'required' => '%s tidak boleh kosong',
                         'numeric' => '%s harus berupa angka'
                     )
-                ),
+                )
             );
             $this->form_validation->set_rules($config);
             

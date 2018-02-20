@@ -24,7 +24,7 @@
         			<div class="form-group">
         				<label class="control-label col-md-2" for="isbn">ISBN:</label>
         				<div class="col-md-10" >
-        					<input class="form-control num" placeholder="ISBN"  name="isbn" type="text" />
+        					<input class="form-control num" placeholder="ISBN"  name="isbn" type="text" autocomplete="off" />
         				</div>
         			</div>
         			<div class="form-group">
@@ -43,7 +43,7 @@
         			<div class="form-group">
         				<label class="control-label col-md-2" for="judul">Judul:</label>
         				<div class="col-md-10" >
-        					<input class="form-control" placeholder="Judul pustaka"  name="judul" type="text" id="judul"/>
+        					<input class="form-control" placeholder="Judul pustaka"  name="judul" type="text" id="judul autocomplete="off""/>
         				</div>
         			</div>
         			<div class="form-group">
@@ -67,7 +67,7 @@
         			<div class="form-group">
         				<label class="control-label col-md-2" for="pengarang">Tahun Terbit:</label>
         				<div class="col-md-10" >
-        					<input class="form-control num" placeholder="Tahun terbit"  name="tahun-terbit" type="text" />
+        					<input class="form-control num" placeholder="Tahun terbit"  name="tahun-terbit" type="text" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
@@ -81,7 +81,7 @@
         			<div class="form-group">
         				<label class="control-label col-md-2" for="jumlah">Jumlah:</label>
         				<div class="col-md-10" >
-        					<input class="form-control num" placeholder="Jumlah eksemplar"  name="jumlah" type="text" />
+        					<input class="form-control num" placeholder="Jumlah eksemplar"  name="jumlah" type="text" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">

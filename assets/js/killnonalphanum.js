@@ -12,6 +12,13 @@ $(".alphasp").on('keyup keypress change',function(){
        $(this).val($(this).val().replace(/[^a-zA-Z ]+/g,''))
     }
 });
+$(".alphaspsym").on('keyup keypress change',function(){
+    var pattern = /^[a-zA-Z ,.':-]+$/;
+    var txtval = $(this).val();
+    if(!pattern.test(txtval)){
+       $(this).val($(this).val().replace(/[^a-zA-Z ]+/g,''))
+    }
+});
 $(".nama").on('keyup keypress change',function(){
     var pattern = /^[a-zA-Z '-]+$/;
     var txtval = $(this).val();

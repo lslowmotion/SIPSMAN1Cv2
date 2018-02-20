@@ -18,31 +18,31 @@
         			<div class="form-group">
         				<label class="control-label col-md-2" for="nama">Nama:</label>
         				<div class="col-md-10" >
-        					<input class="form-control nama" placeholder="Nama"  name="nama" type="text" />
+        					<input class="form-control nama" placeholder="Nama"  name="nama" type="text" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
         				<label class="control-label col-md-2" for="no-induk">No Induk:</label>
         				<div class="col-md-10" >
-        					<input class="form-control num" placeholder="No Induk"  name="no-induk" type="text" />
+        					<input class="form-control num" placeholder="No Induk"  name="no-induk" type="text" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
         				<label class="control-label col-md-2" for="alamat">Alamat:</label>
         				<div class="col-md-10" >
-        					<input class="form-control alphanumspsy" placeholder="Alamat"  name="alamat" type="text" />
+        					<input class="form-control alphanumspsy" placeholder="Alamat"  name="alamat" type="text" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
         				<label class="control-label col-md-2" for="email">Email:</label>
         				<div class="col-md-10" >
-        					<input class="form-control" placeholder="Email"  name="email" type="email" />
+        					<input class="form-control" placeholder="Email"  name="email" type="email" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
         				<label class="control-label col-md-2" for="no-telepon">No Telepon:</label>
         				<div class="col-md-10" >
-        					<input class="form-control num" placeholder="No Telepon"  name="no-telepon" type="text" />
+        					<input class="form-control num" placeholder="No Telepon"  name="no-telepon" type="text" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
