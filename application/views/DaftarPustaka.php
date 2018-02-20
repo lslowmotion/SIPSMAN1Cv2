@@ -20,6 +20,7 @@
 					<table class="table table-striped table-bordered table-hover" id="dataTables-pustaka">
 						<thead>
 							<tr>
+								<th width="14%">Nomor Panggil</th>
 								<th>Judul</th>
 								<th>Pengarang</th>
 								<th>Sampul</th>
@@ -35,6 +36,7 @@
 						
 						
 							<tr>
+								<td><?php echo $row->nomor_panggil;?>
 								<td><?php echo $row->judul;?></td>
 								<td><?php echo $row->pengarang;?></td>
 								<td><a href="#"><img class="center-block" data-toggle="modal" data-target="#sampulModal" data-sampul="<?php
@@ -44,7 +46,7 @@
 								    echo base_url();
 								    echo $row->sampul;
 							    ?>" alt="<?php echo $row->judul;?>" style="width:80px;"></a></td>
-								<td><?php echo $row->ketersediaan;?> eksemplar</td>
+								<td><?php echo $row->jumlah-$row->dipinjam;?> eksemplar</td>
 								<td>
 									<a href="#<?php /* echo base_url('anggota/dataanggota/'.$row->no_induk); */?>"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail</button></a>
 									
@@ -64,8 +66,9 @@
 						<tfoot>
         					<tr>
             					<td>
-            					<a href="#<?php //echo base_url('anggota/tambahanggota');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah Koleksi</button></a>
+            					<a href="<?php echo base_url('pustaka/tambahpustaka');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah Koleksi</button></a>
             					</td>
+            					<td></td>
             					<td></td>
             					<td></td>
             					<td></td>

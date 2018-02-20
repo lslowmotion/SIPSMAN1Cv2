@@ -42,7 +42,7 @@ class Anggota extends CI_Controller{
                     'field' => 'nama',
                     'label' => 'Nama',
                     'rules' => 'required',
-                    'errors' => array('required' => '%s tidak boleh kosong'),
+                    'errors' => array('required' => '%s tidak boleh kosong')
                 ),
                 array(
                     'field' => 'no-induk',
@@ -52,19 +52,19 @@ class Anggota extends CI_Controller{
                         'required' => '%s tidak boleh kosong',
                         'numeric' => '%s harus berupa angka',
                         'max_length' => '%s tidak boleh lebih dari 18 karakter'
-                    ),
+                    )
                 ),
                 array(
                     'field' => 'alamat',
                     'label' => 'Alamat',
                     'rules' => 'required',
-                    'errors' => array('required' => '%s tidak boleh kosong'),
+                    'errors' => array('required' => '%s tidak boleh kosong')
                 ),
                 array(
                     'field' => 'email',
                     'label' => 'Email',
                     'rules' => 'required',
-                    'errors' => array('required' => '%s tidak boleh kosong'),
+                    'errors' => array('required' => '%s tidak boleh kosong')
                 ),
                 array(
                     'field' => 'no-telepon',
@@ -73,7 +73,7 @@ class Anggota extends CI_Controller{
                     'errors' => array(
                         'required' => '%s tidak boleh kosong',
                         'numeric' => '%s harus berupa angka'
-                    ),
+                    )
                 ),
             );
             $this->form_validation->set_rules($config);
@@ -107,7 +107,7 @@ class Anggota extends CI_Controller{
                 $result = $this->AnggotaM->tambahAnggota($data_anggota);
                 
                 //berhasil memasukkan data
-                if($result=='0'){
+                if($result == '0'){
                     $this->load->model('AkunM');
                     $this->AkunM->tambahAkun($data_akun);
                     $this->session->set_flashdata('message',

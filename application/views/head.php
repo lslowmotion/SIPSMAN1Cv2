@@ -107,7 +107,7 @@
                             	
                             	<?php if($this->session->userdata('level')=='admin'){ ?>
                                 <li>
-                                    <a href="#">Tambah Koleksi</a>
+                                    <a href="<?php echo base_url('pustaka/tambahpustaka');?>">Tambah Koleksi</a>
                                 </li>
                                 <?php }?>
                                 <li>
