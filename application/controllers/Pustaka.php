@@ -116,10 +116,12 @@ class Pustaka extends CI_Controller{
                 //mencari nomor panggil yang belum terdaftar
                 $eksemplar = 1;
                 $nomor_panggil = $this->input->post('nomor-panggil').'.'.$eksemplar;
+                $nama_file = $this->input->post('nomor-panggil').'_'.$eksemplar;
                 $cek_judul = $this->PustakaM->getJudulbyNomorPanggil($nomor_panggil);
                 while(!empty($cek_judul)){
                     $eksemplar++;
                     $nomor_panggil = $this->input->post('nomor-panggil').'.'.$eksemplar;
+                    $nama_file = $this->input->post('nomor-panggil').'_'.$eksemplar;
                     $cek_judul = $this->PustakaM->getJudulbyNomorPanggil($nomor_panggil);
                 }
                 
@@ -127,7 +129,7 @@ class Pustaka extends CI_Controller{
                 $upload_config = array(
                     'upload_path' => './assets/cover',
                     'allowed_types' => 'gif|jpg|jpeg|png|bmp',
-                    'encrypt_name' => TRUE
+                    'file_name' => $nama_file
                 );
                 
                 //upload sampul
@@ -200,4 +202,17 @@ class Pustaka extends CI_Controller{
         }
     }
     
+    function hapusPustaka(){
+        //ambil nomor panggil dari POST
+        $nomor_panggil = $this->input->post('nomor-panggil');
+        //delete di db
+        $this->PustakaM->hapusPustaka($nomor_panggil);
+        //kirim notif ke user
+        $this->session->set_flashdata('message',
+            '<div class="alert alert-success" role="alert">Pustaka dengan nomor panggil '
+            .$nomor_panggil.' telah dihapus
+            </div>');
+            redirect(base_url('pustaka'));
+    }
+
 }

@@ -54,4 +54,33 @@ class PustakaM extends CI_Model{
         return $query->result();
     }
     
+    function hapusPustaka($nomor_panggil){
+        //cleaning query from XSS
+        $nomor_panggil = $this->security->xss_clean($nomor_panggil);
+        //cleaning query from SQL injection
+        $nomor_panggil = $this->db->escape_str($nomor_panggil);
+        
+        //flush
+        $this->db->flush_cache();
+        
+        //get data sampul, lalu hapus dari direktori
+        //set query
+        $this->db->select('sampul');
+        $this->db->where('nomor_panggil',$nomor_panggil);
+        $this->db->from('pustaka');
+        //execute query
+        $query = $this->db->get();
+        //hapus sampul dari direktori
+        $sampul_path = $query->row()->sampul;
+        unlink('./'.$sampul_path);
+        
+        //flush
+        $this->db->flush_cache();
+        
+        //set query
+        $this->db->where('nomor_panggil',$nomor_panggil);
+        //execute query
+        $this->db->delete('pustaka');
+    }
+    
 }

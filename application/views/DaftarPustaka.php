@@ -25,7 +25,7 @@
 								<th>Pengarang</th>
 								<th>Sampul</th>
 								<th>Ketersediaan</th>
-								<th width="10%">Menu</th>
+								<th>Menu</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -50,9 +50,9 @@
 								<td>
 									<a href="#<?php /* echo base_url('anggota/dataanggota/'.$row->no_induk); */?>"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail</button></a>
 									
-									<!-- Button trigger modal --><!-- 
-									<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal" data-no-induk="<?php // echo $row->no_induk;  ?>" data-nama="<?php // echo $row->nama;  ?>" data-url="<?php // echo current_url(); ?>">Hapus</button>
-									<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#resetModal" data-no-induk="<?php // echo $row->no_induk;  ?>" data-nama="<?php // echo $row->nama;  ?>" data-url="<?php // echo current_url();?>">Reset Password</button>
+									<!-- Button trigger modal -->
+									<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal" data-nomor-panggil="<?php echo $row->nomor_panggil;  ?>" data-judul="<?php echo $row->judul;  ?>" data-url="<?php echo current_url(); ?>">Hapus</button>
+									<!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#resetModal" data-no-induk="<?php // echo $row->no_induk;  ?>" data-nama="<?php // echo $row->nama;  ?>" data-url="<?php // echo current_url();?>">Reset Password</button>
 									 -->
 								</td>
 							</tr>
@@ -85,7 +85,7 @@
 		</div>
 	
 </body>
-<!-- Modal --><!-- 
+<!-- Modal -->
 <div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -94,12 +94,12 @@
         <h4 class="modal-title" id="myModalLabel">Hapus Data</h4>
       </div>
       <div class="modal-body">
-      Apakah anda yakin ingin menghapus data <span class="nama"></span> (<span class="no-induk"></span>)?
-      Semua data yang berhubungan dengan akun yang bersangkutan juga akan dihapus 
+      Apakah anda yakin ingin menghapus pustaka <span class="judul"></span> (<span class="nomor-panggil"></span>)?
+      Semua data peminjaman terkait pustaka yang bersangkutan juga akan terhapus 
       </div>
       <div class="modal-footer">
-      <form action="<?php //echo base_url('anggota/hapusanggota'); ?>" method="post">
-      	<input type="hidden" class="no-induk" name="no-induk"/>
+      <form action="<?php echo base_url('pustaka/hapuspustaka'); ?>" method="post">
+      	<input type="hidden" class="nomor-panggil" name="nomor-panggil"/>
       	<input type="hidden" class="url" name="url"/>
         <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
         <button type="submit" class="btn btn-danger">Hapus Data</button>
@@ -161,20 +161,20 @@ $(document).ready( function () {
 	$('#dataTables-pustaka').DataTable({
 		"lengthChange": false
 	});
-	/*  $('#hapusModal').on('show.bs.modal', function (event) {
+	$('#hapusModal').on('show.bs.modal', function (event) {
 		  var button = $(event.relatedTarget) // Button that triggered the modal
-		  var no_induk = button.data('no-induk') // Extract info from data-* attributes
-		  var nama = button.data('nama')
+		  var nomor_panggil = button.data('nomor-panggil') // Extract info from data-* attributes
+		  var judul = button.data('judul')
 		  var url = button.data('url') 
 		  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
 		  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
 		  var modal = $(this)
-		  modal.find('.nama').text(nama)
-		  modal.find('.no-induk').text(no_induk)
-		  modal.find('input','.no-induk').val(no_induk)
+		  modal.find('.judul').text(judul)
+		  modal.find('.nomor-panggil').text(nomor_panggil)
+		  modal.find('input','.nomor-panggil').val(nomor_panggil)
 		  modal.find('.url').val(url)
 		});
-	$('#resetModal').on('show.bs.modal', function (event) {
+	/*  $('#resetModal').on('show.bs.modal', function (event) {
 		  var button = $(event.relatedTarget) // Button that triggered the modal
 		  var no_induk = button.data('no-induk') // Extract info from data-* attributes
 		  var nama = button.data('nama')

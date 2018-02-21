@@ -43,7 +43,7 @@
         			<div class="form-group">
         				<label class="control-label col-md-2" for="judul">Judul:</label>
         				<div class="col-md-10" >
-        					<input class="form-control" placeholder="Judul pustaka"  name="judul" type="text" id="judul autocomplete="off""/>
+        					<input class="form-control" placeholder="Judul pustaka"  name="judul" type="text" id="judul" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
@@ -99,7 +99,7 @@
 </body>
 <script src="<?php echo base_url('assets/js/killnonalphanum.js');?>"></script>
 <script>
-
+$(document).ready( function () {
     document.getElementById("kode-klasifikasi").onchange = function() {isiNomorPanggil()};
     document.getElementById("pengarang").onchange = function() {isiNomorPanggil()};
     document.getElementById("judul").onchange = function() {isiNomorPanggil()};
@@ -111,7 +111,7 @@
        // document.getElementById("nomor-panggil").value = kode;
         document.getElementById("nomor-panggil").value = kode.concat("-",pengarang.concat("-",judul.toLowerCase()));
     }
-
+});
 /* $('#submit').on('click', function () {
     $(this).button('loading')
    

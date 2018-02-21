@@ -16,7 +16,7 @@
 			
 			<div class="row">
 			<div class="col-md-12">
-					<form>
+					
 					<table class="table table-striped table-bordered table-hover" id="dataTables-kategori">
 						<thead>
 							<tr>
@@ -27,25 +27,8 @@
 							</tr>
 						</thead>
 						<tbody>
-						<?php 
-						if (isset($daftar_kategori)){
-							foreach ($daftar_kategori as $row){
-						?>	
 						
 						
-							<tr>
-								<td><?php echo $row->kode_klasifikasi;?></td>
-								<td><?php echo $row->nama_kategori;?></td>
-								
-								<td>
-									<a href="<?php echo base_url('pustaka/index/'.$row->kode_klasifikasi);?>"><button type="button" class="btn btn-primary center-block"><i class="fa fa-search"></i> Cari Koleksi</button></a>
-									
-								</td>
-							</tr>
-						<?php 
-							}
-						}
-						?>
 						
 						</tbody>
 						<?php if($this->session->userdata('level')=='admin'){ ?>
@@ -62,7 +45,7 @@
     					<?php }?>
 					</table>
 					
-					</form>
+					
 					</div>
 			</div>
 			</div>
@@ -79,7 +62,20 @@
 <script>
 $(document).ready( function () {
 	$('#dataTables-kategori').DataTable({
-		"lengthChange": false
+		"processing": true,
+        "serverSide": true,
+        "ajax":{
+    	     "url": "<?php echo base_url('kategori/daftarkategori') ?>",
+    	     "dataType": "json",
+    	     "type": "POST",
+     	},
+
+     	"columns": [
+     		{"name": "kode-klasifikasi", "orderable": true},
+     		{"name": "nama-kategori", "orderable": true},
+     		{"name": "menu", "orderable": false}
+ 		],
+ 		"order": [[0, 'asc']],
 	});
 });
 </script>

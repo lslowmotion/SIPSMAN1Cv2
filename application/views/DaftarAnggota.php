@@ -33,7 +33,7 @@
 						<tfoot>
 					<tr>
 					<td>
-					<a href="<?php //echo base_url('anggota/tambahanggota');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah Anggota</button></a>
+					<a href="<?php echo base_url('anggota/tambahanggota');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah Anggota</button></a>
 					</td>
 					<td></td>
 					<td></td>
@@ -124,12 +124,6 @@ $(document).ready( function () {
      		{"name": "menu", "orderable": false}
  		],
  		"order": [[0, 'asc']],
-		
-		// "ajax" : { 
-           // url : "<?php //echo base_url('anggota/daftaranggota');?>"//,
-           /* type : 'GET'
-        },
-		"lengthChange": false */
 	});
 	$('#hapusModal').on('show.bs.modal', function (event) {
 		  var button = $(event.relatedTarget) // Button that triggered the modal

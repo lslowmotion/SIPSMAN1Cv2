@@ -5,14 +5,78 @@ class Kategori extends CI_Controller{
         //load model KategoriM
         $this->load->model('KategoriM');
     }
-    
-    public function index(){
-        //fetch daftar kategori
-        $data['daftar_kategori'] =$this->KategoriM->getDaftarKategori();
+       
+    function index(){
         //tampilkan daftar kategori
         $this->load->view('head');
-        $this->load->view('DaftarKategori',$data);
+        $this->load->view('DaftarKategori');
         $this->load->view('foot');
+    }
+    
+    function daftarKategori(){
+        //kolom untuk menentukan kolom db yang akan diurutkan dari POST DataTables
+        $kolom = array(
+            0 => 'kode_klasifikasi',
+            1 => 'nama_kategori'
+        );
+        
+        //mengambil POST dari DataTables untuk kemudian dilempar ke db untuk fetch
+        $panjang_data = $this->input->post('length'); //jumlah data difetch
+        $mulai_data = $this->input->post('start'); //data mulai fetch dari data ke-sekian
+        $kolom_urut = $kolom[$this->input->post('order')[0]['column']]; //kolom yang diurutkan
+        $urutan = $this->input->post('order')[0]['dir']; //urutan (ascending/descending)
+        
+        //mencari jumlah data kategori
+        $total_data = $this->KategoriM->getJumlahKategori();
+        
+        //memasukkan total data ke data terfilter sebagai inisialisasi
+        $total_data_terfilter = $total_data;
+        
+        //apabila search POST dari DataTables kosong, ambil daftar kategori parsial berdasarkan jumlah data, mulai fetch, kolom terurut, dan urutan
+        if(empty($this->input->post('search')['value'])){
+            $data_kategori = $this->KategoriM->getDaftarKategoriParsial($panjang_data,$mulai_data,$kolom_urut,$urutan);
+            //apabila search POST dari DataTables isi, ambil data kategori by search
+        }else{
+            //search dari POST
+            $search = $this->input->post('search')['value'];
+            
+            //mengambil jumlah data terfilter dari search di db
+            $total_data_terfilter = $this->KategoriM->getDaftarKategoribySearch($panjang_data,$mulai_data,$search,$kolom_urut,$urutan)['jumlah'];
+            
+            //apabila jumlah data terfilter lebih dari 0, isi $data_kategori dengan data hasil search
+            if($total_data_terfilter > 0){
+                $data_kategori = $this->KategoriM->getDaftarKategoribySearch($panjang_data,$mulai_data,$search,$kolom_urut,$urutan)['data'];
+                //jika tidak ditemukan, kosongi $data_kategori
+            }else{
+                $data_kategori = null;
+            }
+        }
+        
+        //jika $data_kategori tidak kosong, masukkan data yang akan di-parse ke DataTables dalam $data
+        if(!empty($data_kategori)){
+            foreach ($data_kategori as $row){
+                $data[] = array(
+                    $row->kode_klasifikasi,
+                    $row->nama_kategori,
+                    '<a href="'.base_url('pustaka/index/'.$row->kode_klasifikasi).'"><button type="button" class="btn btn-primary center-block"><i class="fa fa-search"></i> Cari Koleksi</button></a>'
+                    
+                );
+            }
+            //jika kosong, kosongi $data
+        }else{
+            $data = array();
+        }
+        
+        //set data json
+        $json_data = array(
+            'draw' => intval($this->input->post('draw')),
+            'recordsTotal' => intval($total_data),
+            'recordsFiltered' => intval($total_data_terfilter),
+            'data' => $data
+        );
+        
+        //kirim json
+        echo json_encode($json_data);
     }
     
     function tambahKategori(){

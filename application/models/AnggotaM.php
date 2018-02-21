@@ -39,7 +39,6 @@ class AnggotaM extends CI_Model{
         //flush
         $this->db->flush_cache();
         //set query
-        $this->db->select('no_induk,nama,alamat');
         $this->db->from('anggota');
         //execute query
         $query = $this->db->get();
@@ -60,16 +59,16 @@ class AnggotaM extends CI_Model{
         //flush
         $this->db->flush_cache();
         //set query
+        $this->db->select('no_induk,nama,alamat');
+        $this->db->from('anggota');
         $this->db->limit($panjang_data,$mulai_data);
         $this->db->order_by($kolom_urut,$urutan);
-        $this->db->from('anggota');
+        
         //execute query
         $query = $this->db->get();
-        if($query->num_rows()>0){
-            return $query->result();
-        }else{
-            return null;
-        }
+        
+        return $query->result();
+       
     }
     
     function getDaftarAnggotabySearch($panjang_data,$mulai_data,$search,$kolom_urut,$urutan){
@@ -88,12 +87,14 @@ class AnggotaM extends CI_Model{
         //flush
         $this->db->flush_cache();
         //set query
+        $this->db->select('no_induk,nama,alamat');
+        $this->db->from('anggota');
         $this->db->like('no_induk',$search);
         $this->db->or_like('nama',$search);
         $this->db->or_like('alamat',$search);
         $this->db->limit($panjang_data,$mulai_data);
         $this->db->order_by($kolom_urut,$urutan);
-        $this->db->from('anggota');
+        
         //execute query       
         $query = $this->db->get();
         
@@ -140,6 +141,10 @@ class AnggotaM extends CI_Model{
     }
     
     function hapusAnggota($no_induk){
+        //cleaning query from XSS
+        $no_induk = $this->security->xss_clean($no_induk);
+        //cleaning query from SQL injection
+        $no_induk = $this->db->escape_str($no_induk);
         //flush
         $this->db->flush_cache();
         //set query
