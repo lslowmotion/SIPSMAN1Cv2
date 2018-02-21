@@ -16,7 +16,7 @@
 			
 			<div class="row">
 			<div class="col-md-12">
-					<form>
+					
 					<table class="table table-striped table-bordered table-hover" id="dataTables-anggota">
 						<thead>
 							<tr>
@@ -24,38 +24,16 @@
 								<th>Nama</th>
 								<th>Alamat</th>
 								<th width="33%">Menu</th>
+								
 							</tr>
 						</thead>
 						<tbody>
-						<?php 
-						if (isset($daftar_anggota)){
-							foreach ($daftar_anggota as $row){
-						?>	
-						
-						
-							<tr>
-								<td><?php echo $row->no_induk;?></td>
-								<td><?php echo $row->nama;?></td>
-								<td><?php echo $row->alamat;?></td>
-								<td>
-									<a href="<?php echo base_url('anggota/dataanggota/'.$row->no_induk);?>"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail</button></a>
-									
-									<!-- Button trigger modal -->
-									<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal" data-no-induk="<?php echo $row->no_induk; ?>" data-nama="<?php echo $row->nama; ?>" data-url="<?php echo current_url();?>"><i class="fa fa-trash"></i> Hapus</button>
-									<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#resetModal" data-no-induk="<?php echo $row->no_induk; ?>" data-nama="<?php echo $row->nama; ?>" data-url="<?php echo current_url();?>"><i class="fa fa-refresh"></i> Reset Password</button>
-									
-								</td>
-							</tr>
-						<?php 
-							}
-						}
-						?>
 						
 						</tbody>
 						<tfoot>
 					<tr>
 					<td>
-					<a href="<?php echo base_url('anggota/tambahanggota');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah Anggota</button></a>
+					<a href="<?php //echo base_url('anggota/tambahanggota');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah Anggota</button></a>
 					</td>
 					<td></td>
 					<td></td>
@@ -64,7 +42,7 @@
 					</tfoot>
 					</table>
 					
-					</form>
+					
 					</div>
 			</div>
 			</div>
@@ -127,11 +105,33 @@
 <script src="<?php echo base_url('assets/DataTables-1.10.12/js/dataTables.bootstrap.min.js');?>"></script>
 
 <script>
+
+
 $(document).ready( function () {
 	$('#dataTables-anggota').DataTable({
-		"lengthChange": false
+		"processing": true,
+        "serverSide": true,
+        "ajax":{
+    	     "url": "<?php echo base_url('anggota/daftaranggota') ?>",
+    	     "dataType": "json",
+    	     "type": "POST",
+     	},
+
+     	"columns": [
+     		{"name": "no-induk", "orderable": true},
+     		{"name": "nama", "orderable": true},
+     		{"name": "alamat", "orderable": false},
+     		{"name": "menu", "orderable": false}
+ 		],
+ 		"order": [[0, 'asc']],
+		
+		// "ajax" : { 
+           // url : "<?php //echo base_url('anggota/daftaranggota');?>"//,
+           /* type : 'GET'
+        },
+		"lengthChange": false */
 	});
-	 $('#hapusModal').on('show.bs.modal', function (event) {
+	$('#hapusModal').on('show.bs.modal', function (event) {
 		  var button = $(event.relatedTarget) // Button that triggered the modal
 		  var no_induk = button.data('no-induk') // Extract info from data-* attributes
 		  var nama = button.data('nama')

@@ -5,18 +5,86 @@ class Anggota extends CI_Controller{
         //cek otoritas
         if($this->session->userdata('level') != 'admin'){
             redirect(base_url('akun'));
-        }
+        } 
         //load model AnggotaM
         $this->load->model('AnggotaM');
     }
     
     function index(){
-        //fetch daftar anggota
-        $data['daftar_anggota'] = $this->AnggotaM->getDaftarAnggota();
-        //tampilkan daftar anggota
         $this->load->view('head');
-        $this->load->view('DaftarAnggota',$data);
+        $this->load->view('DaftarAnggota');
         $this->load->view('foot');
+    }
+    
+    function daftarAnggota(){
+        //kolom untuk menentukan kolom db yang akan diurutkan dari POST DataTables
+        $kolom = array(
+            0 => 'no_induk',
+            1 => 'nama',
+            2 => 'alamat',
+        );
+         
+        //mengambil POST dari DataTables untuk kemudian dilempar ke db untuk fetch
+        $panjang_data = $this->input->post('length'); //jumlah data difetch
+        $mulai_data = $this->input->post('start'); //data mulai fetch dari data ke-sekian
+        $kolom_urut = $kolom[$this->input->post('order')[0]['column']]; //kolom yang diurutkan
+        $urutan = $this->input->post('order')[0]['dir']; //urutan (ascending/descending)
+        
+        //mencari jumlah data anggota       
+        $total_data = $this->AnggotaM->getJumlahAnggota();
+        
+        //memasukkan total data ke data terfilter sebagai inisialisasi
+        $total_data_terfilter = $total_data;
+        
+        //apabila search POST dari DataTables kosong, ambil daftar anggota parsial berdasarkan jumlah data, mulai fetch, kolom terurut, dan urutan      
+        if(empty($this->input->post('search')['value'])){
+            $data_anggota = $this->AnggotaM->getDaftarAnggotaParsial($panjang_data,$mulai_data,$kolom_urut,$urutan);
+        //apabila search POST dari DataTables isi, ambil data anggota by search
+        }else{
+            //search dari POST
+            $search = $this->input->post('search')['value'];
+            
+            //mengambil jumlah data terfilter dari search di db
+            $total_data_terfilter = $this->AnggotaM->getDaftarAnggotabySearch($panjang_data,$mulai_data,$search,$kolom_urut,$urutan)['jumlah'];
+            
+            //apabila jumlah data terfilter lebih dari 0, isi $data_anggota dengan data hasil search
+            if($total_data_terfilter > 0){
+                $data_anggota = $this->AnggotaM->getDaftarAnggotabySearch($panjang_data,$mulai_data,$search,$kolom_urut,$urutan)['data'];
+            //jika tidak ditemukan, kosongi $data_anggota    
+            }else{
+                $data_anggota = null;
+            }
+        }
+        
+        //jika $data_anggota tidak kosong, masukkan data yang akan di-parse ke DataTables dalam $data
+        if(!empty($data_anggota)){
+            foreach ($data_anggota as $row){
+                $data[] = array(
+                    $row->no_induk,
+                    $row->nama,
+                    $row->alamat,
+                    '<a href="'.base_url('anggota/dataanggota/'.$row->no_induk).'"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail</button></a>
+                    
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal" data-no-induk="'.$row->no_induk.'" data-nama="'.$row->nama.'" data-url="'.current_url().'"><i class="fa fa-trash"></i> Hapus</button>
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#resetModal" data-no-induk="'.$row->no_induk.'" data-nama="'.$row->nama.'" data-url="'.current_url().'"><i class="fa fa-refresh"></i> Reset Password</button>'
+                );
+            }
+        //jika kosong, kosongi $data
+        }else{
+            $data = array();
+        }
+        
+        //set data json
+        $json_data = array(
+            'draw' => intval($this->input->post('draw')),
+            'recordsTotal' => intval($total_data),
+            'recordsFiltered' => intval($total_data_terfilter),
+            'data' => $data
+        );
+        
+        //kirim json
+        echo json_encode($json_data);
     }
     
     function dataAnggota(){
