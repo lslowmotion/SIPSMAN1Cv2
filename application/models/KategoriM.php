@@ -1,16 +1,6 @@
 <?php
 class KategoriM extends CI_Model{
-    function getDaftarKategori(){
-        //flush
-        $this->db->flush_cache();
-        //set query
-        $this->db->select('kode_klasifikasi,nama_kategori');
-        $this->db->from('kategori');
-        //execute query
-        $query = $this->db->get();
-        return $query->result();
-    }
-    
+        
     function getJumlahKategori(){
         //flush
         $this->db->flush_cache();
@@ -21,7 +11,7 @@ class KategoriM extends CI_Model{
         return $query->num_rows();
     }
     
-    function getDaftarKategoriParsial($panjang_data,$mulai_data,$kolom_urut,$urutan){
+    function getDaftarKategori($panjang_data,$mulai_data,$kolom_urut,$urutan){
         //cleaning query from XSS
         $panjang_data = $this->security->xss_clean($panjang_data);
         $mulai_data = $this->security->xss_clean($mulai_data);

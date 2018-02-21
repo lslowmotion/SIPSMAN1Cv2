@@ -32,9 +32,9 @@ class Kategori extends CI_Controller{
         //memasukkan total data ke data terfilter sebagai inisialisasi
         $total_data_terfilter = $total_data;
         
-        //apabila search POST dari DataTables kosong, ambil daftar kategori parsial berdasarkan jumlah data, mulai fetch, kolom terurut, dan urutan
+        //apabila search POST dari DataTables kosong, ambil daftar kategori  berdasarkan jumlah data, mulai fetch, kolom terurut, dan urutan
         if(empty($this->input->post('search')['value'])){
-            $data_kategori = $this->KategoriM->getDaftarKategoriParsial($panjang_data,$mulai_data,$kolom_urut,$urutan);
+            $data_kategori = $this->KategoriM->getDaftarKategori($panjang_data,$mulai_data,$kolom_urut,$urutan);
             //apabila search POST dari DataTables isi, ambil data kategori by search
         }else{
             //search dari POST

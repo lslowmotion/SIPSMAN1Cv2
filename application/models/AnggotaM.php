@@ -45,7 +45,7 @@ class AnggotaM extends CI_Model{
         return $query->num_rows();
     }
     
-    function getDaftarAnggotaParsial($panjang_data,$mulai_data,$kolom_urut,$urutan){
+    function getDaftarAnggota($panjang_data,$mulai_data,$kolom_urut,$urutan){
         //cleaning query from XSS
         $panjang_data = $this->security->xss_clean($panjang_data);
         $mulai_data = $this->security->xss_clean($mulai_data);

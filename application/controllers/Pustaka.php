@@ -7,22 +7,121 @@ class Pustaka extends CI_Controller{
     }
     
     function index(){
-        //ambil kode kategori dari segmen 2 URI
+        $this->load->view('head');
+        $this->load->view('DaftarPustaka');
+        $this->load->view('foot');
+    }
+    
+    function daftarPustaka(){
+        //kolom untuk menentukan kolom db yang akan diurutkan dari POST DataTables
+        $kolom = array(
+            0 => 'nomor_panggil',
+            1 => 'judul',
+            2 => 'pengarang'
+        );
+        
+        //mengambil POST dari DataTables untuk kemudian dilempar ke db untuk fetch
+        $panjang_data = $this->input->post('length'); //jumlah data difetch
+        $mulai_data = $this->input->post('start'); //data mulai fetch dari data ke-sekian
+        $kolom_urut = $kolom[$this->input->post('order')[0]['column']]; //kolom yang diurutkan
+        $urutan = $this->input->post('order')[0]['dir']; //urutan (ascending/descending)
+        
+        //mengambil URI segmen ke-3
         $kode = $this->uri->segment('3');
         
-        if(empty($kode)){
-            //fetch daftar koleksi pustaka
-            $data['daftar_pustaka'] = $this->PustakaM->getDaftarPustaka();
-            $this->load->view('head');
-            $this->load->view('DaftarPustaka',$data);
-            $this->load->view('foot');
+        //mencari jumlah data pustaka
+        $total_data = $this->PustakaM->getJumlahPustaka($kode);
+        
+        //memasukkan total data ke data terfilter sebagai inisialisasi
+        $total_data_terfilter = $total_data;
+        
+        //apabila search POST dari DataTables kosong, ambil daftar pustaka berdasarkan jumlah data, mulai fetch, kolom terurut, dan urutan
+        if(empty($this->input->post('search')['value'])){
+            $data_pustaka = $this->PustakaM->getDaftarPustaka($panjang_data,$mulai_data,$kolom_urut,$urutan,$kode);
+            //apabila search POST dari DataTables isi, ambil data pustaka by search
         }else{
-            $data['daftar_pustaka'] = $this->PustakaM->getDaftarPustakabyKategori($kode);
-            $this->load->view('head');
-            $this->load->view('DaftarPustaka',$data);
-            $this->load->view('foot');
-        }        
+            //search dari POST
+            $search = $this->input->post('search')['value'];
+            
+            //mengambil jumlah data terfilter dari search di db
+            $total_data_terfilter = $this->PustakaM->getDaftarPustakabySearch($panjang_data,$mulai_data,$search,$kolom_urut,$urutan,$kode)['jumlah'];
+            
+            //apabila jumlah data terfilter lebih dari 0, isi $data_pustaka dengan data hasil search
+            if($total_data_terfilter > 0){
+                $data_pustaka = $this->PustakaM->getDaftarPustakabySearch($panjang_data,$mulai_data,$search,$kolom_urut,$urutan,$kode)['data'];
+                //jika tidak ditemukan, kosongi $data_pustaka
+            }else{
+                $data_pustaka = null;
+            }
+        }
+
+        //jika admin, tampilkan tombol delete
+        if($this->session->userdata('level') != 'admin'){
+            //jika $data_pustaka tidak kosong, masukkan data yang akan di-parse ke DataTables dalam $data
+            if(!empty($data_pustaka)){
+                foreach ($data_pustaka as $row){
+                    $data[] = array(
+                        $row->nomor_panggil,
+                        $row->judul,
+                        $row->pengarang,
+                        
+                        '<a href="#"><img class="center-block" data-toggle="modal" data-target="#sampulModal" data-sampul="
+							    '.base_url($row->sampul).
+                        '" data-judul="'.$row->judul.'" src="'
+                        .base_url($row->sampul).
+                        '" alt="'.$row->judul.'" style="width:80px;"></a>',
+                        
+                        $row->jumlah - $row->dipinjam.' eksemplar',
+                        
+                        '<a href="'.base_url('pustaka/datapustaka/'.$row->nomor_panggil).'"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail</button></a>'
+                        
+                    );
+                }
+                //jika kosong, kosongi $data
+            }else{
+                $data = array();
+            }
+        //jika tidak admin, cukup tampilkan tombol detail
+        }else{
+            //jika $data_pustaka tidak kosong, masukkan data yang akan di-parse ke DataTables dalam $data
+            if(!empty($data_pustaka)){
+                foreach ($data_pustaka as $row){
+                    $data[] = array(
+                        $row->nomor_panggil,
+                        $row->judul,
+                        $row->pengarang,
+                        
+                        '<a href="#"><img class="center-block" data-toggle="modal" data-target="#sampulModal" data-sampul="
+							    '.base_url($row->sampul).
+                        '" data-judul="'.$row->judul.'" src="'
+                        .base_url($row->sampul).
+                        '" alt="'.$row->judul.'" style="width:80px;"></a>',
+                        
+                        $row->jumlah - $row->dipinjam.' eksemplar',
+                        
+                        '<a href="'.base_url('pustaka/datapustaka/'.$row->nomor_panggil).'"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail</button></a>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal" data-nomor-panggil="'.$row->nomor_panggil.'" data-judul="'.$row->judul.'" data-url="'.current_url().'"><i class="fa fa-trash"></i> Hapus</button>'
+                        
+                    );
+                }
+                //jika kosong, kosongi $data
+            }else{
+                $data = array();
+            }
+        }
+        
+        //set data json
+        $json_data = array(
+            'draw' => intval($this->input->post('draw')),
+            'recordsTotal' => intval($total_data),
+            'recordsFiltered' => intval($total_data_terfilter),
+            'data' => $data
+        );
+        
+        //kirim json
+        echo json_encode($json_data);
     }
+    
         
     function tambahPustaka(){
         //cek otoritas
