@@ -64,7 +64,6 @@
       <div class="modal-footer">
       <form action="<?php echo base_url('anggota/hapusanggota'); ?>" method="post">
       	<input type="hidden" class="no-induk" name="no-induk"/>
-      	<input type="hidden" class="url" name="url"/>
         <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
         <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus Data</button>
        </form>
@@ -88,7 +87,6 @@
       <div class="modal-footer">
       <form action="<?php echo base_url('akun/resetpassword'); ?>" method="post">
       	<input type="hidden" class="no-induk" name="id"/>
-      	<input type="hidden" class="url" name="url"/>
         <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
         <button type="submit" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset Password</button>
       </form>

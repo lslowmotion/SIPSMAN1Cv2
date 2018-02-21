@@ -66,8 +66,8 @@ class Anggota extends CI_Controller{
                     '<a href="'.base_url('anggota/dataanggota/'.$row->no_induk).'"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail</button></a>
                     
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal" data-no-induk="'.$row->no_induk.'" data-nama="'.$row->nama.'" data-url="'.current_url().'"><i class="fa fa-trash"></i> Hapus</button>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#resetModal" data-no-induk="'.$row->no_induk.'" data-nama="'.$row->nama.'" data-url="'.current_url().'"><i class="fa fa-refresh"></i> Reset Password</button>'
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal" data-no-induk="'.$row->no_induk.'" data-nama="'.$row->nama.'"><i class="fa fa-trash"></i> Hapus</button>
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#resetModal" data-no-induk="'.$row->no_induk.'" data-nama="'.$row->nama.'"><i class="fa fa-refresh"></i> Reset Password</button>'
                 );
             }
         //jika kosong, kosongi $data
@@ -312,9 +312,9 @@ class Anggota extends CI_Controller{
     
     function hapusAnggota(){
         $no_induk = $this->input->post('no-induk');
+        $this->AnggotaM->hapusAnggota($no_induk);
         $this->load->model('AkunM');
         $this->AkunM->hapusAkun($no_induk);
-        $this->AnggotaM->hapusAnggota($no_induk);
         $this->session->set_flashdata('message',
             '<div class="alert alert-success" role="alert">Data dengan no induk '
                 .$no_induk.' telah dihapus

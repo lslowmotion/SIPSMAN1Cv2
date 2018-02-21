@@ -63,6 +63,10 @@ class AkunM extends CI_Model{
     }
     
     function hapusAkun($id){
+        //cleaning query from XSS
+        $id = $this->security->xss_clean($id);
+        //cleaning query from SQL injection
+        $id = $this->db->escape_str($id);
         //flush
         $this->db->flush_cache();
         //set query
