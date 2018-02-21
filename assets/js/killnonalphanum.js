@@ -19,6 +19,13 @@ $(".nama").on('keyup keypress change',function(){
        $(this).val($(this).val().replace(/[^a-zA-Z '-]+/g,''))
     }
 });
+$(".pengarang").on('keyup keypress change',function(){
+    var pattern = /^[a-zA-Z '-,&]+$/;
+    var txtval = $(this).val();
+    if(!pattern.test(txtval)){
+       $(this).val($(this).val().replace(/[^a-zA-Z '-,&]+/g,''))
+    }
+});
 
 $(".alphanumspsym").on('keyup keypress change',function(){
     var pattern = /^[a-zA-Z0-9 ,.':-]+$/;

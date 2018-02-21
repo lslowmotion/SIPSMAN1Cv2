@@ -49,7 +49,7 @@
         			<div class="form-group">
         				<label class="control-label col-md-2" for="pengarang">Pengarang:</label>
         				<div class="col-md-10" >
-        					<input class="form-control nama" placeholder="Nama pengarang"  name="pengarang" type="text" id="pengarang"/>
+        					<input class="form-control pengarang" placeholder="Nama pengarang"  name="pengarang" type="text" id="pengarang"/>
         				</div>
         			</div>
         			<div class="form-group">

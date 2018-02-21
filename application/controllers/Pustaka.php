@@ -294,7 +294,7 @@ class Pustaka extends CI_Controller{
         //jika tidak submit, cukup tampilkan form tambah pustaka
         }else{
             $this->load->model('KategoriM');
-            $data['daftar_kategori'] = $this->KategoriM->getDaftarKategori();
+            $data['daftar_kategori'] = $this->KategoriM->getDaftarKategori(null,null,'kode_klasifikasi','asc');
             $this->load->view('head');
             $this->load->view('FormTambahPustaka',$data);
             $this->load->view('foot');

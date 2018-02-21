@@ -25,7 +25,10 @@ class KategoriM extends CI_Model{
         //flush
         $this->db->flush_cache();
         //set query
-        $this->db->limit($panjang_data,$mulai_data);
+        //jika tidak kosong, tentukan panjang dan mulai data
+        if(!empty($panjang_data && $mulai_data)){
+            $this->db->limit($panjang_data,$mulai_data);
+        }
         $this->db->order_by($kolom_urut,$urutan);
         $this->db->from('kategori');
         //execute query
