@@ -100,7 +100,7 @@ class Pustaka extends CI_Controller{
                         $row->jumlah - $row->dipinjam.' eksemplar',
                         
                         '<a href="'.base_url('pustaka/datapustaka/'.$row->nomor_panggil).'"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail</button></a>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal" data-nomor-panggil="'.$row->nomor_panggil.'" data-judul="'.$row->judul.'" data-url="'.current_url().'"><i class="fa fa-trash"></i> Hapus</button>'
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal" data-nomor-panggil="'.$row->nomor_panggil.'" data-judul="'.$row->judul.'"><i class="fa fa-trash"></i> Hapus</button>'
                         
                     );
                 }

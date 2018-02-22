@@ -60,7 +60,7 @@
     						<td><?php echo $data_pustaka->tahun_terbit;?></td>
     					</tr>
     					<tr>
-    						<td>Sampul</td>
+    						<td>Gambar Sampul</td>
     						<td align="right">:</td>
     						<td>
     							<a href="#">

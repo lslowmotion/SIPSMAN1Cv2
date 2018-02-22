@@ -29,7 +29,7 @@
         			</div>
         			<div class="form-group">
         				<label class="control-label col-md-2" for="kode-klasifikasi">Kode Klasifikasi:</label>
-        				<div class="col-md-6">
+        				<div class="col-md-7">
         					<select name="kode-klasifikasi" id="kode-klasifikasi" class="form-control">
 								<option selected value="">-- Pilih kategori --</option>
     							<?php 
@@ -39,7 +39,7 @@
     							?>
 							</select>
         				</div>
-        				<div class="col-md-4">
+        				<div class="col-md-3">
         					<a href="<?php echo base_url('kategori/tambahkategori');?>"><button type="button" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> Tambah Kategori</button></a>
         				</div>
         			</div>
