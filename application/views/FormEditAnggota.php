@@ -4,7 +4,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-12">
-					<h1 class="page-header">Tambah Anggota</h1>
+					<h1 class="page-header">Edit Anggota</h1>
 				</div>
 			</div>
 			<?php 
@@ -47,7 +47,7 @@
 			<div class="form-group">
 				<div class="col-md-2 col-md-offset-2">
 					<input type="hidden" value="submit" name="submit">
-					<button type="submit" id="submit" class="form-control btn-primary">Simpan</button>
+					<button type="submit" id="submit" class="form-control btn-primary"><i class="fa fa-save"></i> Simpan</button>
 				</div>
 			</div>
 			</form>

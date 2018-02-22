@@ -53,16 +53,29 @@ class AkunM extends CI_Model{
     }
     
     function resetPassword($id){
+        //cleaning query from XSS
+        $id = $this->security->xss_clean($id);
+        //cleaning query from SQL injection
+        $id = $this->db->escape_str($id);
+        //flush cache
         $this->db->flush_cache();
+        
+        //menyamakan id dan password
         $password=array (
             'password'=>$id
         );
+        
+        //set query
         $this->db->where('id',$id);
         //execute query
         $query = $this->db->update('akun',$password);
     }
     
     function hapusAkun($id){
+        //cleaning query from XSS
+        $id = $this->security->xss_clean($id);
+        //cleaning query from SQL injection
+        $id = $this->db->escape_str($id);
         //flush
         $this->db->flush_cache();
         //set query

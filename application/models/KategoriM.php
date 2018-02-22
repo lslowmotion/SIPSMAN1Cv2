@@ -1,51 +1,17 @@
 <?php
-class AnggotaM extends CI_Model{
-    function login($data){
-        //cleaning query from XSS
-        $id = $this->security->xss_clean($data);
-        //cleaning query from SQL injection
-        $id = $this->db->escape_str($id);
+class KategoriM extends CI_Model{
+        
+    function getJumlahKategori(){
         //flush
         $this->db->flush_cache();
         //set query
-        $this->db->select('nama');
-        $this->db->where('no_induk',$id);
-        $this->db->from('Anggota');
-        //execute query
-        $query = $this->db->get();
-        return $query->result();
-    }
-    
-    function tambahAnggota($data){
-        //cleaning query from XSS
-        $data = $this->security->xss_clean($data);
-        //cleaning query from SQL injection
-        $data = $this->db->escape_str($data);
-        //flush
-        $this->db->flush_cache();
-        //insert data ke db 'anggota'
-        if(!$this->db->insert('anggota',$data)){
-            //throw exception if failed
-            $query=$this->db->error();
-            return $query['code'];
-        }else {
-            //success
-            $query='0';
-            return $query;
-        }
-    }
-    
-    function getJumlahAnggota(){
-        //flush
-        $this->db->flush_cache();
-        //set query
-        $this->db->from('anggota');
+        $this->db->from('kategori');
         //execute query
         $query = $this->db->get();
         return $query->num_rows();
     }
     
-    function getDaftarAnggota($panjang_data,$mulai_data,$kolom_urut,$urutan){
+    function getDaftarKategori($panjang_data,$mulai_data,$kolom_urut,$urutan){
         //cleaning query from XSS
         $panjang_data = $this->security->xss_clean($panjang_data);
         $mulai_data = $this->security->xss_clean($mulai_data);
@@ -59,19 +25,20 @@ class AnggotaM extends CI_Model{
         //flush
         $this->db->flush_cache();
         //set query
-        $this->db->select('no_induk,nama,alamat');
-        $this->db->from('anggota');
-        $this->db->limit($panjang_data,$mulai_data);
+        //jika tidak kosong, tentukan panjang dan mulai data
+        if(!empty($panjang_data && $mulai_data)){
+            $this->db->limit($panjang_data,$mulai_data);
+        }
         $this->db->order_by($kolom_urut,$urutan);
-        
+        $this->db->from('kategori');
         //execute query
         $query = $this->db->get();
         
         return $query->result();
-       
+        
     }
     
-    function getDaftarAnggotabySearch($panjang_data,$mulai_data,$search,$kolom_urut,$urutan){
+    function getDaftarKategoribySearch($panjang_data,$mulai_data,$search,$kolom_urut,$urutan){
         //cleaning query from XSS
         $panjang_data = $this->security->xss_clean($panjang_data);
         $mulai_data = $this->security->xss_clean($mulai_data);
@@ -87,15 +54,12 @@ class AnggotaM extends CI_Model{
         //flush
         $this->db->flush_cache();
         //set query
-        $this->db->select('no_induk,nama,alamat');
-        $this->db->from('anggota');
-        $this->db->like('no_induk',$search);
-        $this->db->or_like('nama',$search);
-        $this->db->or_like('alamat',$search);
+        $this->db->like('kode_klasifikasi',$search);
+        $this->db->or_like('nama_kategori',$search);
         $this->db->limit($panjang_data,$mulai_data);
         $this->db->order_by($kolom_urut,$urutan);
-        
-        //execute query       
+        $this->db->from('kategori');
+        //execute query
         $query = $this->db->get();
         
         //return data sebagai array jumlah data dan data
@@ -108,7 +72,7 @@ class AnggotaM extends CI_Model{
         
     }
     
-    function getDataAnggota($data){
+    function getDataKategori($data){
         //cleaning query from XSS
         $data = $this->security->xss_clean($data);
         //cleaning query from SQL injection
@@ -116,22 +80,41 @@ class AnggotaM extends CI_Model{
         //flush
         $this->db->flush_cache();
         //set query
-        $this->db->from('anggota');
-        $this->db->where('no_induk',$data);
+        $this->db->from('kategori');
+        $this->db->where('kode_klasifikasi',$data);
         //execute query
         $query = $this->db->get();
         return $query->row();
     }
     
-    function editAnggota($data){
+    function tambahKategori($data){
         //cleaning query from XSS
         $data = $this->security->xss_clean($data);
         //cleaning query from SQL injection
         $data = $this->db->escape_str($data);
         //flush
         $this->db->flush_cache();
-        $this->db->where('no_induk',$data['no_induk']);
-        if(!$this->db->update('anggota',$data)){
+        //insert data ke db 'kategori'
+        if(!$this->db->insert('kategori',$data)){
+            //throw exception if failed
+            $query=$this->db->error();
+            return $query['code'];
+        }else {
+            //success
+            $query='0';
+            return $query;
+        }
+    }
+    
+    function editKategori($data){
+        //cleaning query from XSS
+        $data = $this->security->xss_clean($data);
+        //cleaning query from SQL injection
+        $data = $this->db->escape_str($data);
+        //flush
+        $this->db->flush_cache();
+        $this->db->where('kode_klasifikasi',$data['kode_klasifikasi']);
+        if(!$this->db->update('kategori',$data)){
             $query=$this->db->error();
             return $query['code'];
         }else {
@@ -140,16 +123,18 @@ class AnggotaM extends CI_Model{
         }
     }
     
-    function hapusAnggota($no_induk){
+    function hapusKategori($data){
         //cleaning query from XSS
-        $no_induk = $this->security->xss_clean($no_induk);
+        $data = $this->security->xss_clean($data);
         //cleaning query from SQL injection
-        $no_induk = $this->db->escape_str($no_induk);
+        $data = $this->db->escape_str($data);
+        
         //flush
         $this->db->flush_cache();
+        
         //set query
-        $this->db->where('no_induk',$no_induk);
+        $this->db->where('kode_klasifikasi',$data);
         //execute query
-        $this->db->delete('anggota');
+        $this->db->delete('kategori');
     }
 }

@@ -21,34 +21,34 @@
         			<table class="table">
     					<tr>
     						<td class="col-md-3">No Induk</td>
-    						<td class="col-md-1">:</td>
+    						<td class="col-md-1" align="right">:</td>
     						<td class="col-md-8"><?php echo $data_anggota->no_induk;?></td>
     					</tr>
     					<tr>
     						<td>Nama</td>
-    						<td>:</td>
+    						<td align="right">:</td>
     						<td><?php echo $data_anggota->nama;?></td>
     					</tr>
     					<tr>
     						<td>Alamat</td>
-    						<td>:</td>
+    						<td align="right">:</td>
     						<td><?php echo $data_anggota->alamat;?></td>
     					</tr>
     					<tr>
     						<td>Email</td>
-    						<td>:</td>
+    						<td align="right">:</td>
     						<td><?php echo $data_anggota->email;?></td>
     					</tr>
     					<tr>
     						<td>No Telepon</td>
-    						<td>:</td>
+    						<td align="right">:</td>
     						<td><?php echo $data_anggota->telepon;?></td>
     					</tr>
     					<tr>
     						<td>
     							<a href="<?php echo base_url('anggota');?>">
     								<button class="form-control btn-danger">
-    									Kembali ke Daftar Anggota
+    									<i class="fa fa-arrow-left"></i> Kembali ke Daftar Anggota
     								</button>
     							</a>
     						</td>
@@ -56,7 +56,7 @@
     						<td>
     							<a href="<?php echo base_url('anggota/editanggota/'.$data_anggota->no_induk);?>">
     								<button class="form-control btn-primary">
-    									Edit Data
+    									<i class="fa fa-edit"></i> Edit Data
     								</button>
     							</a>
 							</td>
