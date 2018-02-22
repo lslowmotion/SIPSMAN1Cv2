@@ -72,7 +72,7 @@ class KategoriM extends CI_Model{
         
     }
     
-    function getNamaKategori($data){
+    function getDataKategori($data){
         //cleaning query from XSS
         $data = $this->security->xss_clean($data);
         //cleaning query from SQL injection
@@ -104,5 +104,37 @@ class KategoriM extends CI_Model{
             $query='0';
             return $query;
         }
+    }
+    
+    function editKategori($data){
+        //cleaning query from XSS
+        $data = $this->security->xss_clean($data);
+        //cleaning query from SQL injection
+        $data = $this->db->escape_str($data);
+        //flush
+        $this->db->flush_cache();
+        $this->db->where('kode_klasifikasi',$data['kode_klasifikasi']);
+        if(!$this->db->update('kategori',$data)){
+            $query=$this->db->error();
+            return $query['code'];
+        }else {
+            $query='0';
+            return $query;
+        }
+    }
+    
+    function hapusKategori($data){
+        //cleaning query from XSS
+        $data = $this->security->xss_clean($data);
+        //cleaning query from SQL injection
+        $data = $this->db->escape_str($data);
+        
+        //flush
+        $this->db->flush_cache();
+        
+        //set query
+        $this->db->where('kode_klasifikasi',$data);
+        //execute query
+        $this->db->delete('kategori');
     }
 }

@@ -51,22 +51,44 @@ class Kategori extends CI_Controller{
                 $data_kategori = null;
             }
         }
-        
-        //jika $data_kategori tidak kosong, masukkan data yang akan di-parse ke DataTables dalam $data
-        if(!empty($data_kategori)){
-            foreach ($data_kategori as $row){
-                $data[] = array(
-                    $row->kode_klasifikasi,
-                    $row->nama_kategori,
-                    '<a href="'.base_url('pustaka/index/'.$row->kode_klasifikasi).'"><button type="button" class="btn btn-primary center-block"><i class="fa fa-search"></i> Cari Koleksi</button></a>'
-                    
-                );
+        //jika admin, tampilkan tombol delete
+        if($this->session->userdata('level') == 'admin'){
+            //jika $data_kategori tidak kosong, masukkan data yang akan di-parse ke DataTables dalam $data
+            if(!empty($data_kategori)){
+                foreach ($data_kategori as $row){
+                    $data[] = array(
+                        $row->kode_klasifikasi,
+                        $row->nama_kategori,
+                        '<a href="'.base_url('pustaka/index/'.$row->kode_klasifikasi).'"><button type="button" class="btn btn-info"><i class="fa fa-search"></i> Cari Koleksi</button></a>
+                        <a href="'.base_url('kategori/editkategori/'.$row->kode_klasifikasi).'">
+        					<button class="form-control btn-warning">
+        						<i class="fa fa-edit"></i> Edit Data
+        					</button>
+        				</a>'
+                        
+                    );
+                }
+                //jika kosong, kosongi $data
+            }else{
+                $data = array();
             }
-            //jika kosong, kosongi $data
+        //jika tidak admin, cukup tampilkan tombol detail
         }else{
-            $data = array();
+            //jika $data_kategori tidak kosong, masukkan data yang akan di-parse ke DataTables dalam $data
+            if(!empty($data_kategori)){
+                foreach ($data_kategori as $row){
+                    $data[] = array(
+                        $row->kode_klasifikasi,
+                        $row->nama_kategori,
+                        '<a href="'.base_url('pustaka/index/'.$row->kode_klasifikasi).'"><button type="button" class="btn btn-info"><i class="fa fa-search"></i> Cari Koleksi</button></a>'
+                        
+                    );
+                }
+                //jika kosong, kosongi $data
+            }else{
+                $data = array();
+            }
         }
-        
         //set data json
         $json_data = array(
             'draw' => intval($this->input->post('draw')),
@@ -146,6 +168,122 @@ class Kategori extends CI_Controller{
             $this->load->view('head');
             $this->load->view('FormTambahKategori');
             $this->load->view('foot');
+        }
+    }
+    
+    function editKategori(){
+        //cek otoritas
+        if($this->session->userdata('level') != 'admin'){
+            redirect(base_url('akun'));
+        }
+        //ambil no induk dari segmen ke-3 URI
+        $kode_klasifikasi = $this->uri->segment('3');
+        
+        //pengecekan adanya segmen ke-3 URI, jika tidak ada lempar ke ../Kategori
+        if(empty($kode_klasifikasi)){
+            redirect(base_url('kategori'));
+            //jika ada, cek data POST
+        }else{
+            
+            //pengecekan data post edit kategori, jika ada lakukan edit
+            if (!empty($this->input->post('submit'))){
+                //konfigurasi validasi data masukan
+                $config = array(
+                    array(
+                        'field' => 'nama-kategori',
+                        'label' => 'Nama kategori',
+                        'rules' => 'required',
+                        'errors' => array('required' => '%s tidak boleh kosong'),
+                    ),
+                    array(
+                        'field' => 'kode-klasifikasi',
+                        'label' => 'Kode klasifikasi',
+                        'rules' => 'required|numeric',
+                        'errors' => array(
+                            'required' => '%s tidak boleh kosong',
+                            'numeric' => '%s harus berupa angka'
+                        ),
+                    )
+                );
+                //validasi data masukan
+                $this->form_validation->set_rules($config);
+                
+                //tampilkan info apabila error validasi
+                if($this->form_validation->run() == FALSE){
+                    $this->session->set_flashdata('message',
+                        '<div class="alert alert-danger" role="alert">
+                            <b>Terjadi Kesalahan :</b><br>'.validation_errors().'
+                        </div>');
+                    redirect(current_url());
+                    
+                    //lakukan memasukkan data ke dalam db
+                }else{
+                    $kode_klasifikasi = $this->input->post('kode-klasifikasi');
+                    $data_kategori = array(
+                        'kode_klasifikasi' => $this->input->post('kode-klasifikasi'),
+                        'nama_kategori' => $this->input->post('nama-kategori'),
+                    );
+                    $result = $this->KategoriM->editKategori($data_kategori);
+                    
+                    //jika berhasil memasukkan data ke dalam db
+                    if($result=='0'){
+                        $this->session->set_flashdata('message',
+                            '<div class="alert alert-success" role="alert">Data kategori dengan kode klasifikasi: '
+                            .$kode_klasifikasi.' telah diedit
+                            </div>');
+                            redirect(base_url('kategori'));
+                            //gagal memasukkan data ke dalam db
+                    }else{
+                        $this->session->set_flashdata('message',
+                            '<div class="alert alert-danger" role="alert">
+                                <b>Terjadi kesalahan</b>
+                                , Kode : <strong>'.$result.'</strong>
+                            </div>');
+                        redirect(base_url('kategori'));
+                    }
+                }
+                
+                //jika tidak ada data POST, cukup tampilkan data kategori berdasarkan kode klasifikasi pada URI segmen 3
+            }else{
+                $data['data_kategori'] = $this->KategoriM->getDataKategori($kode_klasifikasi);
+                if(empty($data['data_kategori'])){
+                    redirect(base_url('kategori'));
+                }else{
+                    $this->load->view('head');
+                    $this->load->view('FormEditKategori',$data);
+                    $this->load->view('foot');
+                }
+            }
+        }
+    }
+    
+    function hapusKategori(){
+        //cek otoritas
+        if($this->session->userdata('level') != 'admin'){
+            redirect(base_url('akun'));
+        }
+        //ambil nomor panggil dari POST
+        $kode_klasifikasi = $this->input->post('kode-klasifikasi');
+        
+        //fetch data pustaka dengan kategori terkait
+        $this->load->model('PustakaM');
+        $jumlah_pustaka = $this->PustakaM->getJumlahPustaka($kode_klasifikasi);
+        
+        //jika ada daftar pustaka dengan kategori terkait, jangan hapus dan beri notif ke pengguna
+        if($jumlah_pustaka > 0){
+            $this->session->set_flashdata('message',
+                '<div class="alert alert-danger" role="alert">Terdapat koleksi dengan kode klasifikasi '
+                .$kode_klasifikasi.'
+            </div>');
+                redirect(base_url('kategori'));
+        }else{
+        
+            $this->KategoriM->hapusKategori($kode_klasifikasi);
+            $this->session->set_flashdata('message',
+                '<div class="alert alert-success" role="alert">Data kategori dengan kode klasifikasi '
+                .$kode_klasifikasi.' telah dihapus
+                </div>');
+                redirect(base_url('kategori'));
         }
     }
 }

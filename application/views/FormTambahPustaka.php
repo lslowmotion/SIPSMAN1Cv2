@@ -29,7 +29,7 @@
         			</div>
         			<div class="form-group">
         				<label class="control-label col-md-2" for="kode-klasifikasi">Kode Klasifikasi:</label>
-        				<div class="col-md-10" >
+        				<div class="col-md-6">
         					<select name="kode-klasifikasi" id="kode-klasifikasi" class="form-control">
 								<option selected value="">-- Pilih kategori --</option>
     							<?php 
@@ -38,6 +38,9 @@
     							}
     							?>
 							</select>
+        				</div>
+        				<div class="col-md-4">
+        					<a href="<?php echo base_url('kategori/tambahkategori');?>"><button type="button" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> Tambah Kategori</button></a>
         				</div>
         			</div>
         			<div class="form-group">
@@ -79,16 +82,16 @@
         				</div>
         			</div>
         			<div class="form-group">
-        				<label class="control-label col-md-2" for="jumlah">Jumlah Koleksi yang Dimiliki:</label>
+        				<label class="control-label col-md-2" for="jumlah">Jumlah Koleksi:</label>
         				<div class="col-md-10" >
-        					<input class="form-control num" placeholder="Jumlah eksemplar"  name="jumlah" type="text" autocomplete="off"/>
+        					<input class="form-control num" placeholder="Jumlah koleksi yang dimiliki"  name="jumlah" type="text" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
         				<div class="col-md-2 col-md-offset-2">
         					<input type="hidden" value="submit" name="submit">
         					<input type="hidden" value="upload" name="upload">
-        					<button type="submit" id="submit" class="form-control btn-primary">Simpan</button>
+        					<button type="submit" id="submit" class="form-control btn-primary"><i class="fa fa-plus"></i> Simpan</button>
         				</div>
         			</div>
         			</form>
@@ -108,7 +111,6 @@ $(document).ready( function () {
         var kode = document.getElementById("kode-klasifikasi").value;
         var pengarang = (document.getElementById("pengarang").value).substr(0,3);
         var judul = (document.getElementById("judul").value).substr(0,1);
-       // document.getElementById("nomor-panggil").value = kode;
         document.getElementById("nomor-panggil").value = kode.concat("-",pengarang.concat("-",judul.toLowerCase()));
     }
 });

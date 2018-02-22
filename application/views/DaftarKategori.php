@@ -23,7 +23,7 @@
 								<th width="16%">Kode Klasifikasi</th>
 								<th>Nama Kategori</th>
 								
-								<th width="13%">Menu</th>
+								<th width="24%">Menu</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -77,6 +77,7 @@ $(document).ready( function () {
  		],
  		"order": [[0, 'asc']],
 	});
+	
 });
 </script>
 

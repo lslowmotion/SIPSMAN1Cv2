@@ -21,6 +21,10 @@ class PustakaM extends CI_Model{
     }
     
     function getJudulbyNomorPanggil($data){
+        //cleaning query from XSS
+        $data = $this->security->xss_clean($data);
+        //cleaning query from SQL injection
+        $data = $this->db->escape_str($data);
         //flush
         $this->db->flush_cache();
         //set query

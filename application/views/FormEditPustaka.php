@@ -79,16 +79,16 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-md-2" for="jumlah">Jumlah Koleksi yang Dimiliki:</label>
+				<label class="control-label col-md-2" for="jumlah">Jumlah Koleksi:</label>
 				<div class="col-md-10" >
-					<input value="<?php echo $data_pustaka->jumlah;?>" class="form-control num" placeholder="Jumlah eksemplar"  name="jumlah" type="text" />
+					<input value="<?php echo $data_pustaka->jumlah;?>" class="form-control num" placeholder="Jumlah koleksi yang dimiliki"  name="jumlah" type="text" />
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-md-2 col-md-offset-2">
 					<input type="hidden" value="submit" name="submit">
 					<input type="hidden" value="upload" name="upload">
-					<button type="submit" id="submit" class="form-control btn-primary">Simpan</button>
+					<button type="submit" id="submit" class="form-control btn-primary"><i class="fa fa-save"></i> Simpan</button>
 				</div>
 			</div>
 			</form>

@@ -16,21 +16,21 @@
         			?>
         			<form class="form-horizontal" action="<?php echo base_url('kategori/tambahkategori');?>" method="post">
         			<div class="form-group">
-        				<label class="control-label col-md-3" for="kode-klasifikasi">Kode Klasifikasi DDC:</label>
-        				<div class="col-md-9" >
+        				<label class="control-label col-md-2" for="kode-klasifikasi">Kode Klasifikasi:</label>
+        				<div class="col-md-10" >
         					<input class="form-control numdot" placeholder="Kode klasifikasi DDC (Dewey Decimal Classification)"  name="kode-klasifikasi" type="text" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
-        				<label class="control-label col-md-3" for="no-induk">Nama Kategori:</label>
-        				<div class="col-md-9" >
+        				<label class="control-label col-md-2" for="no-induk">Nama Kategori:</label>
+        				<div class="col-md-10" >
         					<input class="form-control alphaspcomma" placeholder="Nama kategori"  name="nama-kategori" type="text" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
-        				<div class="col-md-2 col-md-offset-3">
+        				<div class="col-md-2 col-md-offset-2">
         					<input type="hidden" value="submit" name="submit">
-        					<button type="submit" id="submit" class="form-control btn-primary">Simpan</button>
+        					<button type="submit" id="submit" class="form-control btn-primary"><i class="fa fa-plus"></i> Simpan</button>
         				</div>
         			</div>
         			</form>

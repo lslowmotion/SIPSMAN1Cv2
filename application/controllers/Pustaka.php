@@ -55,7 +55,7 @@ class Pustaka extends CI_Controller{
             }
         }
 
-        //jika admin, tampilkan tombol delete
+        //jika tidak admin, cukup tampilkan tombol detail
         if($this->session->userdata('level') != 'admin'){
             //jika $data_pustaka tidak kosong, masukkan data yang akan di-parse ke DataTables dalam $data
             if(!empty($data_pustaka)){
@@ -81,7 +81,7 @@ class Pustaka extends CI_Controller{
             }else{
                 $data = array();
             }
-        //jika tidak admin, cukup tampilkan tombol detail
+        //jika admin, tampilkan semua tombol menu
         }else{
             //jika $data_pustaka tidak kosong, masukkan data yang akan di-parse ke DataTables dalam $data
             if(!empty($data_pustaka)){
@@ -305,7 +305,7 @@ class Pustaka extends CI_Controller{
         if(isset($data['data_pustaka'])){
             $kode_klasifikasi = $data['data_pustaka']->kode_klasifikasi;
             $this->load->model('KategoriM');
-            $data['data_kategori'] = $this->KategoriM->getNamaKategori($kode_klasifikasi);
+            $data['data_kategori'] = $this->KategoriM->getDataKategori($kode_klasifikasi);
         }
         
         //tampilkan data pustaka
@@ -319,6 +319,10 @@ class Pustaka extends CI_Controller{
     }
     
     function editPustaka(){
+        //cek otoritas
+        if($this->session->userdata('level') != 'admin'){
+            redirect(base_url('akun'));
+        }
         //ambil no induk dari segmen ke-3 URI
         $nomor_panggil = $this->uri->segment('3');
         
@@ -528,7 +532,7 @@ class Pustaka extends CI_Controller{
                 if(isset($data['data_pustaka'])){
                     $kode_klasifikasi = $data['data_pustaka']->kode_klasifikasi;
                     $this->load->model('KategoriM');
-                    $data['data_kategori'] = $this->KategoriM->getNamaKategori($kode_klasifikasi);
+                    $data['data_kategori'] = $this->KategoriM->getDataKategori($kode_klasifikasi);
                 }
                 
                 //fetch daftar kategori
@@ -548,6 +552,10 @@ class Pustaka extends CI_Controller{
     }
     
     function hapusPustaka(){
+        //cek otoritas
+        if($this->session->userdata('level') != 'admin'){
+            redirect(base_url('akun'));
+        }
         //ambil nomor panggil dari POST
         $nomor_panggil = $this->input->post('nomor-panggil');
         //delete di db
