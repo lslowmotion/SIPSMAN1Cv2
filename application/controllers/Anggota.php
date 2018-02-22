@@ -184,7 +184,7 @@ class Anggota extends CI_Controller{
                             .$nama.
                         '</b><br>No induk: <b>'
                             .$no_induk.
-                        '</b><br>telah ditambahkan </div>');
+                        '</b><br>berhasil ditambahkan </div>');
                     redirect(base_url('anggota/tambahanggota'));
                 //gagal memasukkan data
                 }else{
@@ -262,7 +262,7 @@ class Anggota extends CI_Controller{
                 if($this->form_validation->run() == FALSE){
                     $this->session->set_flashdata('message',
                         '<div class="alert alert-danger" role="alert">
-                            <b>Terjadi Kesalahan :</b>'.validation_errors().'
+                            <b>Terjadi Kesalahan :</b><br>'.validation_errors().'
                         </div>');
                     redirect(current_url());
                     
@@ -281,7 +281,7 @@ class Anggota extends CI_Controller{
                     //jika berhasil memasukkan data ke dalam db
                     if($result=='0'){
                         $this->session->set_flashdata('message',
-                            '<div class="alert alert-success" role="alert">'
+                            '<div class="alert alert-success" role="alert">Data anggota dengan no induk: '
                                 .$no_induk.' telah diedit 
                             </div>');
                         redirect(base_url('anggota/dataanggota/'.$no_induk));
@@ -300,7 +300,7 @@ class Anggota extends CI_Controller{
             }else{
                 $data['data_anggota'] = $this->AnggotaM->getDataAnggota($no_induk);
                 if(empty($data['data_anggota'])){
-                    redirect(base_url('anggota/daftaranggota'));
+                    redirect(base_url('anggota'));
                 }else{
                     $this->load->view('head');
                     $this->load->view('FormEditAnggota',$data);
@@ -316,7 +316,7 @@ class Anggota extends CI_Controller{
         $this->load->model('AkunM');
         $this->AkunM->hapusAkun($no_induk);
         $this->session->set_flashdata('message',
-            '<div class="alert alert-success" role="alert">Data dengan no induk '
+            '<div class="alert alert-success" role="alert">Data anggota dengan no induk '
                 .$no_induk.' telah dihapus
             </div>');
         redirect(base_url('anggota'));

@@ -183,12 +183,6 @@ class Pustaka extends CI_Controller{
                     //'rules' => 'required',
                     'errors' => array('required' => '%s tidak boleh kosong')
                 ),
-                /*array(
-                    'field' => 'sampul',
-                    'label' => 'Sampul',
-                    //'rules' => 'required',
-                    'errors' => array('required' => 'Harus memilih file %s untuk di-upload')
-                ),*/
                 array(
                     'field' => 'jumlah',
                     'label' => 'Jumlah',
@@ -198,7 +192,7 @@ class Pustaka extends CI_Controller{
                         'numeric' => '%s harus berupa angka',
                         'greater_than_equal_to' => "%s harus lebih dari 0"
                     )
-                ),
+                )
             );
             $this->form_validation->set_rules($config);
             
@@ -277,7 +271,7 @@ class Pustaka extends CI_Controller{
                             .$data_pustaka['judul'].
                             '</b><br>Jumlah eksemplar: <b>'
                             .$data_pustaka['jumlah'].
-                            '</b><br>telah ditambahkan
+                            '</b><br>berhasil ditambahkan
                         </div>'
                             );
                         redirect(base_url('pustaka/tambahpustaka'));
@@ -301,6 +295,258 @@ class Pustaka extends CI_Controller{
         }
     }
     
+    function dataPustaka(){
+        //ambil no induk dari segmen ke 3 URI
+        $nomor_panggil = $this->uri->segment('3');
+        //fetch data pustaka
+        $data['data_pustaka'] = $this->PustakaM->getDataPustaka($nomor_panggil);
+        
+        //mengambil kategori berdasarkan kode klasifikasi
+        if(isset($data['data_pustaka'])){
+            $kode_klasifikasi = $data['data_pustaka']->kode_klasifikasi;
+            $this->load->model('KategoriM');
+            $data['data_kategori'] = $this->KategoriM->getNamaKategori($kode_klasifikasi);
+        }
+        
+        //tampilkan data pustaka
+        if(empty($data['data_pustaka'])){
+            redirect(base_url('pustaka'));
+        }else{
+            $this->load->view('head');
+            $this->load->view('DataPustaka',$data);
+            $this->load->view('foot');
+        }
+    }
+    
+    function editPustaka(){
+        //ambil no induk dari segmen ke-3 URI
+        $nomor_panggil = $this->uri->segment('3');
+        
+        //pengecekan adanya segmen ke-3 URI, jika tidak ada lempar ke ../Pustaka
+        if(empty($nomor_panggil)){
+            redirect(base_url('pustaka'));
+            //jika ada, cek data POST
+        }else{
+            
+            //pengecekan data post edit pustaka, jika ada lakukan edit
+            if (!empty($this->input->post('submit'))){
+                //konfigurasi validasi data masukan
+                $config = array(
+                    array(
+                        'field' => 'nomor-panggil',
+                        'label' => 'Nomor panggil',
+                        'rules' => 'required',
+                        'errors' => array('required' => '%s tidak boleh kosong')
+                    ),
+                    array(
+                        'field' => 'isbn',
+                        'label' => 'ISBN',
+                        'rules' => 'numeric',
+                        'errors' => array('numeric' => '%s harus berupa angka')
+                    ),
+                    array(
+                        'field' => 'kode-klasifikasi',
+                        'label' => 'Kode klasifikasi',
+                        'rules' => 'required',
+                        'errors' => array('required' => '%s tidak boleh kosong')
+                    ),
+                    array(
+                        'field' => 'judul',
+                        'label' => 'Judul',
+                        'rules' => 'required',
+                        'errors' => array('required' => '%s tidak boleh kosong')
+                    ),
+                    array(
+                        'field' => 'pengarang',
+                        'label' => 'Pengarang',
+                        //'rules' => 'required',
+                        'errors' => array('required' => '%s tidak boleh kosong')
+                    ),
+                    array(
+                        'field' => 'penerbit',
+                        'label' => 'Penerbit',
+                        //'rules' => 'required',
+                        'errors' => array('required' => '%s tidak boleh kosong')
+                    ),
+                    array(
+                        'field' => 'kota-terbit',
+                        'label' => 'Penerbit',
+                        //'rules' => 'required',
+                        'errors' => array('required' => '%s tidak boleh kosong')
+                    ),
+                    array(
+                        'field' => 'tahun-terbit',
+                        'label' => 'Tahun terbit',
+                        'rules' => 'required|numeric|max_length[4]',
+                        'errors' => array(
+                            'required' => '%s tidak boleh kosong',
+                            'numeric' => '%s harus berupa 4 digit angka',
+                            'max_length' => '%s harus berupa 4 digit angka'
+                        )
+                    ),
+                    array(
+                        'field' => 'penerbit',
+                        'label' => 'Penerbit',
+                        //'rules' => 'required',
+                        'errors' => array('required' => '%s tidak boleh kosong')
+                    ),
+                    array(
+                        'field' => 'jumlah',
+                        'label' => 'Jumlah',
+                        'rules' => 'required|numeric|greater_than_equal_to[1]',
+                        'errors' => array(
+                            'required' => '%s tidak boleh kosong',
+                            'numeric' => '%s harus berupa angka',
+                            'greater_than_equal_to' => "%s harus lebih dari 0"
+                        )
+                    ),
+                );
+                //validasi data masukan
+                $this->form_validation->set_rules($config);
+                
+                //tampilkan info apabila error validasi
+                if($this->form_validation->run() == FALSE){
+                    $this->session->set_flashdata('message',
+                        '<div class="alert alert-danger" role="alert">
+                            <b>Terjadi Kesalahan :</b>'.validation_errors().'
+                        </div>');
+                    redirect(current_url());
+                    
+                //lakukan memasukkan data ke dalam db
+                }else{
+                    //nomor_panggil dari POST nomor-panggil
+                    //$nomor_panggil = $this->input->post('nomor-panggil');
+                    
+                    //konfigurasi nama file sampul
+                    $nama_file = str_replace('.', '_', $nomor_panggil);
+                    
+                    //konfigurasi upload sampul
+                    $upload_config = array(
+                        'upload_path' => './assets/cover',
+                        'allowed_types' => 'gif|jpg|jpeg|png|bmp',
+                        'file_name' => $nama_file
+                    );
+                    
+                    //upload sampul
+                    $this->load->library('upload',$upload_config);
+                    $upload_sampul = 'sampul';
+                    
+                    //jika tidak/gagal upload, tampilkan eksepsi error
+                    if (!$this->upload->do_upload($upload_sampul)){
+                        $error_upload = $this->upload->display_errors();
+                        $this->session->set_flashdata('message',
+                            '<div class="alert alert-warning" role="alert">
+                                Gagal upload sampul atau tidak memilih sampul baru. Gambar sampul tetap menggunakan gambar sampul lama.
+                                <br>Data pustaka dengan nomor panggil: 
+                                <strong>'.$nomor_panggil.'</strong> telah diedit
+                            </div>'
+                        );
+                        
+                        //mengeset link upload sama dengan yang sudah ada
+                        $link_upload = $this->PustakaM->getDataPustaka($nomor_panggil)->sampul;
+                        
+                        //jika lolos validasi, data POST dimasukkan ke array untuk dimasukkan db
+                        $data_pustaka = array(
+                            'nomor_panggil' => $nomor_panggil,
+                            'isbn' => $this->input->post('isbn'),
+                            'kode_klasifikasi' => $this->input->post('kode-klasifikasi'),
+                            'judul' => $this->input->post('judul'),
+                            'pengarang' => $this->input->post('pengarang'),
+                            'penerbit' => $this->input->post('penerbit'),
+                            'kota_terbit' => $this->input->post('kota-terbit'),
+                            'tahun_terbit' => $this->input->post('tahun-terbit'),
+                            'sampul' => $link_upload,
+                            'jumlah' => $this->input->post('jumlah')
+                        );
+                        $result = $this->PustakaM->editPustaka($data_pustaka);
+                        //jika berhasil memasukkan data ke dalam db
+                        if($result=='0'){
+                            /* $this->session->set_flashdata('message',
+                                '<div class="alert alert-success" role="alert">'
+                                .$nomor_panggil.' telah diedit
+                            </div>'); */
+                                redirect(base_url('pustaka/datapustaka/'.$nomor_panggil));
+                                //gagal memasukkan data ke dalam db
+                        }else{
+                            $this->session->set_flashdata('message',
+                                '<div class="alert alert-danger" role="alert">
+                                    <b>Terjadi kesalahan</b>
+                                    , Kode : <strong>'.$result.'</strong>
+                                </div>');
+                            redirect(current_url());
+                        }
+                    }
+                    //jika berhasil upload, masukkan data ke db
+                    else
+                    {
+                        $data['data_pustaka'] = $this->PustakaM->getDataPustaka($nomor_panggil);
+                        $sampul_path = '/'.$data['data_pustaka']->sampul;
+                        
+                        //hapus sampul dari direktori
+                        unlink('./'.$sampul_path);
+                        $link_upload = 'assets/cover/'.$this->upload->data('file_name');
+                        
+                        
+                        //jika lolos validasi, data POST dimasukkan ke array untuk dimasukkan db
+                        $data_pustaka = array(
+                            'nomor_panggil' => $nomor_panggil,
+                            'isbn' => $this->input->post('isbn'),
+                            'kode_klasifikasi' => $this->input->post('kode-klasifikasi'),
+                            'judul' => $this->input->post('judul'),
+                            'pengarang' => $this->input->post('pengarang'),
+                            'penerbit' => $this->input->post('penerbit'),
+                            'kota_terbit' => $this->input->post('kota-terbit'),
+                            'tahun_terbit' => $this->input->post('tahun-terbit'),
+                            'sampul' => $link_upload,
+                            'jumlah' => $this->input->post('jumlah')
+                        );
+                        $result = $this->PustakaM->editPustaka($data_pustaka);
+                        //jika berhasil memasukkan data ke dalam db
+                        if($result=='0'){
+                            $this->session->set_flashdata('message',
+                                '<div class="alert alert-success" role="alert">Data pustaka dengan nomor panggil: '
+                                .$nomor_panggil.' telah diedit
+                            </div>');
+                                redirect(base_url('pustaka/datapustaka/'.$nomor_panggil));
+                                //gagal memasukkan data ke dalam db
+                        }else{
+                            $this->session->set_flashdata('message',
+                                '<div class="alert alert-danger" role="alert">
+                                    <b>Terjadi kesalahan</b>
+                                    , Kode : <strong>'.$result.'</strong>
+                                </div>');
+                            redirect(current_url());
+                        }
+                    }
+                }
+                
+            //jika tidak ada data POST, cukup tampilkan data pustaka berdasarkan no induk pada URI segmen 3
+            }else{
+                $data['data_pustaka'] = $this->PustakaM->getDataPustaka($nomor_panggil);
+                
+                //mengambil kategori dari data yang akan diedit berdasarkan kode klasifikasi
+                if(isset($data['data_pustaka'])){
+                    $kode_klasifikasi = $data['data_pustaka']->kode_klasifikasi;
+                    $this->load->model('KategoriM');
+                    $data['data_kategori'] = $this->KategoriM->getNamaKategori($kode_klasifikasi);
+                }
+                
+                //fetch daftar kategori
+                $this->load->model('KategoriM');
+                $data['daftar_kategori'] = $this->KategoriM->getDaftarKategori(null,null,'kode_klasifikasi','asc');
+                
+                
+                if(empty($data['data_pustaka'])){
+                    redirect(base_url('pustaka'));
+                }else{
+                    $this->load->view('head');
+                    $this->load->view('FormEditPustaka',$data);
+                    $this->load->view('foot');
+                }
+            }
+        }
+    }
+    
     function hapusPustaka(){
         //ambil nomor panggil dari POST
         $nomor_panggil = $this->input->post('nomor-panggil');
@@ -308,7 +554,7 @@ class Pustaka extends CI_Controller{
         $this->PustakaM->hapusPustaka($nomor_panggil);
         //kirim notif ke user
         $this->session->set_flashdata('message',
-            '<div class="alert alert-success" role="alert">Pustaka dengan nomor panggil '
+            '<div class="alert alert-success" role="alert">Data pustaka dengan nomor panggil '
             .$nomor_panggil.' telah dihapus
             </div>');
             redirect(base_url('pustaka'));

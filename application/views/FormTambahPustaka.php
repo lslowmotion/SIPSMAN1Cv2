@@ -59,19 +59,19 @@
         				</div>
         			</div>
         			<div class="form-group">
-        				<label class="control-label col-md-2" for="pengarang">Kota Terbit:</label>
+        				<label class="control-label col-md-2" for="kota-terbit">Kota Terbit:</label>
         				<div class="col-md-10" >
         					<input class="form-control nama" placeholder="Kota terbit"  name="kota-terbit" type="text" />
         				</div>
         			</div>
         			<div class="form-group">
-        				<label class="control-label col-md-2" for="pengarang">Tahun Terbit:</label>
+        				<label class="control-label col-md-2" for="tahun-terbit">Tahun Terbit:</label>
         				<div class="col-md-10" >
         					<input class="form-control num" placeholder="Tahun terbit"  name="tahun-terbit" type="text" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
-        				<label class="control-label col-md-2" for="sampul">Sampul:</label>
+        				<label class="control-label col-md-2" for="sampul">Gambar Sampul:</label>
         				<div class="col-md-10" >
  							<input type="file" class="form-control-file" name="sampul" id="sampul" aria-describedby="sampulHelp">
     						<small id="sampulHelp" class="form-text text-muted">FIle sampul harus berupa gambar (jpg/jpeg/png/bmp/gif).</small>
@@ -79,7 +79,7 @@
         				</div>
         			</div>
         			<div class="form-group">
-        				<label class="control-label col-md-2" for="jumlah">Jumlah:</label>
+        				<label class="control-label col-md-2" for="jumlah">Jumlah Koleksi yang Dimiliki:</label>
         				<div class="col-md-10" >
         					<input class="form-control num" placeholder="Jumlah eksemplar"  name="jumlah" type="text" autocomplete="off"/>
         				</div>

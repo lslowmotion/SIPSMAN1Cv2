@@ -131,6 +131,38 @@ class PustakaM extends CI_Model{
         
     }
     
+    function getDataPustaka($data){
+        //cleaning query from XSS
+        $data = $this->security->xss_clean($data);
+        //cleaning query from SQL injection
+        $data = $this->db->escape_str($data);
+        //flush
+        $this->db->flush_cache();
+        //set query
+        $this->db->from('pustaka');
+        $this->db->where('nomor_panggil',$data);
+        //execute query
+        $query = $this->db->get();
+        return $query->row();
+    }
+    
+    function editPustaka($data){
+        //cleaning query from XSS
+        $data = $this->security->xss_clean($data);
+        //cleaning query from SQL injection
+        $data = $this->db->escape_str($data);
+        //flush
+        $this->db->flush_cache();
+        $this->db->where('nomor_panggil',$data['nomor_panggil']);
+        if(!$this->db->update('pustaka',$data)){
+            $query=$this->db->error();
+            return $query['code'];
+        }else {
+            $query='0';
+            return $query;
+        }
+    }
+    
     function hapusPustaka($nomor_panggil){
         //cleaning query from XSS
         $nomor_panggil = $this->security->xss_clean($nomor_panggil);

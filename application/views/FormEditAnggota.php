@@ -4,7 +4,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-12">
-					<h1 class="page-header">Tambah Anggota</h1>
+					<h1 class="page-header">Edit Anggota</h1>
 				</div>
 			</div>
 			<?php 

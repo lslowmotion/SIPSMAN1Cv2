@@ -72,6 +72,21 @@ class KategoriM extends CI_Model{
         
     }
     
+    function getNamaKategori($data){
+        //cleaning query from XSS
+        $data = $this->security->xss_clean($data);
+        //cleaning query from SQL injection
+        $data = $this->db->escape_str($data);
+        //flush
+        $this->db->flush_cache();
+        //set query
+        $this->db->from('kategori');
+        $this->db->where('kode_klasifikasi',$data);
+        //execute query
+        $query = $this->db->get();
+        return $query->row();
+    }
+    
     function tambahKategori($data){
         //cleaning query from XSS
         $data = $this->security->xss_clean($data);
