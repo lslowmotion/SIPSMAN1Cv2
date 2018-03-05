@@ -75,12 +75,12 @@
     					<tr>
     						<td>Jumlah Koleksi Pustaka</td>
     						<td align="right">:</td>
-    						<td><?php echo $data_pustaka->jumlah;?> eksemplar</td>
+    						<td><?php echo $data_pustaka->jumlah_pustaka;?> eksemplar</td>
     					</tr>
     					<tr>
     						<td>Koleksi Dipinjam</td>
     						<td align="right">:</td>
-    						<td><?php echo $data_pustaka->dipinjam;?> eksemplar</td>
+    						<td><?php echo $data_pustaka->jumlah_dipinjam;?> eksemplar</td>
     					</tr>
     					<tr>
     						<td>

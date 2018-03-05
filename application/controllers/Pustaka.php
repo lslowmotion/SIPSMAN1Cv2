@@ -71,7 +71,7 @@ class Pustaka extends CI_Controller{
                         .base_url($row->sampul).
                         '" alt="'.$row->judul.'" style="width:80px;"></a>',
                         
-                        $row->jumlah - $row->dipinjam.' eksemplar',
+                        $row->jumlah_pustaka - $row->jumlah_dipinjam.' eksemplar',
                         
                         '<a href="'.base_url('pustaka/datapustaka/'.$row->nomor_panggil).'"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail</button></a>'
                         
@@ -97,7 +97,7 @@ class Pustaka extends CI_Controller{
                         .base_url($row->sampul).
                         '" alt="'.$row->judul.'" style="width:80px;"></a>',
                         
-                        $row->jumlah - $row->dipinjam.' eksemplar',
+                        $row->jumlah_pustaka - $row->jumlah_dipinjam.' eksemplar',
                         
                         '<a href="'.base_url('pustaka/datapustaka/'.$row->nomor_panggil).'"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail</button></a>
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal" data-nomor-panggil="'.$row->nomor_panggil.'" data-judul="'.$row->judul.'"><i class="fa fa-trash"></i> Hapus</button>'
@@ -256,7 +256,7 @@ class Pustaka extends CI_Controller{
                         'kota_terbit' => $this->input->post('kota-terbit'),
                         'tahun_terbit' => $this->input->post('tahun-terbit'),
                         'sampul' => $link_upload,
-                        'jumlah' => $this->input->post('jumlah')
+                        'jumlah_pustaka' => $this->input->post('jumlah')
                     );
                     //insert array ke db, $result menerima kode eksepsi
                     $result = $this->PustakaM->tambahPustaka($data_pustaka);
@@ -270,7 +270,7 @@ class Pustaka extends CI_Controller{
                             '</b><br>Judul: <b>'
                             .$data_pustaka['judul'].
                             '</b><br>Jumlah eksemplar: <b>'
-                            .$data_pustaka['jumlah'].
+                            .$data_pustaka['jumlah_pustaka'].
                             '</b><br>berhasil ditambahkan
                         </div>'
                             );
@@ -460,7 +460,7 @@ class Pustaka extends CI_Controller{
                             'kota_terbit' => $this->input->post('kota-terbit'),
                             'tahun_terbit' => $this->input->post('tahun-terbit'),
                             'sampul' => $link_upload,
-                            'jumlah' => $this->input->post('jumlah')
+                            'jumlah_pustaka' => $this->input->post('jumlah')
                         );
                         $result = $this->PustakaM->editPustaka($data_pustaka);
                         //jika berhasil memasukkan data ke dalam db
@@ -502,7 +502,7 @@ class Pustaka extends CI_Controller{
                             'kota_terbit' => $this->input->post('kota-terbit'),
                             'tahun_terbit' => $this->input->post('tahun-terbit'),
                             'sampul' => $link_upload,
-                            'jumlah' => $this->input->post('jumlah')
+                            'jumlah_pustaka' => $this->input->post('jumlah')
                         );
                         $result = $this->PustakaM->editPustaka($data_pustaka);
                         //jika berhasil memasukkan data ke dalam db

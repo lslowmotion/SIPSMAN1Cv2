@@ -81,7 +81,7 @@
 			<div class="form-group">
 				<label class="control-label col-md-2" for="jumlah">Jumlah Koleksi:</label>
 				<div class="col-md-10" >
-					<input value="<?php echo $data_pustaka->jumlah;?>" class="form-control num" placeholder="Jumlah koleksi yang dimiliki"  name="jumlah" type="text" />
+					<input value="<?php echo $data_pustaka->jumlah_pustaka;?>" class="form-control num" placeholder="Jumlah koleksi yang dimiliki"  name="jumlah" type="text" />
 				</div>
 			</div>
 			<div class="form-group">

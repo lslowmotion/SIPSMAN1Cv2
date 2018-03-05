@@ -73,7 +73,7 @@ class PustakaM extends CI_Model{
         $this->db->flush_cache();
   
         //set query
-        $this->db->select('nomor_panggil,judul,pengarang,sampul,jumlah,dipinjam');
+        $this->db->select('nomor_panggil,judul,pengarang,sampul,jumlah_pustaka,jumlah_dipinjam');
         //filter kode klasifikasi
         if(!empty($kode)){
             $this->db->where('kode_klasifikasi',$kode);
@@ -109,7 +109,7 @@ class PustakaM extends CI_Model{
         
         //set query
         $this->db->group_start();
-        $this->db->select('nomor_panggil,judul,pengarang,sampul,jumlah,dipinjam');
+        $this->db->select('nomor_panggil,judul,pengarang,sampul,jumlah_pustaka,jumlah_dipinjam');
         $this->db->from('pustaka');
         $this->db->like('nomor_panggil',$search);
         $this->db->or_like('judul',$search);
