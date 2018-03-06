@@ -5,7 +5,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-12">
-					<h1 class="page-header">Kelola Peminjaman</h1>
+					<h1 class="page-header">Status Peminjaman</h1>
 				</div>
 			</div>
 			<?php 
@@ -35,7 +35,7 @@
 						<tfoot>
 					<tr>
 					<td>
-					<a href="<?php echo base_url('anggota/tambahanggota');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah Anggota</button></a>
+					<a href="<?php echo base_url('peminjaman/pinjam');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Pinjam</button></a>
 					</td>
 					<td></td>
 					<td></td>
@@ -69,7 +69,7 @@ $(document).ready( function () {
 		"processing": true,
         "serverSide": true,
         "ajax":{
-    	     "url": "<?php echo base_url('peminjaman/daftarpeminjaman') ?>",
+    	     "url": "<?php echo base_url('peminjaman/daftarpeminjaman/'.$this->uri->segment('3')); ?>",
     	     "dataType": "json",
     	     "type": "POST",
      	},
@@ -82,7 +82,7 @@ $(document).ready( function () {
      		{"name": "denda", "orderable": true},
      		{"name": "menu", "orderable": false}
  		],
- 		"order": [[0, 'asc']],
+ 		"order": [[0, 'desc']],
 	});
 	
 });

@@ -126,14 +126,16 @@
                         <li>
                             <a href="#"><i class="fa fa-calendar fa-fw"></i> Peminjaman<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                            	<?php if($this->session->userdata('level')=='admin'){ ?>
+                            	<?php if($this->session->userdata('level') == 'admin'){ ?>
                                 <li>
-                                    <a href="#">Kelola Peminjaman</a>
+                                    <a href="<?php echo base_url('peminjaman');?>">Status Peminjaman</a>
+                                </li>
+                                <?php }else{?>
+                                <li>
+                                    <a href="<?php echo base_url('peminjaman/index/'.$this->session->userdata('id'));?>">Status Peminjaman</a>
                                 </li>
                                 <?php }?>
-                                <li>
-                                    <a href="#">Status Peminjaman</a>
-                                </li>
+                                
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
