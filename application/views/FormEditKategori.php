@@ -70,10 +70,7 @@
 <!-- /.Modal -->
 <script src="<?php echo base_url('assets/js/killnonalphanum.js');?>"></script>
 <script>
-/* $('#submit').on('click', function () {
-    $(this).button('loading')
-   
-  }) */
+
 $(document).ready( function () {
   	$('#hapusModal').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget) // Button that triggered the modal

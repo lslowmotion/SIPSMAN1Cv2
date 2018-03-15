@@ -229,7 +229,7 @@ class Kategori extends CI_Controller{
                     if($result=='0'){
                         $this->session->set_flashdata('message',
                             '<div class="alert alert-success" role="alert">Data kategori dengan kode klasifikasi: '
-                                .$kode_klasifikasi.' telah diedit
+                                .$kode_klasifikasi.' berhasil diedit
                             </div>');
                         redirect(base_url('kategori'));
                     //gagal memasukkan data ke dalam db
@@ -272,8 +272,8 @@ class Kategori extends CI_Controller{
         //jika ada daftar pustaka dengan kategori terkait, jangan hapus dan beri notif ke pengguna
         if($jumlah_pustaka > 0){
             $this->session->set_flashdata('message',
-                '<div class="alert alert-danger" role="alert">Terdapat koleksi dengan kode klasifikasi '
-                .$kode_klasifikasi.'
+                '<div class="alert alert-danger" role="alert">Gagal menghapus. Terdapat koleksi pustaka dengan kode klasifikasi '
+                .$kode_klasifikasi.'.
             </div>');
                 redirect(base_url('kategori'));
         }else{
@@ -281,7 +281,7 @@ class Kategori extends CI_Controller{
             $this->KategoriM->hapusKategori($kode_klasifikasi);
             $this->session->set_flashdata('message',
                 '<div class="alert alert-success" role="alert">Data kategori dengan kode klasifikasi '
-                .$kode_klasifikasi.' telah dihapus
+                .$kode_klasifikasi.' berhasil dihapus
                 </div>');
                 redirect(base_url('kategori'));
         }

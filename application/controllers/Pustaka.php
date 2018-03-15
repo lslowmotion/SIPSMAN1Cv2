@@ -185,7 +185,7 @@ class Pustaka extends CI_Controller{
                 ),
                 array(
                     'field' => 'jumlah',
-                    'label' => 'Jumlah',
+                    'label' => 'Jumlah koleksi pustaka',
                     'rules' => 'required|numeric|greater_than_equal_to[1]',
                     'errors' => array(
                         'required' => '%s tidak boleh kosong',
@@ -397,12 +397,12 @@ class Pustaka extends CI_Controller{
                     ),
                     array(
                         'field' => 'jumlah',
-                        'label' => 'Jumlah',
+                        'label' => 'Jumlah koleksi pustaka',
                         'rules' => 'required|numeric|greater_than_equal_to['.$jumlah_dipinjam.']',
                         'errors' => array(
                             'required' => '%s tidak boleh kosong',
                             'numeric' => '%s harus berupa angka',
-                            'greater_than_equal_to' => "%s harus lebih dari nol atau jumlah koleksi yang sedang dipinjam"
+                            'greater_than_equal_to' => "%s harus lebih dari 0 dan tidak boleh lebih sedikit dari jumlah koleksi yang sedang dipinjam"
                         )
                     ),
                 );
@@ -447,7 +447,7 @@ class Pustaka extends CI_Controller{
                             '<div class="alert alert-warning" role="alert">
                                 Gagal upload sampul atau tidak memilih sampul baru. Gambar sampul tetap menggunakan gambar sampul lama.
                                 <br>Data pustaka dengan nomor panggil:
-                                <strong>'.$nomor_panggil.'</strong> telah diedit
+                                <strong>'.$nomor_panggil.'</strong> berhasil diedit
                             </div>'
                         );
                     }else{
@@ -461,7 +461,7 @@ class Pustaka extends CI_Controller{
                         
                         $this->session->set_flashdata('message',
                             '<div class="alert alert-success" role="alert">Data pustaka dengan nomor panggil: '
-                            .$nomor_panggil.' telah diedit
+                            .$nomor_panggil.' berhasil diedit
                         </div>');
                     }
                     
@@ -487,7 +487,7 @@ class Pustaka extends CI_Controller{
                         $this->session->set_flashdata('message',
                             '<div class="alert alert-danger" role="alert">
                                 <b>Terjadi kesalahan dalam memasukkan perubahan data pustaka.</b>
-                                , Kode : <strong>'.$result.'</strong>
+                                , Kode: <strong>'.$result.'</strong>
                             </div>');
                         redirect(current_url());
                     }
@@ -533,7 +533,7 @@ class Pustaka extends CI_Controller{
         //kirim notif ke user
         $this->session->set_flashdata('message',
             '<div class="alert alert-success" role="alert">Data pustaka dengan nomor panggil '
-            .$nomor_panggil.' telah dihapus
+            .$nomor_panggil.' berhasil dihapus
             </div>');
             redirect(base_url('pustaka'));
     }

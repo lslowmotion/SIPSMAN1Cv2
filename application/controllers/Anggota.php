@@ -282,7 +282,7 @@ class Anggota extends CI_Controller{
                     if($result=='0'){
                         $this->session->set_flashdata('message',
                             '<div class="alert alert-success" role="alert">Data anggota dengan no induk: '
-                                .$no_induk.' telah diedit 
+                                .$no_induk.' berhasil diedit 
                             </div>');
                         redirect(base_url('anggota/dataanggota/'.$no_induk));
                     //gagal memasukkan data ke dalam db
@@ -317,7 +317,7 @@ class Anggota extends CI_Controller{
         $this->AkunM->hapusAkun($no_induk);
         $this->session->set_flashdata('message',
             '<div class="alert alert-success" role="alert">Data anggota dengan no induk '
-                .$no_induk.' telah dihapus
+                .$no_induk.' berhasil dihapus
             </div>');
         redirect(base_url('anggota'));
     }
