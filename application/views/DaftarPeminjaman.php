@@ -33,17 +33,19 @@
 						
 						</tbody>
 						<tfoot>
-					<tr>
-					<td>
-					<a href="<?php echo base_url('peminjaman/pinjam');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Pinjam</button></a>
-					</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					</tr>
-					</tfoot>
+        					<tr>
+            					<td>
+            						<?php if($this->session->userdata('level') == 'admin'){?>
+            						<a href="<?php echo base_url('peminjaman/pinjam');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Pinjam</button></a>
+            						<?php }?>
+            					</td>
+            					<td></td>
+            					<td></td>
+            					<td></td>
+            					<td></td>
+            					<td></td>
+        					</tr>
+						</tfoot>
 					</table>
 					
 					
@@ -79,7 +81,7 @@ $(document).ready( function () {
      		{"name": "no-induk", "orderable": true},
      		{"name": "tanggal-pinjam", "orderable": true},
      		{"name": "tanggal-kembali", "orderable": true},
-     		{"name": "denda", "orderable": true},
+     		{"name": "denda", "orderable": false},
      		{"name": "menu", "orderable": false}
  		],
  		"order": [[0, 'desc']],

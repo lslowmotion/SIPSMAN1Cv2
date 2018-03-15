@@ -262,7 +262,7 @@ class Anggota extends CI_Controller{
                 if($this->form_validation->run() == FALSE){
                     $this->session->set_flashdata('message',
                         '<div class="alert alert-danger" role="alert">
-                            <b>Terjadi Kesalahan :</b><br>'.validation_errors().'
+                            <b>Terjadi Kesalahan:</b><br>'.validation_errors().'
                         </div>');
                     redirect(current_url());
                     
@@ -289,7 +289,7 @@ class Anggota extends CI_Controller{
                     }else{
                         $this->session->set_flashdata('message',
                             '<div class="alert alert-danger" role="alert">
-                                <b>Terjadi kesalahan</b>
+                                <b>Terjadi kesalahan dalam memasukkan perubahan data anggota.</b>
                                 , Kode : <strong>'.$result.'</strong>
                             </div>');
                         redirect(current_url());

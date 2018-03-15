@@ -130,6 +130,9 @@
                                 <li>
                                     <a href="<?php echo base_url('peminjaman');?>">Status Peminjaman</a>
                                 </li>
+                                <li>
+                                    <a href="<?php echo base_url('peminjaman/pinjam');?>">Pinjam</a>
+                                </li>
                                 <?php }else{?>
                                 <li>
                                     <a href="<?php echo base_url('peminjaman/index/'.$this->session->userdata('id'));?>">Status Peminjaman</a>

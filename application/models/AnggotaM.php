@@ -26,7 +26,7 @@ class AnggotaM extends CI_Model{
         //insert data ke db 'anggota'
         if(!$this->db->insert('anggota',$data)){
             //throw exception if failed
-            $query=$this->db->error();
+            $query = $this->db->error();
             return $query['code'];
         }else {
             //success

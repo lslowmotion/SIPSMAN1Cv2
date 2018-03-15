@@ -212,7 +212,7 @@ class Kategori extends CI_Controller{
                 if($this->form_validation->run() == FALSE){
                     $this->session->set_flashdata('message',
                         '<div class="alert alert-danger" role="alert">
-                            <b>Terjadi Kesalahan :</b><br>'.validation_errors().'
+                            <b>Terjadi Kesalahan:</b><br>'.validation_errors().'
                         </div>');
                     redirect(current_url());
                     
@@ -229,15 +229,15 @@ class Kategori extends CI_Controller{
                     if($result=='0'){
                         $this->session->set_flashdata('message',
                             '<div class="alert alert-success" role="alert">Data kategori dengan kode klasifikasi: '
-                            .$kode_klasifikasi.' telah diedit
+                                .$kode_klasifikasi.' telah diedit
                             </div>');
-                            redirect(base_url('kategori'));
-                            //gagal memasukkan data ke dalam db
+                        redirect(base_url('kategori'));
+                    //gagal memasukkan data ke dalam db
                     }else{
                         $this->session->set_flashdata('message',
                             '<div class="alert alert-danger" role="alert">
-                                <b>Terjadi kesalahan</b>
-                                , Kode : <strong>'.$result.'</strong>
+                                <b>Terjadi kesalahan dalam memasukkan data perubahan kategori</b>
+                                , Kode: <strong>'.$result.'</strong>
                             </div>');
                         redirect(base_url('kategori'));
                     }

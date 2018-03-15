@@ -93,4 +93,70 @@ class PeminjamanM extends CI_Model{
         return $data;
         
     }
+    
+    function getAturanPeminjaman($id){
+        //cleaning query from XSS
+        $id = $this->security->xss_clean($id);
+        //cleaning query from SQL injection
+        $id = $this->db->escape_str($id);
+        //flush
+        $this->db->flush_cache();
+        //set query
+        $this->db->where('id_aturan',$id);
+        $this->db->from('aturan');
+        $query = $this->db->get();
+        return $query->row();
+    }
+    
+    function getDataPeminjaman($data){
+        //cleaning query from XSS
+        $data = $this->security->xss_clean($data);
+        //cleaning query from SQL injection
+        $data = $this->db->escape_str($data);
+        //flush
+        $this->db->flush_cache();
+        //set query
+        $this->db->from('peminjaman');
+        $this->db->where('kode_transaksi',$data);
+        //execute query
+        $query = $this->db->get();
+        return $query->row();
+    }
+    
+    function kembaliPeminjaman($data){
+        //cleaning query from XSS
+        $data = $this->security->xss_clean($data);
+        //cleaning query from SQL injection
+        $data = $this->db->escape_str($data);
+        //flush
+        $this->db->flush_cache();
+        //set tanggal kembali
+        $now = date('d M Y');
+        $data_update = array('tanggal_kembali' => $now);
+        //set query
+        $this->db->from('peminjaman');
+        $this->db->where('kode_transaksi',$data);
+        
+        //execute query
+        $query = $this->db->update('peminjaman',$data_update);
+    }
+    
+    function pinjamPeminjaman($data){
+        //cleaning query from XSS
+        $data = $this->security->xss_clean($data);
+        //cleaning query from SQL injection
+        $data = $this->db->escape_str($data);
+        //flush
+        $this->db->flush_cache();
+        //insert data ke db 'peminjaman'
+        if(!$this->db->insert('peminjaman',$data)){
+            //throw exception if failed
+            $query = $this->db->error();
+            return $query['code'];
+        }else {
+            //success
+            $query='0';
+            return $query;
+        }
+    }
 }
