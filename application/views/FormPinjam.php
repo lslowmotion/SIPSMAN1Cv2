@@ -4,7 +4,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-12">
-					<h1 class="page-header">Pinjam</h1>
+					<h1 class="page-header">Tambah Peminjaman</h1>
 				</div>
 			</div>
 			<div class="row">
@@ -57,9 +57,9 @@
         				</div>
         			</div>
         			<div class="form-group">
-        				<div class="col-md-2 col-md-offset-3">
+        				<div class="col-md-offset-3 col-md-3">
         					<input type="hidden" value="submit" name="submit">
-        					<button type="submit" id="submit" class="form-control btn-primary"><i class="fa fa-plus"></i> Simpan</button>
+        					<button type="submit" id="submit" class="form-control btn-primary"><i class="fa fa-exchange"></i> Proses transaksi peminjaman</button>
         				</div>
         			</div>
         			</form>
