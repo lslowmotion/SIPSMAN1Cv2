@@ -18,7 +18,7 @@
         			<div class="form-group">
         				<label class="control-label col-md-2" for="kode-klasifikasi">Kode Klasifikasi:</label>
         				<div class="col-md-10" >
-        					<input class="form-control numdot" placeholder="Kode klasifikasi DDC (Dewey Decimal Classification)"  name="kode-klasifikasi" type="text" autocomplete="off"/>
+        					<input class="form-control numdot" placeholder="Kode klasifikasi DDC (Dewey Decimal Classification)"  name="kode-klasifikasi" type="text" autocomplete="off" autofocus/>
         				</div>
         			</div>
         			<div class="form-group">
@@ -40,9 +40,3 @@
 	</div>
 </body>
 <script src="<?php echo base_url('assets/js/killnonalphanum.js');?>"></script>
-<script>
-/* $('#submit').on('click', function () {
-    $(this).button('loading')
-   
-  }) */
-</script>

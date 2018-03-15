@@ -18,31 +18,31 @@
         			<div class="form-group">
         				<label class="control-label col-md-2" for="nama">Nama:</label>
         				<div class="col-md-10" >
-        					<input class="form-control nama" placeholder="Nama"  name="nama" type="text" autocomplete="off"/>
+        					<input class="form-control nama" placeholder="Nama lengkap"  name="nama" type="text" autocomplete="off" autofocus/>
         				</div>
         			</div>
         			<div class="form-group">
         				<label class="control-label col-md-2" for="no-induk">No Induk:</label>
         				<div class="col-md-10" >
-        					<input class="form-control num" placeholder="No Induk"  name="no-induk" type="text" autocomplete="off"/>
+        					<input class="form-control num" placeholder="Nomor induk (NIP/NIS)"  name="no-induk" type="text" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
         				<label class="control-label col-md-2" for="alamat">Alamat:</label>
         				<div class="col-md-10" >
-        					<input class="form-control alphanumspsy" placeholder="Alamat"  name="alamat" type="text" autocomplete="off"/>
+        					<input class="form-control alphanumspsy" placeholder="Alamat rumah"  name="alamat" type="text" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
         				<label class="control-label col-md-2" for="email">Email:</label>
         				<div class="col-md-10" >
-        					<input class="form-control" placeholder="Email"  name="email" type="email" autocomplete="off"/>
+        					<input class="form-control" placeholder="Alamat email"  name="email" type="email" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
         				<label class="control-label col-md-2" for="no-telepon">No Telepon:</label>
         				<div class="col-md-10" >
-        					<input class="form-control num" placeholder="No Telepon"  name="no-telepon" type="text" autocomplete="off"/>
+        					<input class="form-control num" placeholder="Nomor telepon"  name="no-telepon" type="text" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
@@ -58,9 +58,3 @@
 	</div>
 </body>
 <script src="<?php echo base_url('assets/js/killnonalphanum.js');?>"></script>
-<script>
-/* $('#submit').on('click', function () {
-    $(this).button('loading')
-   
-  }) */
-</script>

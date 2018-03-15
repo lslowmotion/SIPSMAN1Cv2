@@ -78,30 +78,7 @@
   </div>
 </div>
 <!-- /.Modal -->
-<!-- Modal --><!-- 
-<div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Reset Password</h4>
-      </div>
-      <div class="modal-body">
-      Apakah anda yakin ingin mereset password?
-      Password yang direset akan disamakan dengan no induk. Segera ganti password untuk keamanan akun!  
-      </div>
-      <div class="modal-footer">
-      <form action="<?php //echo base_url('akun/resetpassword'); ?>" method="post">
-      	<input type="hidden" class="no-induk" name="id"/>
-      	<input type="hidden" class="url" name="url"/>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-warning">Reset Password</button>
-      </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /.Modal -->
+
 <!-- Modal -->
 <div class="modal fade" id="sampulModal" tabindex="-1" role="dialog" aria-labelledby="sampulModalLabel">
   <div class="modal-dialog" role="document">
@@ -159,19 +136,7 @@ $(document).ready( function () {
 		  modal.find('input','.nomor-panggil').val(nomor_panggil)
 		  modal.find('.url').val(url)
 		});
-	/*  $('#resetModal').on('show.bs.modal', function (event) {
-		  var button = $(event.relatedTarget) // Button that triggered the modal
-		  var no_induk = button.data('no-induk') // Extract info from data-* attributes
-		  var nama = button.data('nama')
-		  var url = button.data('url') 
-		  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-		  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-		  var modal = $(this)
-		  modal.find('.nama').text(nama)
-		  modal.find('.no-induk').text(no_induk)
-		  modal.find('input','.no-induk').val(no_induk)
-		  modal.find('.url').val(url)
-		});  */
+
 	$('#sampulModal').on('show.bs.modal', function (event) {
 		  var img = $(event.relatedTarget) // Button that triggered the modal
 		  var sampul = img.data('sampul') // Extract info from data-* attributes

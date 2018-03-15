@@ -18,7 +18,7 @@
         			<div class="form-group">
         				<label class="control-label col-md-3" for="nomor-panggil">Nomor Panggil Pustaka:</label>
         				<div class="col-md-9" >
-        					<input list="nomor-panggil" name="nomor-panggil" autocomplete="off" class="form-control" />
+        					<input list="nomor-panggil" name="nomor-panggil" autocomplete="off" class="form-control" placeholder="Cari nomor panggil/judul pustaka" autofocus />
         					<datalist id="nomor-panggil">
         						<?php 
         						foreach ($daftar_pustaka as $row){
@@ -33,7 +33,7 @@
         			<div class="form-group">
         				<label class="control-label col-md-3" for="no-induk">No Induk Peminjam:</label>
         				<div class="col-md-9" >
-        					<input list="no-induk" name="no-induk" autocomplete="off" class="form-control" />
+        					<input list="no-induk" name="no-induk" autocomplete="off" class="form-control" placeholder="Cari no induk/nama anggota perpustakaan" />
         					<datalist id="no-induk">
         						<?php 
         						foreach ($daftar_anggota as $row){
