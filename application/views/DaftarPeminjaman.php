@@ -32,13 +32,12 @@
 						<tbody>
 						
 						</tbody>
+						<?php if($this->session->userdata('level') == 'admin'){?>
 						<tfoot>
         					<tr>
             					<td>
-            						<?php if($this->session->userdata('level') == 'admin'){?>
             						<a href="<?php echo base_url('peminjaman/pinjam');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Pinjam</button></a>
-            						<?php }?>
-            					</td>
+        						</td>
             					<td></td>
             					<td></td>
             					<td></td>
@@ -46,6 +45,7 @@
             					<td></td>
         					</tr>
 						</tfoot>
+						<?php }?>
 					</table>
 					
 					

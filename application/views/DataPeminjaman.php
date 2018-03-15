@@ -70,7 +70,7 @@
     						</td>
     						<td></td>
     						<td>
-    						<?php if ($data_peminjaman->tanggal_kembali == 'Belum dikembalikan'){?>
+    						<?php if ($data_peminjaman->tanggal_kembali == 'Belum dikembalikan' && $this->session->userdata('level') == 'admin'){?>
     							<button class="form-control btn-primary" data-toggle="modal" data-target="#kembalikanModal"
     								data-kode-transaksi="<?php echo $data_peminjaman->kode_transaksi;?>"
     								data-tanggal-pinjam="<?php echo $data_peminjaman->tanggal_pinjam;?>"
@@ -100,7 +100,7 @@
 
 
 </body>
-<?php if ($data_peminjaman->tanggal_kembali == 'Belum dikembalikan'){?>
+<?php if ($data_peminjaman->tanggal_kembali == 'Belum dikembalikan' && $this->session->userdata('level') == 'admin'){?>
 <!-- Modal -->
 <div class="modal fade" id="kembalikanModal" tabindex="-1" role="dialog" aria-labelledby="kembalikanModalLabel">
     <div class="modal-dialog" role="document">
