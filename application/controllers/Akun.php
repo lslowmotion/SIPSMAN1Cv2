@@ -118,7 +118,7 @@ class Akun extends CI_Controller {
     
     function editPassword(){
         //cek otoritas
-        if($this->session->userdata('level') != 'admin'){
+        if(empty($this->session->userdata('id'))){
             redirect(base_url('akun'));
         }
         
