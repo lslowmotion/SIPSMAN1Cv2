@@ -75,7 +75,7 @@ class Akun extends CI_Controller {
                     $this->session->set_flashdata(
                         'message','
                         <div class="alert alert-danger" role="alert">
-					       Login gagal! silakan cek kembali nis/nip dan password, atau hubungi petugas.
+					       Login gagal! silakan cek kembali NIS/NIP dan password, atau hubungi petugas perpustakaan.
 						</div>'
                     );
                     redirect(base_url('akun'));

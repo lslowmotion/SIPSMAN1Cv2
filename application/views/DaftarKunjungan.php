@@ -5,7 +5,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-12">
-					<h1 class="page-header">Daftar Kunjungan</h1>
+					<h1 class="page-header">Riwayat Kunjungan</h1>
 				</div>
 			</div>
 			<?php 
@@ -19,10 +19,10 @@
 					<table class="table table-striped table-bordered table-hover" id="dataTables-kunjungan">
 						<thead>
 							<tr>
-								<th>ID Kunjungan</th>
+								<th width="16%">ID Kunjungan</th>
 								<th>No Induk</th>
 								<th>Tanggal Kunjungan</th>
-								<th>Menu</th>
+								<th width="17%">Menu</th>
 							</tr>
 						</thead>
 						<tbody>

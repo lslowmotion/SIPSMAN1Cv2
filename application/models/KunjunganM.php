@@ -1,6 +1,6 @@
 <?php
 class KunjunganM extends CI_Model{
-    function getJumlahKunjungan($no_induk){
+    function getJumlahKunjungan($no_induk,$tanggal_kunjungan){
         //flush
         $this->db->flush_cache();
         //set query
@@ -8,6 +8,11 @@ class KunjunganM extends CI_Model{
         //filter no induk
         if(!empty($no_induk)){
             $this->db->where('no_induk',$no_induk);
+        }
+        
+        //filter kunjungan
+        if(!empty($tanggal_kunjungan)){
+            $this->db->where('tanggal_kunjungan',$tanggal_kunjungan);
         }
         
         $this->db->from('kunjungan');
@@ -93,5 +98,39 @@ class KunjunganM extends CI_Model{
         
         return $data;
         
+    }
+    
+    function getDataKunjungan($data){
+        //cleaning query from XSS
+        $data = $this->security->xss_clean($data);
+        //cleaning query from SQL injection
+        $data = $this->db->escape_str($data);
+        //flush
+        $this->db->flush_cache();
+        //set query
+        $this->db->from('kunjungan');
+        $this->db->where('id_kunjungan',$data);
+        //execute query
+        $query = $this->db->get();
+        return $query->row();
+    }
+    
+    function tambahKunjungan($data){
+        //cleaning query from XSS
+        $data = $this->security->xss_clean($data);
+        //cleaning query from SQL injection
+        $data = $this->db->escape_str($data);
+        //flush
+        $this->db->flush_cache();
+        //insert data ke db 'anggota'
+        if(!$this->db->insert('kunjungan',$data)){
+            //throw exception if failed
+            $query = $this->db->error();
+            return $query['code'];
+        }else {
+            //success
+            $query='0';
+            return $query;
+        }
     }
 }

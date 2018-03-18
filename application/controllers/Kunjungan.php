@@ -7,19 +7,19 @@ class Kunjungan extends CI_Controller {
     }
     
     function index(){
-        //jika bukan admin, lempar ke daftar peminjaman berdasarkan no induk pengguna menggunakan URI segmen 3
-        if($this->session->userdata('level') == 'admin' || !empty($this->uri->segment('3'))){
+        //jika bukan admin atau anggota membuka URI lv 3 selain id sendiri, lempar ke daftar kunjungan berdasarkan no induk pengguna menggunakan URI segmen 3
+        if($this->session->userdata('level') != 'admin' && (empty($this->uri->segment('3')) || $this->session->userdata('id') != $this->uri->segment('3'))){
+            redirect(base_url('kunjungan/index/'.$this->session->userdata('id')));
+        }else{
             $this->load->view('head');
             $this->load->view('DaftarKunjungan');
             $this->load->view('foot');
-        }else{
-            redirect(base_url('peminjaman/index/'.$this->session->userdata('id')));
         }
     }
     
     function daftarKunjungan(){
         //jika bukan admin dan tidak ada URI segmen 3, beri URI segmen 3 berdasarkan no induk anggota
-        if($this->session->userdata('level') != 'admin' && empty($this->uri->segment('3'))){
+        if($this->session->userdata('level') != 'admin' && (empty($this->uri->segment('3')) || $this->session->userdata('id') != $this->uri->segment('3'))){
             redirect(base_url('kunjungan/daftarkunjungan/'.$this->session->userdata('id')));
         }
         //kolom untuk menentukan kolom db yang akan diurutkan dari POST DataTables
@@ -39,7 +39,7 @@ class Kunjungan extends CI_Controller {
         $no_induk = $this->uri->segment('3');
         
         //mencari jumlah data kunjungan
-        $total_data = $this->KunjunganM->getJumlahKunjungan($no_induk);
+        $total_data = $this->KunjunganM->getJumlahKunjungan($no_induk,null);
         
         //memasukkan total data ke data terfilter sebagai inisialisasi
         $total_data_terfilter = $total_data;
@@ -92,6 +92,97 @@ class Kunjungan extends CI_Controller {
     }
     
     function tambahKunjungan(){
-        $this->load->view('FormKunjungan');
+        if(empty($this->input->post('no-induk'))){
+            $this->load->view('FormKunjungan');
+        }else{
+            $config = array(
+                array(
+                    'field' => 'no-induk',
+                    'label' => 'No induk',
+                    'rules' => 'required|numeric|max_length[18]',
+                    'errors' => array(
+                        'required' => '%s tidak boleh kosong',
+                        'numeric' => '%s harus berupa angka',
+                        'max_length' => '%s tidak boleh lebih dari 18 karakter'
+                    )
+                )
+            );
+            $this->form_validation->set_rules($config);
+            
+            //validasi form
+            if ($this->form_validation->run() == FALSE){
+                
+                //jika tidak lolos validasi, lempar kembali dengan alert
+                $this->session->set_flashdata('message',
+                    '<div class="alert alert-danger" role="alert">'
+                        .validation_errors().
+                    '</div>');
+                redirect(base_url('kunjungan/tambahkunjungan'));
+            }
+            
+            $no_induk = $this->input->post('no-induk');
+            
+            //cek no induk di data anggota
+            $this->load->model('AnggotaM');
+            $cek_anggota = $this->AnggotaM->getDataAnggota($no_induk);
+            if(empty($cek_anggota)){
+                $this->session->set_flashdata('message',
+                    '<div class="alert alert-danger" role="alert">
+                    Tidak ada anggota dengan no induk <b>'.$no_induk.'</b>. Mohon daftar terlebih dahulu pada petugas perpustakaan.
+                    </div>');
+                redirect(base_url('kunjungan/tambahkunjungan'));
+            }
+            
+            //jika pengunjung dengan no induk bersangkutan telah tercatat pada tanggal kunjung sekarang, lempar
+            $tanggal_kunjungan = date('d M Y',strtotime('Today'));
+            $cek_kunjungan = $this->KunjunganM->getJumlahKunjungan($no_induk,$tanggal_kunjungan);
+            if($cek_kunjungan > 0){
+                $this->session->set_flashdata('message',
+                    '<div class="alert alert-danger" role="alert">
+                    Kunjungan no induk <b>'.$no_induk.'</b> pada tanggal <b>'.$tanggal_kunjungan.'</b> sudah dicatat sebelumnya.
+                    </div>');
+                redirect(base_url('kunjungan/tambahkunjungan'));
+            }
+            
+            //mencari nomor id kunjungan yang tersedia
+            $kunjungan_ke = 1;
+            $format_kunjungan_ke = sprintf("%03d", $kunjungan_ke);
+            $id_kunjungan = date('ymd',strtotime('Today')).'-'.$format_kunjungan_ke;
+            $cek_ketersediaan_id_kunjungan = $this->KunjunganM->getDataKunjungan($id_kunjungan);
+            while(!empty($cek_ketersediaan_id_kunjungan)){
+                $kunjungan_ke ++;
+                $format_kunjungan_ke = sprintf("%03d", $kunjungan_ke);
+                $id_kunjungan = date('ymd',strtotime('Today')).'-'.$format_kunjungan_ke;
+                $cek_ketersediaan_id_kunjungan = $this->KunjunganM->getDataKunjungan($id_kunjungan);
+            }
+            
+            //format data masukan
+            $data_kunjungan = array(
+                'id_kunjungan' => $id_kunjungan,
+                'no_induk' => $no_induk,
+                'tanggal_kunjungan' => $tanggal_kunjungan
+            );
+            
+            //insert array ke db, $result menerima kode eksepsi
+            $result = $this->KunjunganM->tambahKunjungan($data_kunjungan);
+            
+            //berhasil memasukkan data
+            if($result == '0'){
+                //sukses transaksi, lempar ke data peminjaman bersangkutan
+                $this->session->set_flashdata('message',
+                    '<div class="alert alert-success" role="alert">
+                        Kunjungan no induk <b>'.$no_induk.'</b> berhasil dicatat.
+                    </div>'
+                );  
+                redirect(base_url('kunjungan/tambahkunjungan'));
+                //gagal memasukkan data
+            }else{
+                $this->session->set_flashdata('message',
+                    '<div class="alert alert-danger" role="alert">
+                        <strong>Terjadi kesalahan dalam pencatatan kunjungan no induk <b>'.$no_induk.'</b>.</strong>
+                    </div>');
+                redirect(base_url('kunjungan/tambahkunjungan'));
+            }
+        }
     }
 }

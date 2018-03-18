@@ -64,7 +64,7 @@
 					
 				</ul>
 			<?php }else{?>
-			<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 					Login
                     <i class="fa fa-sign-in fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
@@ -79,7 +79,7 @@
 								<input class="form-control" placeholder="password" name="password" type="password" />
 							</div>
 							<input type="hidden" name="submit" value=TRUE />
-							<button type="submit" class="form-control btn-primary"><i class="fa fa-chevron-right "></i> Login</button>
+							<button type="submit" class="form-control btn-primary"><i class="fa fa-sign-in "></i> Login</button>
 						</form>
                     </ul>
 				<?php }?>
@@ -93,11 +93,11 @@
 					<ul class="nav" id="side-menu">
 						<?php if($this->session->userdata('level') == 'admin'){?>
                         <li>
-                            <a href="<?php echo base_url('kunjungan');?>"><i class="fa fa-dashboard fa-fw"></i> Daftar Kunjungan</a>
+                            <a href="<?php echo base_url('kunjungan');?>"><i class="fa fa-dashboard fa-fw"></i> Riwayat Kunjungan</a>
                         </li>
-                        <?php }else{?>
-                        <li>
-                            <a href="<?php echo base_url();?>"><i class="fa fa-dashboard fa-fw"></i> Welcome</a>
+                        <?php }elseif($this->session->userdata('level') == 'anggota'){?>
+                    	<li>
+                            <a href="<?php echo base_url('kunjungan/index/'.$this->session->userdata('id'));?>"><i class="fa fa-dashboard fa-fw"></i> Riwayat Kunjungan</a>
                         </li>
                         <?php }?>
                         <li>
@@ -122,8 +122,9 @@
                                 <?php }?>
                             </ul>
                             <!-- /.nav-second-level -->
-                        <?php if(!empty($this->session->userdata('id'))){?>
+                        
                         </li>
+                        <?php if(!empty($this->session->userdata('id'))){?>
                         <li>
                             <a href="#"><i class="fa fa-calendar fa-fw"></i> Peminjaman<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -146,8 +147,8 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                         <li>
-                         	<?php if($this->session->userdata('level')=='admin'){ ?>
+                        <?php if($this->session->userdata('level')=='admin'){ ?>
+                        <li>
                             <a href="#"><i class="fa fa-users fa-fw"></i> Keanggotaan<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                             	<li>
@@ -157,9 +158,13 @@
                                     <a href="<?php echo base_url('anggota/tambahanggota');?>">Tambah Anggota</a>
                                 </li>
                             </ul>
-                            <?php }?>
                             <!-- /.nav-second-level -->
                         </li>
+                        
+                        <li>
+                            <a href="<?php echo base_url('kunjungan/tambahkunjungan');?>"><i class="fa fa-edit fa-fw"></i> Mode Catat Kunjungan</a>
+                        </li>
+                        <?php }?>
                         <?php }?>
                     </ul>
                 </div>

@@ -10,19 +10,19 @@ class Peminjaman extends CI_Controller {
     }
     
     function index(){
-        //jika bukan admin, lempar ke daftar peminjaman berdasarkan no induk pengguna menggunakan URI segmen 3
-        if($this->session->userdata('level') == 'admin' || !empty($this->uri->segment('3'))){
+        //jika bukan admin atau anggota membuka URI lv 3 selain id sendiri, atau tidak ada URI segmen 3, lempar ke daftar peminjaman berdasarkan no induk pengguna menggunakan URI segmen 3
+        if($this->session->userdata('level') != 'admin' && (empty($this->uri->segment('3')) || $this->session->userdata('id') != $this->uri->segment('3'))){
+            redirect(base_url('peminjaman/index/'.$this->session->userdata('id')));
+        }else{
             $this->load->view('head');
             $this->load->view('DaftarPeminjaman');
             $this->load->view('foot');
-        }else{
-            redirect(base_url('peminjaman/index/'.$this->session->userdata('id')));
         }
     }
     
     function daftarPeminjaman(){
-        //jika bukan admin dan tidak ada URI segmen 3, beri URI segmen 3 berdasarkan no induk anggota
-        if($this->session->userdata('level') != 'admin' && empty($this->uri->segment('3'))){
+        //jika bukan admin, anggota membuka URI lv 3 selain id sendiri, atau tidak ada URI segmen 3, beri URI segmen 3 berdasarkan no induk anggota
+        if($this->session->userdata('level') != 'admin' && (empty($this->uri->segment('3')) || $this->session->userdata('id') != $this->uri->segment('3'))){
             redirect(base_url('peminjaman/daftarpeminjaman/'.$this->session->userdata('id')));
         }
         //kolom untuk menentukan kolom db yang akan diurutkan dari POST DataTables

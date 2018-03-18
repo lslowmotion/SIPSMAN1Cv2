@@ -14,16 +14,10 @@
     
         <!-- Bootstrap Core CSS -->
         <link href="<?php echo base_url('assets/css/bootstrap.min.css');?>" rel="stylesheet">
-    
-        <!-- MetisMenu CSS -->
-        <link href="<?php echo base_url('assets/css/metisMenu.min.css');?>" rel="stylesheet">
-    
-        <!-- Custom CSS -->
-        <link href="<?php echo base_url('assets/css/sb-admin-2.css');?>" rel="stylesheet">
-    
-        <!-- Morris Charts CSS -->
-        <link href="<?php echo base_url('assets/css/morris.css');?>" rel="stylesheet">
-    
+    	
+    	<!-- Form Kunjungan CSS -->
+        <link href="<?php echo base_url('assets/css/form-kunjungan.css');?>" rel="stylesheet">
+        
         <!-- Custom Fonts -->
         <link href="<?php echo base_url('assets/font-awesome-4.7.0/css/font-awesome.min.css');?>" rel="stylesheet" type="text/css">
     
@@ -37,58 +31,41 @@
     </head>
 
     <script src="<?php echo base_url('assets/js/jquery-3.1.1.min.js');?>"></script>
-    <link href="<?php echo base_url('assets/DataTables-1.10.12/css/dataTables.bootstrap.min.css')?>" rel="stylesheet"/>
     
     <body>
 	<!-- Form kunjungan -->
-    	
-    		<div class="jumbotron vertical-center">
-    			<?php 
-    				if($this->session->flashdata('message')){
-    					echo $this->session->flashdata('message');
-    				}
-    			?>
-    			
-        		<div class="container-fluid">
-        			<div class="col-md-4 col-md-offset-4">
-        				<div class="panel panel-info" >
-            				<div class="panel-heading text-center">Selamat datang di Perpustakaan SMA N 1 Cilacap.<br>
-            				Silahkan masukkan nomor induk.</div>
-            				<div class="panel-body">
-            					<form method="post" action="<?php echo base_url('kunjungan/tambahkunjungan');?>" >
-            						<div class="form-group">
-            							<label class="control-label" for="no-induk">No Induk:</label>
-            							<input class="form-control" placeholder="NIP/NIS"  name="no-induk" type="text" />
-            						</div>
-            						<div class="form-group">
-            							<input type=hidden name="submit" value=TRUE>
-            							<button type="submit" id="submit" class="form-control btn-primary">Masuk</button>
-            						</div>
-            					</form>
-            				</div>
-        				</div>
-        			</div>
-        		</div>
-    		</div>
-    	
+        <div class="back">
+            <div class="div-center">
+            	<div class="content">	
+    				<h4 class="text-center">Selamat berkunjung di Perpustakaan SMA N 1 Cilacap<br>
+    				Mohon masukkan no induk anda</h4>
+    				<hr>
+					<form method="post" action="<?php echo base_url('kunjungan/tambahkunjungan');?>" >
+						<div class="form-group">
+							<label class="control-label" for="no-induk">No Induk:</label>
+							<input class="form-control" placeholder="NIP/NIS"  name="no-induk" type="text" />
+						</div>
+						<div class="form-group">
+							<input type=hidden name="submit" value=TRUE>
+							<button type="submit" id="submit" class="form-control btn-primary">Masuk</button>
+						</div>
+					</form>
+					<?php 
+        				if($this->session->flashdata('message')){
+        					echo $this->session->flashdata('message');
+        				}
+        			?>
+    			</div>
+			</div>
+		</div>
     <!-- Formkunjungan -->
     </body>
-	
 
 	<!-- jQuery -->
 	
-    <!-- <script src="<?php echo base_url('assets/js/jquery-3.1.1.min.js');?>"></script> -->	
+    <script src="<?php echo base_url('assets/js/jquery-3.1.1.min.js');?>"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="<?php echo base_url('assets/js/bootstrap.min.js');?>"></script>
 
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="<?php echo base_url('assets/js/metisMenu.min.js');?>"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="<?php echo base_url('assets/js/raphael.min.js');?>"></script>
-    <script src="<?php echo base_url('assets/js/morris.min.js');?>"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="<?php echo base_url('assets/js/sb-admin-2.js');?>"></script>
 
 </html>

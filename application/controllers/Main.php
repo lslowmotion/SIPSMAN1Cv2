@@ -5,7 +5,7 @@ class main extends CI_Controller{
         parent::__construct();
     }
     public function index(){
-        if($this->session->userdata('level') =='admin'){
+        if(!empty($this->session->userdata('id'))){
             redirect(base_url('kunjungan'));
         }
         $this->load->view('head');

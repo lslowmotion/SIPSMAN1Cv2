@@ -20,12 +20,12 @@
 					<table class="table table-striped table-bordered table-hover" id="dataTables-peminjaman">
 						<thead>
 							<tr>
-								<th>Kode Transaksi</th>
+								<th width="17%">Kode Transaksi</th>
 								<th>No Induk</th>
 								<th>Tanggal Pinjam</th>
 								<th>Tanggal Kembali</th>
 								<th>Denda</th>
-								<th>Menu</th>
+								<th width="18%">Menu</th>
 								
 							</tr>
 						</thead>
