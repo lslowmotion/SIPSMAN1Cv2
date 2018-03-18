@@ -1,9 +1,13 @@
 <?php
 class PeminjamanM extends CI_Model{
-    function getJumlahPeminjaman($no_induk){
+    function getJumlahPeminjaman($no_induk,$cek_tanggal_kembali){
         //flush
         $this->db->flush_cache();
         //set query
+        //filter tanggal kembali
+        if(!empty($cek_tanggal_kembali)){
+            $this->db->where('tanggal_kembali',$cek_tanggal_kembali);
+        }
         //filter no induk
         if(!empty($no_induk)){
             $this->db->where('no_induk',$no_induk);
@@ -72,6 +76,7 @@ class PeminjamanM extends CI_Model{
         $this->db->like('kode_transaksi',$search);
         $this->db->or_like('no_induk',$search);
         $this->db->or_like('tanggal_pinjam',$search);
+        $this->db->or_like('tanggal_kembali',$search);
         $this->db->limit($panjang_data,$mulai_data);
         $this->db->order_by($kolom_urut,$urutan);
         $this->db->group_end();

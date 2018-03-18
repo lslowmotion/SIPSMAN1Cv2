@@ -43,7 +43,7 @@ class Peminjaman extends CI_Controller {
         $no_induk = $this->uri->segment('3');
         
         //mencari jumlah data peminjaman
-        $total_data = $this->PeminjamanM->getJumlahPeminjaman($no_induk);
+        $total_data = $this->PeminjamanM->getJumlahPeminjaman($no_induk,null);
         
         //memasukkan total data ke data terfilter sebagai inisialisasi
         $total_data_terfilter = $total_data;
@@ -75,10 +75,10 @@ class Peminjaman extends CI_Controller {
                     $row->kode_transaksi,
                     $row->no_induk,
                     date("d M Y", strtotime($row->tanggal_pinjam)),
-                    $this->convert_tanggal_kembali(strtotime($row->tanggal_kembali)),
+                    $this->convert_tanggal_kembali($row->tanggal_kembali),
                     
                     //menghitung denda
-                    $this->hitung_denda(strtotime($row->tanggal_pinjam),strtotime($row->tanggal_kembali)),
+                    $this->hitung_denda(strtotime($row->tanggal_pinjam),$row->tanggal_kembali),
                     '<a href="'.base_url('peminjaman/datapeminjaman/'.$row->kode_transaksi).'"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail</button></a>'
                 );
             }
@@ -100,17 +100,17 @@ class Peminjaman extends CI_Controller {
     }
     
     //fungsi untuk mengubah tanggal kembali menjadi bentuk yang readable
-    private function convert_tanggal_kembali($unix_tanggal_kembali){
-        if($unix_tanggal_kembali == 0){
+    private function convert_tanggal_kembali($tanggal_kembali){
+        if($tanggal_kembali == 'Belum dikembalikan'){
             $status = 'Belum dikembalikan';
         }else{
-            $status = date("d M Y",$unix_tanggal_kembali);
+            $status = date("d M Y",strtotime($tanggal_kembali));
         }
         return $status;
     }
     
     //fungsi untuk menghitung denda berdasarkan tanggal pinjam dan tanggal kembali
-    private function hitung_denda($unix_tanggal_pinjam,$unix_tanggal_kembali){
+    private function hitung_denda($unix_tanggal_pinjam,$tanggal_kembali){
         $id_aturan = 1;
         $aturan_receive = $this->PeminjamanM->getAturanPeminjaman($id_aturan);
         
@@ -121,8 +121,10 @@ class Peminjaman extends CI_Controller {
         
         //maksimal durasi pinjam dalam UNIX time
         $unix_durasi = 86400 * $durasi;
-        if($unix_tanggal_kembali != 0){
-            $total_denda = max(0,((($unix_tanggal_kembali - $unix_tanggal_pinjam) - $unix_durasi) / 86400) * $denda);
+        
+        //convert tanggal kembali
+        if($tanggal_kembali != 'Belum dikembalikan'){
+            $total_denda = max(0,(((strtotime($tanggal_kembali) - $unix_tanggal_pinjam) - $unix_durasi) / 86400) * $denda);
         }else{
             $total_denda = max(0,(((strtotime('today') - $unix_tanggal_pinjam) - $unix_durasi) / 86400) * $denda);
         }
@@ -147,8 +149,8 @@ class Peminjaman extends CI_Controller {
                 redirect(base_url('peminjaman'));
             }
             $data['data_peminjaman']->tanggal_pinjam = date("d M Y", strtotime($data['data_peminjaman']->tanggal_pinjam));
-            $data['data_peminjaman']->tanggal_kembali = $this->convert_tanggal_kembali(strtotime($data['data_peminjaman']->tanggal_kembali));
-            $data['data_peminjaman']->denda = $this->hitung_denda(strtotime($data['data_peminjaman']->tanggal_pinjam),strtotime($data['data_peminjaman']->tanggal_kembali));
+            $data['data_peminjaman']->tanggal_kembali = $this->convert_tanggal_kembali($data['data_peminjaman']->tanggal_kembali);
+            $data['data_peminjaman']->denda = $this->hitung_denda(strtotime($data['data_peminjaman']->tanggal_pinjam),$data['data_peminjaman']->tanggal_kembali);
             $data['data_pustaka'] = $this->PustakaM->getDataPustaka($data['data_peminjaman']->nomor_panggil);
             $data['data_anggota'] = $this->AnggotaM->getDataAnggota($data['data_peminjaman']->no_induk);
             $this->load->view('head');
@@ -177,11 +179,11 @@ class Peminjaman extends CI_Controller {
         //jika kode transaksi tidak kosong, proses pengembalian
         if(!empty($cek_kode_transaksi)){
             
-            //cek tanggal_kembali apakah kosong
+            //cek tanggal_kembali apakah belum dikembalikan
             $cek_tanggal_kembali = $this->PeminjamanM->getDataPeminjaman($kode_transaksi)->tanggal_kembali;
             
-            //jika tanggal kembali kosong, proses pengembalian
-            if($cek_tanggal_kembali == null){
+            //jika tanggal kembali belum dikembalikan, proses pengembalian
+            if($cek_tanggal_kembali == 'Belum dikembalikan'){
                 
                 
                 //ambil nomor panggil, ambil data pustaka, edit pustaka kurangi jumlah_dipinjam pada pustaka bersangkutan
@@ -282,6 +284,21 @@ class Peminjaman extends CI_Controller {
                     redirect(base_url('peminjaman/pinjam'));
                 }
                 
+                //lakukan verifikasi maksimal pinjam yang dibolehkan
+                $id_aturan = 1;
+                $maksimal_pinjam = $this->PeminjamanM->getAturanPeminjaman($id_aturan)->maksimal_pinjam;
+                $no_induk = $this->input->post('no-induk');
+                //menghitung jumlah peminjaman yang masih belum dikembalikan oleh anggota bersangkutan
+                $jumlah_peminjaman_by_no_induk = $this->PeminjamanM->getJumlahPeminjaman($no_induk,'Belum dikembalikan') + 1;
+                //jika peminjaman belum kembali lebih dari maksimal pinjam yang diperbolehkan, lempar
+                if($jumlah_peminjaman_by_no_induk > $maksimal_pinjam){
+                    $this->session->set_flashdata('message',
+                        '<div class="alert alert-danger" role="alert">
+                        No induk '.$no_induk.' sedang meminjam jumlah koleksi pustaka maksimal yang diizinkan yaitu sebanyak '.$maksimal_pinjam.' eksemplar. Mohon kembalikan pustaka yang sedang dipinjam terlebih dahulu.
+                        </div>');
+                    redirect(base_url('peminjaman/pinjam'));
+                }
+                
                 //mencari nomor kode transaksi yang tersedia
                 $transaksi_ke = 1;
                 $format_transaksi_ke = sprintf("%03d", $transaksi_ke);
@@ -298,8 +315,9 @@ class Peminjaman extends CI_Controller {
                 $data_peminjaman = array(
                     'kode_transaksi' => $kode_transaksi,
                     'nomor_panggil' => $this->input->post('nomor-panggil'),
-                    'no_induk' => $this->input->post('no-induk'),
-                    'tanggal_pinjam' => date('d M Y',strtotime($this->input->post('tanggal-pinjam')))
+                    'no_induk' => $no_induk,
+                    'tanggal_pinjam' => date('d M Y',strtotime($this->input->post('tanggal-pinjam'))),
+                    'tanggal_kembali' => 'Belum dikembalikan'
                 );
                 
                 
