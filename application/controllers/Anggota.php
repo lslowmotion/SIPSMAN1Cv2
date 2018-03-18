@@ -312,6 +312,18 @@ class Anggota extends CI_Controller{
     
     function hapusAnggota(){
         $no_induk = $this->input->post('no-induk');
+        
+        //cek jika ada peminjaman dengan no induk bersangkutan. jika ada, jangan hapus
+        $this->load->model('PeminjamanM');
+        $cek_peminjaman_by_no_induk = $this->PeminjamanM->getJumlahPeminjaman($no_induk,null,null);
+        if($cek_peminjaman_by_no_induk > 0){
+            $this->session->set_flashdata('message',
+                '<div class="alert alert-danger" role="alert">
+                    Gagal menghapus anggota dengan <b>no induk '.$no_induk.'</b>. Terdapat peminjaman dengan data anggota yang bersangkutan.
+                </div>');
+            redirect(base_url('anggota'));
+        }
+        
         $this->AnggotaM->hapusAnggota($no_induk);
         $this->load->model('AkunM');
         $this->AkunM->hapusAkun($no_induk);

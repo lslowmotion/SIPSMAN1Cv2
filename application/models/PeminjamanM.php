@@ -1,12 +1,16 @@
 <?php
 class PeminjamanM extends CI_Model{
-    function getJumlahPeminjaman($no_induk,$cek_tanggal_kembali){
+    function getJumlahPeminjaman($no_induk,$nomor_panggil,$cek_tanggal_kembali){
         //flush
         $this->db->flush_cache();
         //set query
         //filter tanggal kembali
         if(!empty($cek_tanggal_kembali)){
             $this->db->where('tanggal_kembali',$cek_tanggal_kembali);
+        }
+        //filter nomor panggil
+        if(!empty($nomor_panggil)){
+            $this->db->where('nomor_panggil',$nomor_panggil);
         }
         //filter no induk
         if(!empty($no_induk)){

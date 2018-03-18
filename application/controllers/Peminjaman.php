@@ -43,7 +43,7 @@ class Peminjaman extends CI_Controller {
         $no_induk = $this->uri->segment('3');
         
         //mencari jumlah data peminjaman
-        $total_data = $this->PeminjamanM->getJumlahPeminjaman($no_induk,null);
+        $total_data = $this->PeminjamanM->getJumlahPeminjaman($no_induk,null,null);
         
         //memasukkan total data ke data terfilter sebagai inisialisasi
         $total_data_terfilter = $total_data;
@@ -288,8 +288,8 @@ class Peminjaman extends CI_Controller {
                 $id_aturan = 1;
                 $maksimal_pinjam = $this->PeminjamanM->getAturanPeminjaman($id_aturan)->maksimal_pinjam;
                 $no_induk = $this->input->post('no-induk');
-                //menghitung jumlah peminjaman yang masih belum dikembalikan oleh anggota bersangkutan
-                $jumlah_peminjaman_by_no_induk = $this->PeminjamanM->getJumlahPeminjaman($no_induk,'Belum dikembalikan') + 1;
+                //menghitung jumlah peminjaman yang masih belum dikembalikan oleh anggota bersangkutan + 1 (karena akan pinjam baru)
+                $jumlah_peminjaman_by_no_induk = $this->PeminjamanM->getJumlahPeminjaman($no_induk,null,'Belum dikembalikan') + 1;
                 //jika peminjaman belum kembali lebih dari maksimal pinjam yang diperbolehkan, lempar
                 if($jumlah_peminjaman_by_no_induk > $maksimal_pinjam){
                     $this->session->set_flashdata('message',

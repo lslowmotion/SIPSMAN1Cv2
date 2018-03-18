@@ -88,7 +88,7 @@
         <h4 class="modal-title" id="sampulModalLabel"><span class="judul"></span></h4>
       </div>
       <div class="modal-body">
-          <img class="sampul center-block" alt="Sampul">
+          <img class="sampul center-block" width="380" alt="Sampul">
       </div>
       
     </div>

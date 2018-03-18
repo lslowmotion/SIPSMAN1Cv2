@@ -131,7 +131,7 @@
                                     <a href="<?php echo base_url('peminjaman');?>">Status Peminjaman</a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo base_url('peminjaman/pinjam');?>">Tambah Peminjaman</a>
+                                    <a href="<?php echo base_url('peminjaman/pinjam');?>">Peminjaman Baru</a>
                                 </li>
                                 <li>
                                     <a href="<?php echo '#'//base_url('peminjaman/pinjam');?>">Pengaturan Peminjaman</a>

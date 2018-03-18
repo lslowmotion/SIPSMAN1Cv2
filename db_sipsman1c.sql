@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2018 at 07:02 AM
+-- Generation Time: Mar 18, 2018 at 07:14 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -137,7 +137,7 @@ CREATE TABLE `peminjaman` (
   `nomor_panggil` varchar(16) NOT NULL,
   `no_induk` varchar(18) NOT NULL,
   `tanggal_pinjam` varchar(11) NOT NULL,
-  `tanggal_kembali` varchar(18) DEFAULT NULL
+  `tanggal_kembali` varchar(18) NOT NULL DEFAULT 'Belum dikembalikan'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -157,7 +157,8 @@ INSERT INTO `peminjaman` (`kode_transaksi`, `nomor_panggil`, `no_induk`, `tangga
 ('180315-004', '576-Cha-t.2', '10777', '15 Mar 2018', 'Belum dikembalikan'),
 ('180318-001', '335-Tan-m.1', '10777', '18 Mar 2018', '18 Mar 2018'),
 ('180318-002', '335-Tan-m.1', '10777', '18 Mar 2018', 'Belum dikembalikan'),
-('180318-003', '335-Tan-m.1', '10777', '18 Mar 2018', 'Belum dikembalikan');
+('180318-003', '335-Tan-m.1', '10777', '18 Mar 2018', 'Belum dikembalikan'),
+('180318-004', '576-Cha-t.1', '10123', '18 Mar 2018', 'Belum dikembalikan');
 
 -- --------------------------------------------------------
 
@@ -186,7 +187,7 @@ CREATE TABLE `pustaka` (
 INSERT INTO `pustaka` (`nomor_panggil`, `isbn`, `kode_klasifikasi`, `judul`, `pengarang`, `penerbit`, `kota_terbit`, `tahun_terbit`, `sampul`, `jumlah_pustaka`, `jumlah_dipinjam`) VALUES
 ('210-Fri-b.1', '9780679724650', '210', 'Beyond Good & Evil: Prelude to a Philosophy of the Future', 'Friedrich Nietzche', 'Vintage Publisher', 'New York', '1989', 'assets/cover/210-Fri-b_11.jpg', 4, 4),
 ('335-Tan-m.1', '9789791683746', '335', 'Madilog Tan Malaka Edisi Terbaru (Hard Cover)', 'Tan Malaka', 'Pustaka Narasi', 'Yogyakarta', '2014', 'assets/cover/335-Tan-m_1.jpg', 3, 3),
-('576-Cha-t.1', '9780451529060', '576', 'The Origin of Species: 150th Anniversary Edition', 'Charles Darwin', 'Signet', 'New York', '2003', 'assets/cover/576-Cha-t_1.jpg', 3, 1),
+('576-Cha-t.1', '9780451529060', '576', 'The Origin of Species: 150th Anniversary Edition', 'Charles Darwin', 'Signet', 'New York', '2003', 'assets/cover/576-Cha-t_1.jpg', 3, 2),
 ('576-Cha-t.2', '9781108005487', '576', 'The Origin of Species: By Means of Natural Selection, or the Preservation of Favoured Races in the Struggle for Life (Cambridge Library Collection - Darwin, Evolution and Genetics)', 'Charles Darwin', 'Cambridge University Press', 'Cambridge', '2009', 'assets/cover/576-Cha-t_2.jpg', 1, 1);
 
 --

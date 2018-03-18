@@ -36,7 +36,7 @@
 						<tfoot>
         					<tr>
             					<td>
-            						<a href="<?php echo base_url('peminjaman/pinjam');?>"><button type="button" class="btn btn-primary"><i class="fa fa-exchange "></i> Tambah peminjaman</button></a>
+            						<a href="<?php echo base_url('peminjaman/pinjam');?>"><button type="button" class="btn btn-primary"><i class="fa fa-exchange "></i> Peminjaman baru</button></a>
         						</td>
             					<td></td>
             					<td></td>

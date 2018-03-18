@@ -528,6 +528,18 @@ class Pustaka extends CI_Controller{
         }
         //ambil nomor panggil dari POST
         $nomor_panggil = $this->input->post('nomor-panggil');
+        
+        //cek jika ada pustaka dengan nomor panggil bersangkutan. jika ada, jangan hapus
+        $this->load->model('PeminjamanM');
+        $cek_peminjaman_by_nomor_panggil = $this->PeminjamanM->getJumlahPeminjaman(null,$nomor_panggil,null);
+        if($cek_peminjaman_by_nomor_panggil > 0){
+            $this->session->set_flashdata('message',
+                '<div class="alert alert-danger" role="alert">
+                    Gagal menghapus anggota dengan <b>nomor panggil '.$nomor_panggil.'</b>. Terdapat peminjaman dengan data koleksi pustaka yang bersangkutan.
+                </div>');
+            redirect(base_url('pustaka'));
+        }
+        
         //delete di db
         $this->PustakaM->hapusPustaka($nomor_panggil);
         //kirim notif ke user
