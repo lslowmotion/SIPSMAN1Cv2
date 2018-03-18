@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2018 at 07:14 AM
+-- Generation Time: Mar 18, 2018 at 10:22 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -72,7 +72,7 @@ CREATE TABLE `anggota` (
 --
 
 INSERT INTO `anggota` (`no_induk`, `nama`, `alamat`, `email`, `telepon`) VALUES
-('10123', 'Zubaidah', 'Jati', 'zub@gmail.com', '085765432111'),
+('10123', 'Zubaidah', 'Jati Waringin', 'zub@gmail.com', '085765432111'),
 ('10124', 'Zumala', 'Undaan', 'zum@gmail.com', '08924314352'),
 ('10456', 'Nur Falah', 'Kalirejo Ungaran', 'falahnur@gmail.com', '087864154345'),
 ('10567', 'Ahmad Fathoni', 'Kudus', 'ahmad@gmail.com', '081234521312'),
@@ -103,7 +103,7 @@ CREATE TABLE `aturan` (
 --
 
 INSERT INTO `aturan` (`id_aturan`, `denda`, `durasi`, `maksimal_pinjam`) VALUES
-(1, 500, 7, 3);
+(1, 500, 10, 3);
 
 -- --------------------------------------------------------
 
@@ -125,6 +125,27 @@ INSERT INTO `kategori` (`kode_klasifikasi`, `nama_kategori`) VALUES
 ('335', 'Sosialisme dan sistem terkait'),
 ('570', 'Biologi'),
 ('576', 'Genetik dan evolusi');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kunjungan`
+--
+
+CREATE TABLE `kunjungan` (
+  `id_kunjungan` varchar(10) NOT NULL,
+  `no_induk` varchar(18) NOT NULL,
+  `tanggal_kunjungan` varchar(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kunjungan`
+--
+
+INSERT INTO `kunjungan` (`id_kunjungan`, `no_induk`, `tanggal_kunjungan`) VALUES
+('180318-001', '10666', '18 Mar 2018'),
+('180318-002', '10123', '18 Mar 2018'),
+('180318-003', '10777', '18 Mar 2018');
 
 -- --------------------------------------------------------
 
@@ -217,6 +238,12 @@ ALTER TABLE `aturan`
 --
 ALTER TABLE `kategori`
   ADD PRIMARY KEY (`kode_klasifikasi`);
+
+--
+-- Indexes for table `kunjungan`
+--
+ALTER TABLE `kunjungan`
+  ADD PRIMARY KEY (`id_kunjungan`);
 
 --
 -- Indexes for table `peminjaman`
