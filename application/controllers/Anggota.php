@@ -262,7 +262,7 @@ class Anggota extends CI_Controller{
                 if($this->form_validation->run() == FALSE){
                     $this->session->set_flashdata('message',
                         '<div class="alert alert-danger" role="alert">
-                            <b>Terjadi Kesalahan :</b><br>'.validation_errors().'
+                            <b>Terjadi Kesalahan:</b><br>'.validation_errors().'
                         </div>');
                     redirect(current_url());
                     
@@ -281,18 +281,18 @@ class Anggota extends CI_Controller{
                     //jika berhasil memasukkan data ke dalam db
                     if($result=='0'){
                         $this->session->set_flashdata('message',
-                            '<div class="alert alert-success" role="alert">Data anggota dengan no induk: '
-                                .$no_induk.' telah diedit 
+                            '<div class="alert alert-success" role="alert">Data anggota dengan no induk: <b>'
+                                .$no_induk.'</b> berhasil diedit 
                             </div>');
                         redirect(base_url('anggota/dataanggota/'.$no_induk));
                     //gagal memasukkan data ke dalam db
                     }else{
                         $this->session->set_flashdata('message',
                             '<div class="alert alert-danger" role="alert">
-                                <b>Terjadi kesalahan</b>
+                                <b>Terjadi kesalahan dalam memasukkan perubahan data anggota.</b>
                                 , Kode : <strong>'.$result.'</strong>
                             </div>');
-                        redirect(current_url());
+                        redirect(base_url('anggota/dataanggota/'.$no_induk));
                     }
                 }
                 
@@ -312,12 +312,24 @@ class Anggota extends CI_Controller{
     
     function hapusAnggota(){
         $no_induk = $this->input->post('no-induk');
+        
+        //cek jika ada peminjaman dengan no induk bersangkutan. jika ada, jangan hapus
+        $this->load->model('PeminjamanM');
+        $cek_peminjaman_by_no_induk = $this->PeminjamanM->getJumlahPeminjaman($no_induk,null,null);
+        if($cek_peminjaman_by_no_induk > 0){
+            $this->session->set_flashdata('message',
+                '<div class="alert alert-danger" role="alert">
+                    Gagal menghapus anggota dengan no induk <b>'.$no_induk.'</b>. Terdapat peminjaman dengan data anggota yang bersangkutan.
+                </div>');
+            redirect(base_url('anggota'));
+        }
+        
         $this->AnggotaM->hapusAnggota($no_induk);
         $this->load->model('AkunM');
         $this->AkunM->hapusAkun($no_induk);
         $this->session->set_flashdata('message',
-            '<div class="alert alert-success" role="alert">Data anggota dengan no induk '
-                .$no_induk.' telah dihapus
+            '<div class="alert alert-success" role="alert">Data anggota dengan no induk <b>'
+                .$no_induk.'</b> berhasil dihapus
             </div>');
         redirect(base_url('anggota'));
     }

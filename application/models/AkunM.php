@@ -44,12 +44,12 @@ class AkunM extends CI_Model{
         $password = $this->db->escape_str($password);
         //set query
         $this->db->flush_cache();
-        $password=array (
-            'password'=>$password
+        $data_update = array(
+            'password' => $password
         );
         $this->db->where('id',$id);
         //execute query
-        $query = $this->db->update('akun',$password);
+        $query = $this->db->update('akun',$data_update);
     }
     
     function resetPassword($id){

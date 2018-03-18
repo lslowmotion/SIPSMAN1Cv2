@@ -24,12 +24,12 @@
         			<div class="form-group">
         				<label class="control-label col-md-2" for="isbn">ISBN:</label>
         				<div class="col-md-10" >
-        					<input class="form-control num" placeholder="ISBN"  name="isbn" type="text" autocomplete="off" />
+        					<input class="form-control num" placeholder="ISBN (International Standard Book Number)"  name="isbn" type="text" autocomplete="off" autofocus/>
         				</div>
         			</div>
         			<div class="form-group">
         				<label class="control-label col-md-2" for="kode-klasifikasi">Kode Klasifikasi:</label>
-        				<div class="col-md-6">
+        				<div class="col-md-7">
         					<select name="kode-klasifikasi" id="kode-klasifikasi" class="form-control">
 								<option selected value="">-- Pilih kategori --</option>
     							<?php 
@@ -39,7 +39,7 @@
     							?>
 							</select>
         				</div>
-        				<div class="col-md-4">
+        				<div class="col-md-3">
         					<a href="<?php echo base_url('kategori/tambahkategori');?>"><button type="button" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> Tambah Kategori</button></a>
         				</div>
         			</div>
@@ -58,13 +58,13 @@
         			<div class="form-group">
         				<label class="control-label col-md-2" for="penerbit">Penerbit:</label>
         				<div class="col-md-10" >
-        					<input class="form-control" placeholder="Penerbit"  name="penerbit" type="text" />
+        					<input class="form-control" placeholder="Nama penerbit"  name="penerbit" type="text" />
         				</div>
         			</div>
         			<div class="form-group">
         				<label class="control-label col-md-2" for="kota-terbit">Kota Terbit:</label>
         				<div class="col-md-10" >
-        					<input class="form-control nama" placeholder="Kota terbit"  name="kota-terbit" type="text" />
+        					<input class="form-control nama" placeholder="Kota tempat terbit"  name="kota-terbit" type="text" />
         				</div>
         			</div>
         			<div class="form-group">
@@ -77,7 +77,7 @@
         				<label class="control-label col-md-2" for="sampul">Gambar Sampul:</label>
         				<div class="col-md-10" >
  							<input type="file" class="form-control-file" name="sampul" id="sampul" aria-describedby="sampulHelp">
-    						<small id="sampulHelp" class="form-text text-muted">FIle sampul harus berupa gambar (jpg/jpeg/png/bmp/gif).</small>
+    						<small id="sampulHelp" class="form-text text-muted">FIle sampul harus berupa gambar (jpg/jpeg/png/bmp/gif). Ukuran file maksimum 2 MB.</small>
   
         				</div>
         			</div>
@@ -114,8 +114,5 @@ $(document).ready( function () {
         document.getElementById("nomor-panggil").value = kode.concat("-",pengarang.concat("-",judul.toLowerCase()));
     }
 });
-/* $('#submit').on('click', function () {
-    $(this).button('loading')
-   
-  }) */
+
 </script>

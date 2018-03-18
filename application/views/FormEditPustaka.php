@@ -23,7 +23,7 @@
 			<div class="form-group">
 				<label class="control-label col-md-2" for="no-induk">ISBN:</label>
 				<div class="col-md-10" >
-					<input value="<?php echo $data_pustaka->isbn;?>" class="form-control num" placeholder="ISBN"  name="isbn" type="text"/>
+					<input value="<?php echo $data_pustaka->isbn;?>" class="form-control num" placeholder="ISBN (International Standard Book Number)"  name="isbn" type="text"/>
 				</div>
 			</div>
 			<div class="form-group">
@@ -43,7 +43,7 @@
 			<div class="form-group">
 				<label class="control-label col-md-2" for="judul">Judul:</label>
 				<div class="col-md-10" >
-					<input value="<?php echo $data_pustaka->judul;?>" class="form-control" placeholder="Judul"  name="judul" type="text" />
+					<input value="<?php echo $data_pustaka->judul;?>" class="form-control" placeholder="Judul pustaka"  name="judul" type="text" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -61,7 +61,7 @@
 			<div class="form-group">
 				<label class="control-label col-md-2" for="kota-terbit">Kota Terbit:</label>
 				<div class="col-md-10" >
-					<input value="<?php echo $data_pustaka->kota_terbit;?>" class="form-control nama" placeholder="Kota terbit"  name="kota-terbit" type="text" />
+					<input value="<?php echo $data_pustaka->kota_terbit;?>" class="form-control nama" placeholder="Kota tempat terbit"  name="kota-terbit" type="text" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -81,7 +81,7 @@
 			<div class="form-group">
 				<label class="control-label col-md-2" for="jumlah">Jumlah Koleksi:</label>
 				<div class="col-md-10" >
-					<input value="<?php echo $data_pustaka->jumlah;?>" class="form-control num" placeholder="Jumlah koleksi yang dimiliki"  name="jumlah" type="text" />
+					<input value="<?php echo $data_pustaka->jumlah_pustaka;?>" class="form-control num" placeholder="Jumlah koleksi yang dimiliki"  name="jumlah" type="text" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -97,9 +97,3 @@
 	</div>
 </body>
 <script src="<?php echo base_url('assets/js/killnonalphanum.js');?>"></script>
-<script>
-/* $('#submit').on('click', function () {
-    $(this).button('loading')
-   
-  }) */
-</script>

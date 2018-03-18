@@ -60,7 +60,7 @@
     						<td><?php echo $data_pustaka->tahun_terbit;?></td>
     					</tr>
     					<tr>
-    						<td>Sampul</td>
+    						<td>Gambar Sampul</td>
     						<td align="right">:</td>
     						<td>
     							<a href="#">
@@ -75,12 +75,12 @@
     					<tr>
     						<td>Jumlah Koleksi Pustaka</td>
     						<td align="right">:</td>
-    						<td><?php echo $data_pustaka->jumlah;?> eksemplar</td>
+    						<td><?php echo $data_pustaka->jumlah_pustaka;?> eksemplar</td>
     					</tr>
     					<tr>
     						<td>Koleksi Dipinjam</td>
     						<td align="right">:</td>
-    						<td><?php echo $data_pustaka->dipinjam;?> eksemplar</td>
+    						<td><?php echo $data_pustaka->jumlah_dipinjam;?> eksemplar</td>
     					</tr>
     					<tr>
     						<td>
@@ -122,7 +122,7 @@
         <h4 class="modal-title" id="sampulModalLabel"><span class="judul"></span></h4>
       </div>
       <div class="modal-body">
-          <img class="sampul center-block" alt="Sampul">
+          <img class="sampul center-block" width="380" alt="Sampul">
       </div>
       
     </div>

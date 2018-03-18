@@ -20,22 +20,6 @@ class PustakaM extends CI_Model{
         }
     }
     
-    function getJudulbyNomorPanggil($data){
-        //cleaning query from XSS
-        $data = $this->security->xss_clean($data);
-        //cleaning query from SQL injection
-        $data = $this->db->escape_str($data);
-        //flush
-        $this->db->flush_cache();
-        //set query
-        $this->db->select('judul');
-        $this->db->where('nomor_panggil',$data);
-        $this->db->from('pustaka');
-        //execute query
-        $query = $this->db->get();
-        return $query->result();
-    }
-    
     function getJumlahPustaka($kode){
         //cleaning query from XSS
         $kode = $this->security->xss_clean($kode);
@@ -73,7 +57,7 @@ class PustakaM extends CI_Model{
         $this->db->flush_cache();
   
         //set query
-        $this->db->select('nomor_panggil,judul,pengarang,sampul,jumlah,dipinjam');
+        $this->db->select('nomor_panggil,judul,pengarang,sampul,jumlah_pustaka,jumlah_dipinjam');
         //filter kode klasifikasi
         if(!empty($kode)){
             $this->db->where('kode_klasifikasi',$kode);
@@ -109,7 +93,7 @@ class PustakaM extends CI_Model{
         
         //set query
         $this->db->group_start();
-        $this->db->select('nomor_panggil,judul,pengarang,sampul,jumlah,dipinjam');
+        $this->db->select('nomor_panggil,judul,pengarang,sampul,jumlah_pustaka,jumlah_dipinjam');
         $this->db->from('pustaka');
         $this->db->like('nomor_panggil',$search);
         $this->db->or_like('judul',$search);

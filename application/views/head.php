@@ -6,8 +6,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Sistem Informasi Perpustakaan SMA N 1 Cilacap">
+    <meta name="author" content="Laatansa">
+    <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/ico/sipsman1c.ico');?>" />
 
     <title>SIPSMAN1C - Sistem Informasi Perpustakaan SMA N 1 Cilacap</title>
 
@@ -63,27 +64,23 @@
 					
 				</ul>
 			<?php }else{?>
-			<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 					Login
                     <i class="fa fa-sign-in fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu">
-						
-								
-									<form class="col-md-12" method="post" action="<?php echo base_url('akun/login');?>" >
-										<div class="form-group">
-											<label for="id">Username</label>
-											<input class="form-control" placeholder="NIP/NIS"  name="id" type="text" />
-										</div>
-										<div class="form-group">
-											<label for="password">Password</label>
-											<input class="form-control" placeholder="password" name="password" type="password" />
-										</div>
-										<input type="hidden" name="submit" value=TRUE />
-										<button type="submit" class="form-control btn-primary"><i class="fa fa-chevron-right "></i> Login</button>
-									</form>
-								
-						
+						<form class="col-md-12" method="post" action="<?php echo base_url('akun/login');?>" >
+							<div class="form-group">
+								<label for="id">Username</label>
+								<input class="form-control" placeholder="NIP/NIS"  name="id" type="text" />
+							</div>
+							<div class="form-group">
+								<label for="password">Password</label>
+								<input class="form-control" placeholder="password" name="password" type="password" />
+							</div>
+							<input type="hidden" name="submit" value=TRUE />
+							<button type="submit" class="form-control btn-primary"><i class="fa fa-sign-in "></i> Login</button>
+						</form>
                     </ul>
 				<?php }?>
             <!-- /.dropdown-user -->
@@ -94,10 +91,15 @@
 			<div class="navbar-default sidebar" role="navigation">
 				<div class="sidebar-nav navbar-collapse">
 					<ul class="nav" id="side-menu">
+						<?php if($this->session->userdata('level') == 'admin'){?>
                         <li>
-                            <a href="<?php echo base_url();?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="<?php echo base_url('kunjungan');?>"><i class="fa fa-dashboard fa-fw"></i> Riwayat Kunjungan</a>
                         </li>
-                        
+                        <?php }elseif($this->session->userdata('level') == 'anggota'){?>
+                    	<li>
+                            <a href="<?php echo base_url('kunjungan/index/'.$this->session->userdata('id'));?>"><i class="fa fa-dashboard fa-fw"></i> Riwayat Kunjungan</a>
+                        </li>
+                        <?php }?>
                         <li>
                             <a href="#"><i class="fa fa-book fa-fw"></i> Koleksi Pustaka<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -120,24 +122,33 @@
                                 <?php }?>
                             </ul>
                             <!-- /.nav-second-level -->
-                        <?php if(!empty($this->session->userdata('id'))){?>
+                        
                         </li>
+                        <?php if(!empty($this->session->userdata('id'))){?>
                         <li>
                             <a href="#"><i class="fa fa-calendar fa-fw"></i> Peminjaman<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                            	<?php if($this->session->userdata('level')=='admin'){ ?>
+                            	<?php if($this->session->userdata('level') == 'admin'){ ?>
                                 <li>
-                                    <a href="#">Kelola Peminjaman</a>
+                                    <a href="<?php echo base_url('peminjaman');?>">Status Peminjaman</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url('peminjaman/pinjam');?>">Peminjaman Baru</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url('peminjaman/pengaturanpeminjaman');?>">Pengaturan</a>
+                                </li>
+                                <?php }else{?>
+                                <li>
+                                    <a href="<?php echo base_url('peminjaman/index/'.$this->session->userdata('id'));?>">Status Peminjaman</a>
                                 </li>
                                 <?php }?>
-                                <li>
-                                    <a href="#">Status Peminjaman</a>
-                                </li>
+                                
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                         <li>
-                         	<?php if($this->session->userdata('level')=='admin'){ ?>
+                        <?php if($this->session->userdata('level')=='admin'){ ?>
+                        <li>
                             <a href="#"><i class="fa fa-users fa-fw"></i> Keanggotaan<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                             	<li>
@@ -147,9 +158,13 @@
                                     <a href="<?php echo base_url('anggota/tambahanggota');?>">Tambah Anggota</a>
                                 </li>
                             </ul>
-                            <?php }?>
                             <!-- /.nav-second-level -->
                         </li>
+                        
+                        <li>
+                            <a href="<?php echo base_url('kunjungan/tambahkunjungan');?>"><i class="fa fa-edit fa-fw"></i> Mode Catat Kunjungan</a>
+                        </li>
+                        <?php }?>
                         <?php }?>
                     </ul>
                 </div>
