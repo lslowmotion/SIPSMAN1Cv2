@@ -77,7 +77,7 @@
         				<label class="control-label col-md-2" for="sampul">Gambar Sampul:</label>
         				<div class="col-md-10" >
  							<input type="file" class="form-control-file" name="sampul" id="sampul" aria-describedby="sampulHelp">
-    						<small id="sampulHelp" class="form-text text-muted">FIle sampul harus berupa gambar (jpg/jpeg/png/bmp/gif).</small>
+    						<small id="sampulHelp" class="form-text text-muted">FIle sampul harus berupa gambar (jpg/jpeg/png/bmp/gif). Ukuran file maksimum 2 MB.</small>
   
         				</div>
         			</div>

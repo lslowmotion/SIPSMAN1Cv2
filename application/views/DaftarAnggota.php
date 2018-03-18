@@ -58,7 +58,7 @@
         <h4 class="modal-title" id="hapusModalLabel">Hapus Data</h4>
       </div>
       <div class="modal-body">
-      Apakah anda yakin ingin menghapus data <span class="nama"></span> (<span class="no-induk"></span>)?
+      Apakah anda yakin ingin menghapus data <b><span class="nama"></span> (<span class="no-induk"></span>)</b>?
       Semua data yang berhubungan dengan akun yang bersangkutan juga akan dihapus 
       </div>
       <div class="modal-footer">
@@ -82,7 +82,7 @@
       </div>
       <div class="modal-body">
       Apakah anda yakin ingin mereset password?
-      Password yang direset akan disamakan dengan no induk. Segera ganti password untuk keamanan akun!  
+      Password yang direset akan disamakan dengan <b>no induk</b>. Segera ganti password untuk keamanan akun!  
       </div>
       <div class="modal-footer">
       <form action="<?php echo base_url('akun/resetpassword'); ?>" method="post">

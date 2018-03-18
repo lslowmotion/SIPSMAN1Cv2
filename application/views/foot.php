@@ -1,5 +1,5 @@
 	
-	<foot>
+
 	<!-- jQuery -->
 	
     <!-- <script src="<?php echo base_url('assets/js/jquery-3.1.1.min.js');?>"></script> -->	
@@ -15,5 +15,5 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="<?php echo base_url('assets/js/sb-admin-2.js');?>"></script>
-    </foot>
+
 </html>

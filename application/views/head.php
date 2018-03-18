@@ -69,22 +69,18 @@
                     <i class="fa fa-sign-in fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu">
-						
-								
-									<form class="col-md-12" method="post" action="<?php echo base_url('akun/login');?>" >
-										<div class="form-group">
-											<label for="id">Username</label>
-											<input class="form-control" placeholder="NIP/NIS"  name="id" type="text" />
-										</div>
-										<div class="form-group">
-											<label for="password">Password</label>
-											<input class="form-control" placeholder="password" name="password" type="password" />
-										</div>
-										<input type="hidden" name="submit" value=TRUE />
-										<button type="submit" class="form-control btn-primary"><i class="fa fa-chevron-right "></i> Login</button>
-									</form>
-								
-						
+						<form class="col-md-12" method="post" action="<?php echo base_url('akun/login');?>" >
+							<div class="form-group">
+								<label for="id">Username</label>
+								<input class="form-control" placeholder="NIP/NIS"  name="id" type="text" />
+							</div>
+							<div class="form-group">
+								<label for="password">Password</label>
+								<input class="form-control" placeholder="password" name="password" type="password" />
+							</div>
+							<input type="hidden" name="submit" value=TRUE />
+							<button type="submit" class="form-control btn-primary"><i class="fa fa-chevron-right "></i> Login</button>
+						</form>
                     </ul>
 				<?php }?>
             <!-- /.dropdown-user -->
@@ -95,10 +91,15 @@
 			<div class="navbar-default sidebar" role="navigation">
 				<div class="sidebar-nav navbar-collapse">
 					<ul class="nav" id="side-menu">
+						<?php if($this->session->userdata('level') == 'admin'){?>
                         <li>
-                            <a href="<?php echo base_url();?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="<?php echo base_url('kunjungan');?>"><i class="fa fa-dashboard fa-fw"></i> Daftar Kunjungan</a>
                         </li>
-                        
+                        <?php }else{?>
+                        <li>
+                            <a href="<?php echo base_url();?>"><i class="fa fa-dashboard fa-fw"></i> Welcome</a>
+                        </li>
+                        <?php }?>
                         <li>
                             <a href="#"><i class="fa fa-book fa-fw"></i> Koleksi Pustaka<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -134,7 +135,7 @@
                                     <a href="<?php echo base_url('peminjaman/pinjam');?>">Peminjaman Baru</a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo '#'//base_url('peminjaman/pinjam');?>">Pengaturan Peminjaman</a>
+                                    <a href="<?php echo base_url('peminjaman/pengaturanpeminjaman');?>">Pengaturan</a>
                                 </li>
                                 <?php }else{?>
                                 <li>

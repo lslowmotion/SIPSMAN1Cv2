@@ -53,7 +53,7 @@
         <h4 class="modal-title" id="myModalLabel">Hapus Data</h4>
       </div>
       <div class="modal-body">
-      Apakah anda yakin ingin menghapus kategori <span class="kode-klasifikasi"></span> (<span class="nama-kategori"></span>)?
+      Apakah anda yakin ingin menghapus kategori <b><span class="kode-klasifikasi"></span> (<span class="nama-kategori"></span>)</b>?
 
       </div>
       <div class="modal-footer">

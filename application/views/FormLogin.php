@@ -41,9 +41,3 @@
 <!-- Formlogin -->
 
 </body>
-
-<script>
-  $('#submit').on('click', function () {
-    $(this).button('loading')
-  })
-</script>

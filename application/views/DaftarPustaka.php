@@ -63,7 +63,7 @@
         <h4 class="modal-title" id="myModalLabel">Hapus Data</h4>
       </div>
       <div class="modal-body">
-      Apakah anda yakin ingin menghapus pustaka <span class="judul"></span> (<span class="nomor-panggil"></span>)?
+      Apakah anda yakin ingin menghapus pustaka <b><span class="judul"></span> (<span class="nomor-panggil"></span>)</b>?
       Semua data peminjaman terkait pustaka yang bersangkutan juga akan terhapus 
       </div>
       <div class="modal-footer">

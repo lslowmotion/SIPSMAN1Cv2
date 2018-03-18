@@ -75,11 +75,11 @@ class Peminjaman extends CI_Controller {
                     $row->kode_transaksi,
                     $row->no_induk,
                     date("d M Y", strtotime($row->tanggal_pinjam)),
-                    $this->convert_tanggal_kembali($row->tanggal_kembali),
+                    $this->convertTanggalKembali($row->tanggal_kembali),
                     
                     //menghitung denda
-                    $this->hitung_denda(strtotime($row->tanggal_pinjam),$row->tanggal_kembali),
-                    '<a href="'.base_url('peminjaman/datapeminjaman/'.$row->kode_transaksi).'"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail</button></a>'
+                    $this->hitungDenda($row->tanggal_pinjam,$row->tanggal_kembali),
+                    '<a href="'.base_url('peminjaman/datapeminjaman/'.$row->kode_transaksi).'"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail/Kembalikan</button></a>'
                 );
             }
             //jika kosong, kosongi $data
@@ -99,8 +99,8 @@ class Peminjaman extends CI_Controller {
         echo json_encode($json_data);
     }
     
-    //fungsi untuk mengubah tanggal kembali menjadi bentuk yang readable
-    private function convert_tanggal_kembali($tanggal_kembali){
+    //-- fungsi untuk mengubah tanggal kembali menjadi bentuk yang readable
+    private function convertTanggalKembali($tanggal_kembali){
         if($tanggal_kembali == 'Belum dikembalikan'){
             $status = 'Belum dikembalikan';
         }else{
@@ -109,8 +109,8 @@ class Peminjaman extends CI_Controller {
         return $status;
     }
     
-    //fungsi untuk menghitung denda berdasarkan tanggal pinjam dan tanggal kembali
-    private function hitung_denda($unix_tanggal_pinjam,$tanggal_kembali){
+    //-- fungsi untuk menghitung denda berdasarkan tanggal pinjam dan tanggal kembali
+    private function hitungDenda($tanggal_pinjam,$tanggal_kembali){
         $id_aturan = 1;
         $aturan_receive = $this->PeminjamanM->getAturanPeminjaman($id_aturan);
         
@@ -124,9 +124,9 @@ class Peminjaman extends CI_Controller {
         
         //convert tanggal kembali
         if($tanggal_kembali != 'Belum dikembalikan'){
-            $total_denda = max(0,(((strtotime($tanggal_kembali) - $unix_tanggal_pinjam) - $unix_durasi) / 86400) * $denda);
+            $total_denda = max(0,(((strtotime($tanggal_kembali) - strtotime($tanggal_pinjam)) - $unix_durasi) / 86400) * $denda);
         }else{
-            $total_denda = max(0,(((strtotime('today') - $unix_tanggal_pinjam) - $unix_durasi) / 86400) * $denda);
+            $total_denda = max(0,(((strtotime('today') - strtotime($tanggal_pinjam)) - $unix_durasi) / 86400) * $denda);
         }
         return $total_denda;
     }
@@ -149,8 +149,8 @@ class Peminjaman extends CI_Controller {
                 redirect(base_url('peminjaman'));
             }
             $data['data_peminjaman']->tanggal_pinjam = date("d M Y", strtotime($data['data_peminjaman']->tanggal_pinjam));
-            $data['data_peminjaman']->tanggal_kembali = $this->convert_tanggal_kembali($data['data_peminjaman']->tanggal_kembali);
-            $data['data_peminjaman']->denda = $this->hitung_denda(strtotime($data['data_peminjaman']->tanggal_pinjam),$data['data_peminjaman']->tanggal_kembali);
+            $data['data_peminjaman']->tanggal_kembali = $this->convertTanggalKembali($data['data_peminjaman']->tanggal_kembali);
+            $data['data_peminjaman']->denda = $this->hitungDenda($data['data_peminjaman']->tanggal_pinjam,$data['data_peminjaman']->tanggal_kembali);
             $data['data_pustaka'] = $this->PustakaM->getDataPustaka($data['data_peminjaman']->nomor_panggil);
             $data['data_anggota'] = $this->AnggotaM->getDataAnggota($data['data_peminjaman']->no_induk);
             $this->load->view('head');
@@ -378,6 +378,89 @@ class Peminjaman extends CI_Controller {
             $this->load->view('head');
             $this->load->view('FormPinjam',$data);
             $this->load->view('foot');
+        }
+    }
+    
+    function pengaturanPeminjaman(){
+        //cek otoritas
+        if($this->session->userdata('level') != 'admin'){
+            redirect(base_url('peminjaman'));
+        }
+        
+        //jika POST kosong, lempar ke form
+        if(empty($this->input->post('submit'))){
+            $id_aturan = 1;
+            $data['data_aturan'] = $this->PeminjamanM->getAturanPeminjaman($id_aturan);
+            $this->load->view('head');
+            $this->load->view('FormPengaturanPeminjaman',$data);
+            $this->load->view('foot');
+        }else{ //jika POST tidak kosong, proses
+        
+            $config = array(
+                array(
+                    'field' => 'denda',
+                    'label' => 'Nominal denda',
+                    'rules' => 'required|numeric',
+                    'errors' => array(
+                        'required' => '%s tidak boleh kosong',
+                        'numeric' => '%s harus berupa angka (dalam rupiah)'
+                    )
+                ),
+                array(
+                    'field' => 'durasi',
+                    'label' => 'Maksimal durasi pinjam',
+                    'rules' => 'required|numeric',
+                    'errors' => array(
+                        'required' => '%s tidak boleh kosong',
+                        'numeric' => '%s harus berupa angka (dalam hari)'
+                    ),
+                ),
+                array(
+                    'field' => 'maksimal-pinjam',
+                    'label' => 'Maksimal koleksi pustaka yang boleh dipinjam',
+                    'rules' => 'required|numeric',
+                    'errors' => array(
+                        'required' => '%s tidak boleh kosong',
+                        'numeric' => '%s harus berupa angka (dalam eksemplar)'
+                    )
+                )
+            );
+            //validasi data masukan
+            $this->form_validation->set_rules($config);
+            //tampilkan info apabila error validasi
+            if($this->form_validation->run() == FALSE){
+                $this->session->set_flashdata('message',
+                    '<div class="alert alert-danger" role="alert">
+                        <b>Terjadi Kesalahan:</b><br>'.validation_errors().'
+                    </div>');
+                redirect(base_url('peminjaman/pengaturanpeminjaman'));
+            }
+            
+            $id_aturan = 1;
+            
+            $data_aturan = array(
+                'id_aturan' => $id_aturan,
+                'denda' => $this->input->post('denda'),
+                'durasi' => $this->input->post('durasi'),
+                'maksimal_pinjam' => $this->input->post('maksimal-pinjam')
+            );
+            
+            $result = $this->PeminjamanM->editAturanPeminjaman($data_aturan);
+            
+            //jika berhasil memasukkan data ke dalam db
+            if($result=='0'){
+                $this->session->set_flashdata('message',
+                    '<div class="alert alert-success" role="alert">Aturan peminjaman berhasil diubah</div>');
+                    redirect(base_url('peminjaman/pengaturanpeminjaman'));
+                    //gagal memasukkan data ke dalam db
+            }else{
+                $this->session->set_flashdata('message',
+                    '<div class="alert alert-danger" role="alert">
+                                <b>Terjadi kesalahan dalam mengubah aturan peminjaman.</b>
+                                , Kode : <strong>'.$result.'</strong>
+                            </div>');
+                redirect(base_url('peminjaman/pengaturanpeminjaman'));
+            }
         }
     }
 }

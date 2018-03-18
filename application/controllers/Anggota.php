@@ -281,8 +281,8 @@ class Anggota extends CI_Controller{
                     //jika berhasil memasukkan data ke dalam db
                     if($result=='0'){
                         $this->session->set_flashdata('message',
-                            '<div class="alert alert-success" role="alert">Data anggota dengan no induk: '
-                                .$no_induk.' berhasil diedit 
+                            '<div class="alert alert-success" role="alert">Data anggota dengan no induk: <b>'
+                                .$no_induk.'</b> berhasil diedit 
                             </div>');
                         redirect(base_url('anggota/dataanggota/'.$no_induk));
                     //gagal memasukkan data ke dalam db
@@ -292,7 +292,7 @@ class Anggota extends CI_Controller{
                                 <b>Terjadi kesalahan dalam memasukkan perubahan data anggota.</b>
                                 , Kode : <strong>'.$result.'</strong>
                             </div>');
-                        redirect(current_url());
+                        redirect(base_url('anggota/dataanggota/'.$no_induk));
                     }
                 }
                 
@@ -319,7 +319,7 @@ class Anggota extends CI_Controller{
         if($cek_peminjaman_by_no_induk > 0){
             $this->session->set_flashdata('message',
                 '<div class="alert alert-danger" role="alert">
-                    Gagal menghapus anggota dengan <b>no induk '.$no_induk.'</b>. Terdapat peminjaman dengan data anggota yang bersangkutan.
+                    Gagal menghapus anggota dengan no induk <b>'.$no_induk.'</b>. Terdapat peminjaman dengan data anggota yang bersangkutan.
                 </div>');
             redirect(base_url('anggota'));
         }
@@ -328,8 +328,8 @@ class Anggota extends CI_Controller{
         $this->load->model('AkunM');
         $this->AkunM->hapusAkun($no_induk);
         $this->session->set_flashdata('message',
-            '<div class="alert alert-success" role="alert">Data anggota dengan no induk '
-                .$no_induk.' berhasil dihapus
+            '<div class="alert alert-success" role="alert">Data anggota dengan no induk <b>'
+                .$no_induk.'</b> berhasil dihapus
             </div>');
         redirect(base_url('anggota'));
     }

@@ -535,7 +535,7 @@ class Pustaka extends CI_Controller{
         if($cek_peminjaman_by_nomor_panggil > 0){
             $this->session->set_flashdata('message',
                 '<div class="alert alert-danger" role="alert">
-                    Gagal menghapus anggota dengan <b>nomor panggil '.$nomor_panggil.'</b>. Terdapat peminjaman dengan data koleksi pustaka yang bersangkutan.
+                    Gagal menghapus koleksi pustaka dengan nomor panggil <b>'.$nomor_panggil.'</b>. Terdapat peminjaman dengan data koleksi pustaka yang bersangkutan.
                 </div>');
             redirect(base_url('pustaka'));
         }
@@ -544,8 +544,8 @@ class Pustaka extends CI_Controller{
         $this->PustakaM->hapusPustaka($nomor_panggil);
         //kirim notif ke user
         $this->session->set_flashdata('message',
-            '<div class="alert alert-success" role="alert">Data pustaka dengan nomor panggil '
-            .$nomor_panggil.' berhasil dihapus
+            '<div class="alert alert-success" role="alert">Data pustaka dengan nomor panggil <b>'
+            .$nomor_panggil.'</b> berhasil dihapus
             </div>');
             redirect(base_url('pustaka'));
     }

@@ -117,6 +117,23 @@ class PeminjamanM extends CI_Model{
         return $query->row();
     }
     
+    function editAturanPeminjaman($data){
+        //cleaning query from XSS
+        $data = $this->security->xss_clean($data);
+        //cleaning query from SQL injection
+        $data = $this->db->escape_str($data);
+        //flush
+        $this->db->flush_cache();
+        $this->db->where('id_aturan',$data['id_aturan']);
+        if(!$this->db->update('aturan',$data)){
+            $query=$this->db->error();
+            return $query['code'];
+        }else {
+            $query='0';
+            return $query;
+        }
+    }
+    
     function getDataPeminjaman($data){
         //cleaning query from XSS
         $data = $this->security->xss_clean($data);
