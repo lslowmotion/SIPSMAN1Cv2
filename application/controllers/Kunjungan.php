@@ -18,7 +18,7 @@ class Kunjungan extends CI_Controller {
     }
     
     function daftarKunjungan(){
-        //jika bukan admin dan tidak ada URI segmen 3, beri URI segmen 3 berdasarkan no induk anggota
+        //jika bukan admin dan tidak ada URI segmen 3 atau membuka URI lv 3 selain id sendiri, beri URI segmen 3 berdasarkan no induk anggota
         if($this->session->userdata('level') != 'admin' && (empty($this->uri->segment('3')) || $this->session->userdata('id') != $this->uri->segment('3'))){
             redirect(base_url('kunjungan/daftarkunjungan/'.$this->session->userdata('id')));
         }
