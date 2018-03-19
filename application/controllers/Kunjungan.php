@@ -171,7 +171,7 @@ class Kunjungan extends CI_Controller {
                 //sukses transaksi, lempar ke data peminjaman bersangkutan
                 $this->session->set_flashdata('message',
                     '<div class="alert alert-success" role="alert">
-                        Kunjungan no induk <b>'.$no_induk.'</b> berhasil dicatat.
+                        Selamat datang <b>'.$cek_anggota->nama.'</b>. Kunjungan anda berhasil dicatat.
                     </div>'
                 );  
                 redirect(base_url('kunjungan/tambahkunjungan'));
