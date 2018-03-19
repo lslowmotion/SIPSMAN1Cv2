@@ -70,17 +70,32 @@ class Peminjaman extends CI_Controller {
         
         //jika $data_peminjaman tidak kosong, masukkan data yang akan di-parse ke DataTables dalam $data
         if(!empty($data_peminjaman)){
-            foreach ($data_peminjaman as $row){
-                $data[] = array(
-                    $row->kode_transaksi,
-                    $row->no_induk,
-                    date("d M Y", strtotime($row->tanggal_pinjam)),
-                    $this->convertTanggalKembali($row->tanggal_kembali),
-                    
-                    //menghitung denda
-                    $this->hitungDenda($row->tanggal_pinjam,$row->tanggal_kembali),
-                    '<a href="'.base_url('peminjaman/datapeminjaman/'.$row->kode_transaksi).'"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail/Kembalikan</button></a>'
-                );
+            if($this->session->userdata('level') == 'admin'){
+                foreach ($data_peminjaman as $row){
+                    $data[] = array(
+                        $row->kode_transaksi,
+                        $row->no_induk,
+                        date("d M Y", strtotime($row->tanggal_pinjam)),
+                        $this->convertTanggalKembali($row->tanggal_kembali),
+                        
+                        //menghitung denda
+                        $this->hitungDenda($row->tanggal_pinjam,$row->tanggal_kembali),
+                        '<a href="'.base_url('peminjaman/datapeminjaman/'.$row->kode_transaksi).'"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail/Kembalikan</button></a>'
+                    );
+                }
+            }else{
+                foreach ($data_peminjaman as $row){
+                    $data[] = array(
+                        $row->kode_transaksi,
+                        $row->no_induk,
+                        date("d M Y", strtotime($row->tanggal_pinjam)),
+                        $this->convertTanggalKembali($row->tanggal_kembali),
+                        
+                        //menghitung denda
+                        $this->hitungDenda($row->tanggal_pinjam,$row->tanggal_kembali),
+                        '<a href="'.base_url('peminjaman/datapeminjaman/'.$row->kode_transaksi).'"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Detail</button></a>'
+                    );
+                }
             }
             //jika kosong, kosongi $data
         }else{

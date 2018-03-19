@@ -14,6 +14,9 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo base_url('assets/css/bootstrap.min.css');?>" rel="stylesheet">
+    
+    <!-- Bootstrap ComboBox CSS -->
+    <link href="<?php echo base_url('assets/css/bootstrap-combobox.css');?>" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
     <link href="<?php echo base_url('assets/css/metisMenu.min.css');?>" rel="stylesheet">

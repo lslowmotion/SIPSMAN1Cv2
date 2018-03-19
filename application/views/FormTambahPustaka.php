@@ -31,7 +31,7 @@
         				<label class="control-label col-md-2" for="kode-klasifikasi">Kode Klasifikasi:</label>
         				<div class="col-md-7">
         					<select name="kode-klasifikasi" id="kode-klasifikasi" class="form-control">
-								<option selected value="">-- Pilih kategori --</option>
+								<option selected value="">Kode klasifikasi/Nama kategori</option>
     							<?php 
     							foreach ($daftar_kategori as $row){
     								echo '<option value="'.$row->kode_klasifikasi.'">'.$row->kode_klasifikasi.': '.$row->nama_kategori.'</option>';
@@ -84,7 +84,10 @@
         			<div class="form-group">
         				<label class="control-label col-md-2" for="jumlah">Jumlah Koleksi:</label>
         				<div class="col-md-10" >
-        					<input class="form-control num" placeholder="Jumlah koleksi yang dimiliki"  name="jumlah" type="text" autocomplete="off"/>
+            				<div class="input-group">
+            					<input class="form-control num" placeholder="Jumlah koleksi yang dimiliki"  name="jumlah" type="text" autocomplete="off"/>
+            					<span class="input-group-addon">eksemplar</span>
+            				</div>
         				</div>
         			</div>
         			<div class="form-group">
@@ -103,6 +106,8 @@
 <script src="<?php echo base_url('assets/js/killnonalphanum.js');?>"></script>
 <script>
 $(document).ready( function () {
+	$('#kode-klasifikasi').combobox();
+	
     document.getElementById("kode-klasifikasi").onchange = function() {isiNomorPanggil()};
     document.getElementById("pengarang").onchange = function() {isiNomorPanggil()};
     document.getElementById("judul").onchange = function() {isiNomorPanggil()};

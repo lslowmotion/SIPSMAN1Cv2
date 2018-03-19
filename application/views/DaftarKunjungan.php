@@ -22,7 +22,9 @@
 								<th width="16%">ID Kunjungan</th>
 								<th>No Induk</th>
 								<th>Tanggal Kunjungan</th>
+								<?php if($this->session->userdata('level') == 'admin'){?>
 								<th width="17%">Menu</th>
+								<?php }?>
 							</tr>
 						</thead>
 						<tbody>
@@ -60,7 +62,9 @@ $(document).ready( function () {
      		{"name": "id-kunjungan", "orderable": true},
      		{"name": "no-induk", "orderable": true},
      		{"name": "tanggal-kunjungan", "orderable": true},
+     		<?php if($this->session->userdata('level') == 'admin'){?>
      		{"name": "menu", "orderable": false}
+     		<?php }?>
  		],
  		"order": [[0, 'desc']],
 	});

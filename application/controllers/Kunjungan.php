@@ -18,7 +18,7 @@ class Kunjungan extends CI_Controller {
     }
     
     function daftarKunjungan(){
-        //jika bukan admin dan tidak ada URI segmen 3, beri URI segmen 3 berdasarkan no induk anggota
+        //jika bukan admin dan tidak ada URI segmen 3 atau membuka URI lv 3 selain id sendiri, beri URI segmen 3 berdasarkan no induk anggota
         if($this->session->userdata('level') != 'admin' && (empty($this->uri->segment('3')) || $this->session->userdata('id') != $this->uri->segment('3'))){
             redirect(base_url('kunjungan/daftarkunjungan/'.$this->session->userdata('id')));
         }
@@ -66,13 +66,23 @@ class Kunjungan extends CI_Controller {
         
         //jika $data_kunjungan tidak kosong, masukkan data yang akan di-parse ke DataTables dalam $data
         if(!empty($data_kunjungan)){
-            foreach ($data_kunjungan as $row){
-                $data[] = array(
-                    $row->id_kunjungan,
-                    $row->no_induk,
-                    date("d M Y", strtotime($row->tanggal_kunjungan)),
-                    '<a href="'.base_url('anggota/dataanggota/'.$row->no_induk).'"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Data Pengunjung</button></a>'
-                );
+            if($this->session->userdata('level') == 'admin'){
+                foreach ($data_kunjungan as $row){
+                    $data[] = array(
+                        $row->id_kunjungan,
+                        $row->no_induk,
+                        date("d M Y", strtotime($row->tanggal_kunjungan)),
+                        '<a href="'.base_url('anggota/dataanggota/'.$row->no_induk).'"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Data Pengunjung</button></a>'
+                    );
+                }
+            }else{
+                foreach ($data_kunjungan as $row){
+                    $data[] = array(
+                        $row->id_kunjungan,
+                        $row->no_induk,
+                        date("d M Y", strtotime($row->tanggal_kunjungan))
+                    );
+                }
             }
             //jika kosong, kosongi $data
         }else{
@@ -147,12 +157,12 @@ class Kunjungan extends CI_Controller {
             //mencari nomor id kunjungan yang tersedia
             $kunjungan_ke = 1;
             $format_kunjungan_ke = sprintf("%03d", $kunjungan_ke);
-            $id_kunjungan = date('ymd',strtotime('Today')).'-'.$format_kunjungan_ke;
+            $id_kunjungan = date('ymd',strtotime('Today')).'/'.$format_kunjungan_ke;
             $cek_ketersediaan_id_kunjungan = $this->KunjunganM->getDataKunjungan($id_kunjungan);
             while(!empty($cek_ketersediaan_id_kunjungan)){
                 $kunjungan_ke ++;
                 $format_kunjungan_ke = sprintf("%03d", $kunjungan_ke);
-                $id_kunjungan = date('ymd',strtotime('Today')).'-'.$format_kunjungan_ke;
+                $id_kunjungan = date('ymd',strtotime('Today')).'/'.$format_kunjungan_ke;
                 $cek_ketersediaan_id_kunjungan = $this->KunjunganM->getDataKunjungan($id_kunjungan);
             }
             
@@ -171,7 +181,7 @@ class Kunjungan extends CI_Controller {
                 //sukses transaksi, lempar ke data peminjaman bersangkutan
                 $this->session->set_flashdata('message',
                     '<div class="alert alert-success" role="alert">
-                        Kunjungan no induk <b>'.$no_induk.'</b> berhasil dicatat.
+                        Selamat datang <b>'.$cek_anggota->nama.'</b>. Kunjungan anda berhasil dicatat.
                     </div>'
                 );  
                 redirect(base_url('kunjungan/tambahkunjungan'));

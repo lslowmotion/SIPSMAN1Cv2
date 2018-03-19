@@ -18,29 +18,29 @@
         			<div class="form-group">
         				<label class="control-label col-md-3" for="nomor-panggil">Nomor Panggil Pustaka:</label>
         				<div class="col-md-9" >
-        					<input list="nomor-panggil" name="nomor-panggil" autocomplete="off" class="form-control" placeholder="Cari nomor panggil/judul pustaka" autofocus />
-        					<datalist id="nomor-panggil">
+        					<select name="nomor-panggil" id="nomor-panggil" class="form-control">
+								<option selected value="">Nomor panggil/Judul pustaka</option>
         						<?php 
         						foreach ($daftar_pustaka as $row){
         						    if($row->jumlah_pustaka - $row->jumlah_dipinjam > 0){
-    						          echo '<option value="'.$row->nomor_panggil.'">'.$row->judul.'</option>';
+        						        echo '<option value="'.$row->nomor_panggil.'">'.$row->nomor_panggil.': '.$row->judul.'</option>';
         						    }
         						}
         						?>
-        					</datalist>
+        					</select>
         				</div>
         			</div>
         			<div class="form-group">
         				<label class="control-label col-md-3" for="no-induk">No Induk Peminjam:</label>
         				<div class="col-md-9" >
-        					<input list="no-induk" name="no-induk" autocomplete="off" class="form-control" placeholder="Cari no induk/nama anggota perpustakaan" />
-        					<datalist id="no-induk">
+        					<select name="no-induk" id="no-induk" class="form-control">
+								<option selected value="">No induk/Nama peminjam</option>
         						<?php 
         						foreach ($daftar_anggota as $row){
-        						    echo '<option value="'.$row->no_induk.'">'.$row->nama.'</option>';
+        						    echo '<option value="'.$row->no_induk.'">'.$row->no_induk.': '.$row->nama.'</option>';
         						}
         						?>
-        					</datalist>
+        					</select>
         				</div>
         			</div>
         			
@@ -70,6 +70,10 @@
 </body>
 
 <script>
+$(document).ready( function () {
+	$('#nomor-panggil').combobox();
+	$('#no-induk').combobox();
+	
 	var tanggal_sekarang = new Date();
 	var tanggal_kembali = new Date();
 	tanggal_kembali.setDate(tanggal_sekarang.getDate() + <?php echo $durasi;?>);
@@ -88,4 +92,6 @@
 		document.getElementById('tanggal-kembali').valueAsDate = tanggal_kembali;
 	
 	}
+
+});
 </script>
