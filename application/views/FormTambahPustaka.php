@@ -84,7 +84,10 @@
         			<div class="form-group">
         				<label class="control-label col-md-2" for="jumlah">Jumlah Koleksi:</label>
         				<div class="col-md-10" >
-        					<input class="form-control num" placeholder="Jumlah koleksi yang dimiliki"  name="jumlah" type="text" autocomplete="off"/>
+            				<div class="input-group">
+            					<input class="form-control num" placeholder="Jumlah koleksi yang dimiliki"  name="jumlah" type="text" autocomplete="off"/>
+            					<span class="input-group-addon">eksemplar</span>
+            				</div>
         				</div>
         			</div>
         			<div class="form-group">
