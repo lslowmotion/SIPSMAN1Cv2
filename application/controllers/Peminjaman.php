@@ -119,7 +119,7 @@ class Peminjaman extends CI_Controller {
         if($tanggal_kembali == 'Belum dikembalikan'){
             $status = 'Belum dikembalikan';
         }else{
-            $status = date("d M Y",strtotime($tanggal_kembali));
+            $status = date('d M Y',strtotime($tanggal_kembali));
         }
         return $status;
     }
@@ -139,9 +139,9 @@ class Peminjaman extends CI_Controller {
         
         //convert tanggal kembali
         if($tanggal_kembali != 'Belum dikembalikan'){
-            $total_denda = max(0,(((strtotime($tanggal_kembali) - strtotime($tanggal_pinjam)) - $unix_durasi) / 86400) * $denda);
+            $total_denda = max(0,ceil(((strtotime($tanggal_kembali) - strtotime($tanggal_pinjam)) - $unix_durasi) / 86400) * $denda);
         }else{
-            $total_denda = max(0,(((strtotime('today') - strtotime($tanggal_pinjam)) - $unix_durasi) / 86400) * $denda);
+            $total_denda = max(0,ceil(((strtotime('today') - strtotime($tanggal_pinjam)) - $unix_durasi) / 86400) * $denda);
         }
         return $total_denda;
     }

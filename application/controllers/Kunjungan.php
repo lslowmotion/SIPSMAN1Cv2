@@ -7,6 +7,10 @@ class Kunjungan extends CI_Controller {
     }
     
     function index(){
+        //jika tidak login, lempar
+        if(empty($this->session->userdata('id'))){
+            redirect(base_url('akun'));
+        }
         //jika bukan admin atau anggota membuka URI lv 3 selain id sendiri, lempar ke daftar kunjungan berdasarkan no induk pengguna menggunakan URI segmen 3
         if($this->session->userdata('level') != 'admin' && (empty($this->uri->segment('3')) || $this->session->userdata('id') != $this->uri->segment('3'))){
             redirect(base_url('kunjungan/index/'.$this->session->userdata('id')));
@@ -18,6 +22,10 @@ class Kunjungan extends CI_Controller {
     }
     
     function daftarKunjungan(){
+        //jika tidak login, lempar
+        if(empty($this->session->userdata('id'))){
+            redirect(base_url('akun'));
+        }
         //jika bukan admin dan tidak ada URI segmen 3 atau membuka URI lv 3 selain id sendiri, beri URI segmen 3 berdasarkan no induk anggota
         if($this->session->userdata('level') != 'admin' && (empty($this->uri->segment('3')) || $this->session->userdata('id') != $this->uri->segment('3'))){
             redirect(base_url('kunjungan/daftarkunjungan/'.$this->session->userdata('id')));
@@ -102,6 +110,10 @@ class Kunjungan extends CI_Controller {
     }
     
     function tambahKunjungan(){
+        //jika anggota, lempar
+        if($this->session->userdata('level') == 'anggota'){
+            redirect(base_url());
+        }
         if(empty($this->input->post('no-induk'))){
             $this->load->view('FormKunjungan');
         }else{

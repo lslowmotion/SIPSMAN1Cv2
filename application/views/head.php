@@ -79,7 +79,7 @@
 							</div>
 							<div class="form-group">
 								<label for="password">Password</label>
-								<input class="form-control" placeholder="password" name="password" type="password" />
+								<input class="form-control" placeholder="Password" name="password" type="password" />
 							</div>
 							<input type="hidden" name="submit" value=TRUE />
 							<button type="submit" class="form-control btn-primary"><i class="fa fa-sign-in "></i> Login</button>
