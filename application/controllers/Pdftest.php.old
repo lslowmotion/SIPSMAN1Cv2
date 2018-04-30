@@ -1,7 +1,7 @@
 <?php
 use Mpdf\Mpdf;
 
-class PdfTest extends CI_Controller {
+class Pdftest extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
