@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "47f6fc6e170c5f7123ca8b79b05ea901",
+    "content-hash": "60e34e2813797eaf6f0ee94bb1b676e0",
     "packages": [
         {
             "name": "mpdf/mpdf",

@@ -13,7 +13,7 @@
 	},
 	"require" : {
 		"php" : ">=7.0.0",
-		"mpdf/mpdf": "^7.0"
+		"mpdf/mpdf" : "~7.0"
 	},
 	"suggest" : {
 		"paragonie/random_compat" : "Provides better randomness in PHP 5.x"
