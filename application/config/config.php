@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/SIPSMAN1Cv2';
+$config['base_url'] = 'https://sipsman1cv2.herokuapp.com/';
 
 /*
 |--------------------------------------------------------------------------
