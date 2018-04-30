@@ -72,33 +72,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $active_group = 'testing';
 $query_builder = TRUE;
-/* $db['default']['hostname'] = 'pgsql:host=ec2-54-247-89-189.eu-west-1.compute.amazonaws.com'; //set host
-$db['default']['username'] = 'hocvtunblcfyla'; //set username
-$db['default']['password'] = 'aeea4003510986828424c08df0a476aae5542e66d99f21c4e7eb9782d59630ba'; //set password
-$db['default']['database'] = 'd1q9b21mi102vj'; //set databse
-$db['default']['dbdriver'] = 'pdo'; //set driver here */
-
-/* $db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'db_sipsman1c',
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
-);*/
 $db['testing'] = array(
     'dsn'	=> '',
     'hostname' => 'ec2-54-247-89-189.eu-west-1.compute.amazonaws.com',
