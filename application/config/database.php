@@ -96,11 +96,11 @@ $db['default'] = array(
 );
 $db['testing'] = array(
     'dsn'	=> '',
-    'hostname' => 'localhost',
-    'username' => 'root',
-    'password' => '',
-    'database' => 'db_sipsman1c',
-    'dbdriver' => 'mysqli',
+    'hostname' => 'ec2-54-247-89-189.eu-west-1.compute.amazonaws.com',
+    'username' => 'hocvtunblcfyla',
+    'password' => 'aeea4003510986828424c08df0a476aae5542e66d99f21c4e7eb9782d59630ba',
+    'database' => 'd1q9b21mi102vj',
+    'dbdriver' => 'postgre',
     'dbprefix' => '',
     'pconnect' => FALSE,
     'db_debug' => FALSE,
@@ -113,5 +113,6 @@ $db['testing'] = array(
     'compress' => FALSE,
     'stricton' => FALSE,
     'failover' => array(),
-    'save_queries' => TRUE
+    'save_queries' => TRUE,
+    'port' => 5432
 );
