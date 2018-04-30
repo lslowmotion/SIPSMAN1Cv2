@@ -18,4 +18,8 @@ class PdfTest extends CI_Controller {
         // Output a PDF file directly to the browser
         $mpdf->Output();
     }
+    
+    function debug(){
+        $this->load->view('nothingness');
+    }
 }
