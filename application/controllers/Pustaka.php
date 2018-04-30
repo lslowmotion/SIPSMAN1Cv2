@@ -561,6 +561,6 @@ class Pustaka extends CI_Controller{
         $mpdf->WriteHTML('Hello World');
         
         // Output a PDF file directly to the browser
-        $mpdf->Output('testing.pdf');
+        $mpdf->Output('testing.pdf','');
     }
 }
