@@ -12,7 +12,7 @@ class AkunM extends CI_Model{
         //set query
         $this->db->where('id',$id);
         $this->db->where('password',$password);
-        $this->db->from('public.akun');
+        $this->db->from('akun');
         //execute query
         $query = $this->db->get();
         return $query->result();
