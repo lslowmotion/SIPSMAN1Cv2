@@ -1,5 +1,5 @@
 <?php
-use mpdf\mpdf;
+use Mpdf\Mpdf;
 
 class PdfTest extends CI_Controller {
     public function __construct()
