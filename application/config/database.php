@@ -70,8 +70,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
 */
-/* $active_group = 'testing';
-$query_builder = TRUE; */
+$active_group = 'default';
+$query_builder = TRUE;
 $db['default']['hostname'] = 'pgsql:host=ec2-54-247-89-189.eu-west-1.compute.amazonaws.com'; //set host
 $db['default']['username'] = 'hocvtunblcfyla'; //set username
 $db['default']['password'] = 'aeea4003510986828424c08df0a476aae5542e66d99f21c4e7eb9782d59630ba'; //set password
