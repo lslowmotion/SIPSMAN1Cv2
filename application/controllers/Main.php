@@ -9,7 +9,7 @@ class main extends CI_Controller{
             redirect(base_url('kunjungan'));
         }
         $this->load->view('head');
-        $this->load->view('dashboard');
+        $this->load->view('Dashboard');
         $this->load->view('foot');
     }
 }
