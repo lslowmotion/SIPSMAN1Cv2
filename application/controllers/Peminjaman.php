@@ -1,4 +1,6 @@
 <?php
+use Mpdf\Mpdf;
+
 class Peminjaman extends CI_Controller {
     public function __construct()
     {
@@ -477,5 +479,16 @@ class Peminjaman extends CI_Controller {
                 redirect(base_url('peminjaman/pengaturanpeminjaman'));
             }
         }
+    }
+    
+    function cetakDaftarPeminjaman(){
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4'
+        ]);
+        
+        $mpdf->WriteHTML('Test');
+        
+        $mpdf->Output('DaftarPeminjaman.pdf',\Mpdf\Output\Destination::INLINE);
     }
 }

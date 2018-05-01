@@ -1,6 +1,4 @@
 <?php
-use Mpdf\Mpdf;
-
 class Pustaka extends CI_Controller{
     public function __construct(){
         parent::__construct();
@@ -550,17 +548,5 @@ class Pustaka extends CI_Controller{
             .$nomor_panggil.'</b> berhasil dihapus
             </div>');
             redirect(base_url('pustaka'));
-    }
-
-    function testing(){
-        
-        $mpdf = new Mpdf();
-        
-        // Write some HTML code:
-        
-        $mpdf->WriteHTML('Hello World');
-        
-        // Output a PDF file directly to the browser
-        $mpdf->Output();
     }
 }
