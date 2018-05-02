@@ -177,6 +177,11 @@ class Peminjaman extends CI_Controller {
     }
     
     function cetakStrukPeminjaman(){
+        //jika bukan admin, lempar pengguna
+        if($this->session->userdata('level') != 'admin'){
+            redirect(base_url('peminjaman'));
+        }
+        
         //load model yang diperlukan
         $this->load->model('PustakaM');
         $this->load->model('AnggotaM');
