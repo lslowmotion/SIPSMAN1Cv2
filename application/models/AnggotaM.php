@@ -10,7 +10,7 @@ class AnggotaM extends CI_Model{
         //set query
         $this->db->select('nama');
         $this->db->where('no_induk',$id);
-        $this->db->from('Anggota');
+        $this->db->from('anggota');
         //execute query
         $query = $this->db->get();
         return $query->result();
