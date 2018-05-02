@@ -49,7 +49,7 @@
 					
 				</div>
 			</div>
-			
+			<?php if ($this->session->userdata('level') == 'admin'){?>
 			<div class="row">
 				<div class="col-md-12">
 				<h3>Cetak Status Peminjaman</h3>
@@ -83,13 +83,13 @@
         			<div class="form-group">
         				<div class="col-md-4 col-md-offset-1">
         					<input type="hidden" value="submit" name="submit">
-        					<button type="submit" id="submit" class="form-control btn-primary"><i class="fa fa-print"></i> Cetak Status Peminjaman</button>
+        					<button type="submit" id="submit" class="form-control btn-primary"><i class="fa fa-print"></i> Cetak status peminjaman</button>
         				</div>
         			</div>	
             	</form>		
         		</div>
 			</div>
-			
+			<?php }?>
 		</div>
 	</div>
 </body>
