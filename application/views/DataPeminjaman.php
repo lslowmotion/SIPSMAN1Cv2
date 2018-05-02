@@ -70,20 +70,28 @@
     						</td>
     						<td></td>
     						<td>
-    						<?php if ($data_peminjaman->tanggal_kembali == 'Belum dikembalikan' && $this->session->userdata('level') == 'admin'){?>
-    							<button class="form-control btn-primary" data-toggle="modal" data-target="#kembalikanModal"
-    								data-kode-transaksi="<?php echo $data_peminjaman->kode_transaksi;?>"
-    								data-tanggal-pinjam="<?php echo $data_peminjaman->tanggal_pinjam;?>"
-    								data-tanggal-kembali="
-    								<?php
-        								$now = date('d M Y');
-    								    echo $now;
-    								?>"
-    								data-denda="<?php echo $data_peminjaman->denda;?>"
-    								>
-									<i class="fa fa-exchange"></i> Kembalikan/Selesai pinjam
-								</button>
-							<?php }?>
+    						<?php if ($this->session->userdata('level') == 'admin'){
+    						    if ($data_peminjaman->tanggal_kembali == 'Belum dikembalikan' && $this->session->userdata('level') == 'admin'){?>
+        							<button class="form-control btn-primary" data-toggle="modal" data-target="#kembalikanModal"
+        								data-kode-transaksi="<?php echo $data_peminjaman->kode_transaksi;?>"
+        								data-tanggal-pinjam="<?php echo $data_peminjaman->tanggal_pinjam;?>"
+        								data-tanggal-kembali="
+        								<?php
+            								$now = date('d M Y');
+        								    echo $now;
+        								?>"
+        								data-denda="<?php echo $data_peminjaman->denda;?>"
+        								>
+    									<i class="fa fa-exchange"></i> Kembalikan/Selesai pinjam
+    								</button>
+								<?php }else{?>
+    								<a href="<?php echo base_url('peminjaman/cetakstrukpeminjaman/'.$data_peminjaman->kode_transaksi);?>" target=_blank>
+    									<button class="form-control btn-primary">
+    										<i class="fa fa-print"></i> Cetak bukti pengembalian
+    									</button>
+    								</a>
+							<?php }
+    						}?>
 							</td>
     					</tr>
     				</table>

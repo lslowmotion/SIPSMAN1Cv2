@@ -152,7 +152,7 @@ class Peminjaman extends CI_Controller {
         //load model yang diperlukan
         $this->load->model('PustakaM');
         $this->load->model('AnggotaM');
-        //ambil no induk dari segmen ke 3 URI
+        //ambil kode transaksi dari segmen ke 3 URI
         $kode_transaksi = $this->uri->segment('3');
         //fetch data peminjaman
         $data['data_peminjaman'] = $this->PeminjamanM->getDataPeminjaman($kode_transaksi);
@@ -173,6 +173,55 @@ class Peminjaman extends CI_Controller {
             $this->load->view('head');
             $this->load->view('DataPeminjaman',$data);
             $this->load->view('foot');
+        }
+    }
+    
+    function cetakStrukPeminjaman(){
+        //load model yang diperlukan
+        $this->load->model('PustakaM');
+        $this->load->model('AnggotaM');
+        //ambil kode transaksi dari segmen ke 3 URI
+        $kode_transaksi = $this->uri->segment('3');
+        //fetch data peminjaman
+        $data['data_peminjaman'] = $this->PeminjamanM->getDataPeminjaman($kode_transaksi);
+        
+        //tampilkan data peminjaman
+        if(empty($data['data_peminjaman'])){
+            redirect(base_url('peminjaman'));
+        }else{
+            //jika pengguna non admin mengakses data peminjaman selain milik sendiri, lempar ke status peminjaman
+            if($this->session->userdata('level') != 'admin' && $data['data_peminjaman']->no_induk != $this->session->userdata('id')){
+                redirect(base_url('peminjaman'));
+            }
+            $data['data_peminjaman']->tanggal_pinjam = date("d M Y", strtotime($data['data_peminjaman']->tanggal_pinjam));
+            $data['data_peminjaman']->tanggal_kembali = $data['data_peminjaman']->tanggal_kembali;
+            $data['data_peminjaman']->denda = $this->hitungDenda($data['data_peminjaman']->tanggal_pinjam,$data['data_peminjaman']->tanggal_kembali);
+            $data['data_pustaka'] = $this->PustakaM->getDataPustaka($data['data_peminjaman']->nomor_panggil);
+            $data['data_anggota'] = $this->AnggotaM->getDataAnggota($data['data_peminjaman']->no_induk);
+            $view = $this->load->view('FileStrukPeminjaman',$data,true);
+            
+            //pengaturan ukuran kertas dan margin mpdf
+            $mpdf = new Mpdf([
+                'mode' => 'utf-8',
+                'format' => 'A6',
+                'margin_left' => 10,
+                'margin_top' => 10,
+                'margin_right' => 10,
+                'margin_bottom' => 10,
+                'default_font_size' => 9
+            ]);
+            
+            //header file pdf
+            $mpdf->WriteHTML('<h3>Bukti Pengembalian Pustaka Perpustakaan SMA N 1 Cilacap</h3>');
+            
+            //body file pdf
+            $mpdf->WriteHTML($view);
+            
+            //nama file pdf pada browser
+            $mpdf->SetTitle('Bukti Pengembalian');
+            
+            //nama file pdf pada download
+            $mpdf->Output('Bukti Pengembalian.pdf','I');
         }
     }
     
@@ -497,6 +546,11 @@ class Peminjaman extends CI_Controller {
     }
     
     function cetakDaftarPeminjaman(){
+        //cek otoritas
+        if($this->session->userdata('level') != 'admin'){
+            redirect(base_url('peminjaman'));
+        }
+        
         //load model yang diperlukan
         $this->load->model('AnggotaM');
         $this->load->model('PustakaM');
@@ -555,16 +609,6 @@ class Peminjaman extends CI_Controller {
         }
         $data['data_peminjaman'] = $data_peminjaman;
         
-        //pengaturan ukuran kertas dan margin mpdf
-        $mpdf = new Mpdf([
-            'mode' => 'utf-8',
-            'format' => 'A4-L',
-            'margin_left' => 25,
-            'margin_top' => 25,
-            'margin_right' => 25,
-            'margin_bottom' => 25
-        ]);
-        
         //melempar data peminjaman ke view FileDaftarPeminjaman dan menyimpannya ke dalam variabel $view
         $view = $this->load->view('FileDaftarPeminjaman',$data,true);
         
@@ -617,8 +661,18 @@ class Peminjaman extends CI_Controller {
             $tahun = ' '.$tahun;
         }
         
+        //pengaturan ukuran kertas dan margin mpdf
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4-L',
+            'margin_left' => 25,
+            'margin_top' => 25,
+            'margin_right' => 25,
+            'margin_bottom' => 25
+        ]);
+        
         //header file pdf
-        $mpdf->WriteHTML('<h2>Daftar Peminjaman Perpustakaan SMA Negeri 1 Cilacap</h2><h3>'.$bulan.$tahun.'</h3>');
+        $mpdf->WriteHTML('<h2>Daftar Peminjaman Perpustakaan SMA N 1 Cilacap</h2><h3>'.$bulan.$tahun.'</h3>');
         
         //body file pdf
         $mpdf->WriteHTML($view);
