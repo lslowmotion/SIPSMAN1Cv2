@@ -565,7 +565,7 @@ class Peminjaman extends CI_Controller {
             $config = array(
                 array(
                     'field' => 'bulan',
-                    'label' => 'Bulan pada menu Cetak Status Peminjaman',
+                    'label' => 'Bulan pada menu Cetak Daftar Peminjaman',
                     'rules' => 'max_length[3]',
                     'errors' => array('max_length' => '%s harus berupa 3 karakter')
                 ),

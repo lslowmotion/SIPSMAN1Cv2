@@ -1,4 +1,6 @@
 <?php
+use Mpdf\Mpdf;
+
 class Kunjungan extends CI_Controller {
     public function __construct()
     {
@@ -206,5 +208,141 @@ class Kunjungan extends CI_Controller {
                 redirect(base_url('kunjungan/tambahkunjungan'));
             }
         }
+    }
+    
+    function cetakDaftarKunjungan(){
+        //cek otoritas
+        if($this->session->userdata('level') != 'admin'){
+            redirect(base_url('kunjungan'));
+        }
+        
+        //load model yang diperlukan
+        $this->load->model('AnggotaM');
+        
+        //validasi masukan POST untuk pengaturan bulan dan tahun yang dicetak
+        if(!empty($this->input->post('submit'))){
+            //konfigurasi validasi data masukan
+            $config = array(
+                array(
+                    'field' => 'bulan',
+                    'label' => 'Bulan pada menu Cetak Daftar Kunjungan',
+                    'rules' => 'max_length[3]',
+                    'errors' => array('max_length' => '%s harus berupa 3 karakter')
+                ),
+                array(
+                    'field' => 'tahun',
+                    'label' => 'Tahun pada menu Cetak Daftar Kunjungan',
+                    'rules' => 'numeric|max_length[4]|min_length[4]',
+                    'errors' => array(
+                        'numeric' => '%s harus berupa angka',
+                        'max_length' => '%s tidak valid. Tahun harus berupa 4 digit angka',
+                        'min_length' => '%s tidak valid. Tahun harus berupa 4 digit angka'
+                    )
+                )
+            );
+            $this->form_validation->set_rules($config);
+            
+            //validasi form
+            if ($this->form_validation->run() == FALSE){
+                
+                //jika tidak lolos validasi, lempar kembali dengan alert
+                $this->session->set_flashdata('message',
+                    '<div class="alert alert-danger" role="alert">'
+                    .validation_errors().
+                    '</div>');
+                    redirect(base_url('kunjungan'));
+            }
+        }
+        
+        //menerima POST pengaturan bulan dan tahun
+        $bulan = $this->input->post('bulan');
+        $tahun = $this->input->post('tahun');
+        
+        //mengatur search query agar memiliki format yang tepat (contoh: Mar 2018)
+        $filterbulantahun = $bulan.' '.$tahun;
+        
+        //mencari jumlah data kunjungan
+        $panjang_data = $this->KunjunganM->getJumlahKunjungan(null,null);
+        
+        //fetch data kunjungan berdasarkan search query bulan tahun
+        $data_kunjungan = $this->KunjunganM->getDaftarKunjunganbySearch($panjang_data,0,$filterbulantahun,0,'desc',null)['data'];
+        foreach ($data_kunjungan as $row){
+            $row->nama = $this->AnggotaM->getDataAnggota($row->no_induk)->nama;
+        }
+        $data['data_kunjungan'] = $data_kunjungan;
+        
+        //melempar data peminjaman ke view FileDaftarKunjungan dan menyimpannya ke dalam variabel $view
+        $view = $this->load->view('FileDaftarKunjungan',$data,true);
+        
+        //mengubah format bulan menjadi bentuk panjang untuk digunakan pada header file pdf
+        switch ($bulan) {
+            case "Jan":
+                $bulan = 'Januari';
+                break;
+            case "Feb":
+                $bulan = 'Februari';
+                break;
+            case "Mar":
+                $bulan = 'Maret';
+                break;
+            case "Apr":
+                $bulan = 'April';
+                break;
+            case "May":
+                $bulan = 'Mei';
+                break;
+            case "Jun":
+                $bulan = 'Juni';
+                break;
+            case "Jul":
+                $bulan = 'Juli';
+                break;
+            case "Aug":
+                $bulan = 'Agustus';
+                break;
+            case "Sep":
+                $bulan = 'September';
+                break;
+            case "Oct":
+                $bulan = 'Oktober';
+                break;
+            case "Nov":
+                $bulan = 'November';
+                break;
+            case "Dec":
+                $bulan = 'Desember';
+                break;
+            default:
+                $bulan = '';
+        }
+        
+        //mengubah format tahun menjadi bentuk normal untuk digunakan pada header file pdf
+        if (empty($tahun)){
+            $tahun = '';
+        }else{
+            $tahun = ' '.$tahun;
+        }
+        
+        //pengaturan ukuran kertas dan margin mpdf
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'margin_left' => 25,
+            'margin_top' => 25,
+            'margin_right' => 25,
+            'margin_bottom' => 25
+        ]);
+        
+        //header file pdf
+        $mpdf->WriteHTML('<h2>Daftar Kunjungan Perpustakaan SMA N 1 Cilacap</h2><h3>'.$bulan.$tahun.'</h3>');
+        
+        //body file pdf
+        $mpdf->WriteHTML($view);
+        
+        //nama file pdf pada browser
+        $mpdf->SetTitle('Daftar Kunjungan Perpustakaan');
+        
+        //nama file pdf pada download
+        $mpdf->Output('Daftar Kunjungan Perpustakaan.pdf','I');
     }
 }
