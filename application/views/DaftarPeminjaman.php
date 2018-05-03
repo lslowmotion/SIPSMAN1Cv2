@@ -99,7 +99,7 @@ if ($this->session->userdata('level') == 'admin'){?>
         			<div class="form-group">
         				<div class="col-md-5 col-md-offset-2">
         					<input type="hidden" value="submit" name="submit">
-        					<button type="submit" id="submit" class="btn"><i class="fa fa-print"></i> Cetak daftar peminjaman</button>
+        					<button type="submit" id="submit" class="btn"><i class="fa fa-print"></i> Cetak</button>
         				</div>
         			</div>	
             	</form>		
