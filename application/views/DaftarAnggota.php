@@ -33,7 +33,7 @@
 						<tfoot>
 					<tr>
 					<td>
-					<a href="<?php echo base_url('anggota/tambahanggota');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah Anggota</button></a>
+					<a href="<?php echo base_url('anggota/tambahanggota');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah anggota</button></a>
 					</td>
 					<td></td>
 					<td></td>
@@ -65,7 +65,7 @@
       <form action="<?php echo base_url('anggota/hapusanggota'); ?>" method="post">
       	<input type="hidden" class="no-induk" name="no-induk"/>
         <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus Data</button>
+        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus data</button>
        </form>
       </div>
     </div>

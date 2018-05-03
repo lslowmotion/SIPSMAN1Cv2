@@ -35,7 +35,7 @@
 						<tfoot>
         					<tr>
             					<td>
-            					<a href="<?php echo base_url('kategori/tambahkategori');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Kategori</button></a>
+            					<a href="<?php echo base_url('kategori/tambahkategori');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah kategori</button></a>
             					</td>
             					<td></td>
             					<td></td>

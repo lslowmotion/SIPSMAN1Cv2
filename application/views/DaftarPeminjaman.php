@@ -37,7 +37,11 @@
             					<td>
             						<a href="<?php echo base_url('peminjaman/pinjam');?>"><button type="button" class="btn btn-primary"><i class="fa fa-exchange"></i> Peminjaman baru</button></a>
         						</td>
-            					<td></td>
+            					<td>
+                					<button class="form-control btn-primary" data-toggle="modal" data-target="#cetakModal">
+                    					<i class="fa fa-print"></i> Cetak
+                    				</button>
+                				</td>
             					<td></td>
             					<td></td>
             					<td></td>
@@ -49,14 +53,26 @@
 					
 				</div>
 			</div>
-			<?php if ($this->session->userdata('level') == 'admin'){?>
-			<div class="row">
-				<div class="col-md-12">
-				<h3>Cetak Status Peminjaman</h3>
+		</div>
+	</div>
+</body>
+
+<?php 
+//jika admin, parse modal
+if ($this->session->userdata('level') == 'admin'){?>
+<!-- Modal -->
+<div class="modal fade" id="cetakModal" tabindex="-1" role="dialog" aria-labelledby="cetakModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="cetakModalLabel">Cetak Status Peminjaman</h4>
+            </div>
+            <div class="modal-body">
 				<form class="form-horizontal" action="<?php echo base_url('peminjaman/cetakdaftarpeminjaman');?>" method="post" target="_blank">
         			<div class="form-group">
-        				<label class="control-label col-md-1" for="bulan">Bulan:</label>
-        				<div class="col-md-11" >
+        				<label class="control-label col-md-2" for="bulan">Bulan:</label>
+        				<div class="col-md-10" >
         					<select name="bulan" id="bulan" class="form-control">
                 				<option selected value="">Semua bulan</option>
                 				<option value="Jan">Januari</option>
@@ -75,29 +91,26 @@
         				</div>
         			</div>
         			<div class="form-group">
-        				<label class="control-label col-md-1" for="tahun">Tahun:</label>
-        				<div class="col-md-11" >
+        				<label class="control-label col-md-2" for="tahun">Tahun:</label>
+        				<div class="col-md-10" >
         					<input class="form-control num" placeholder="Ketik tahun atau kosongkan untuk cetak semua tahun"  name="tahun" type="text" autocomplete="off"/>
         				</div>
         			</div>
         			<div class="form-group">
-        				<div class="col-md-4 col-md-offset-1">
+        				<div class="col-md-5 col-md-offset-2">
         					<input type="hidden" value="submit" name="submit">
         					<button type="submit" id="submit" class="form-control btn-primary"><i class="fa fa-print"></i> Cetak status peminjaman</button>
         				</div>
         			</div>	
             	</form>		
-        		</div>
-			</div>
-			<?php }?>
-		</div>
+            </div>
+        </div>
 	</div>
-</body>
+</div>
+<!-- /.Modal -->
+<?php }?>
 
-<!-- /.Tabel akun -->
 <!-- jQuery -->
-
-
 <script src="<?php echo base_url('assets/DataTables-1.10.12/js/jquery.dataTables.min.js');?>"></script>
 <script src="<?php echo base_url('assets/DataTables-1.10.12/js/dataTables.bootstrap.min.js');?>"></script>
 <script src="<?php echo base_url('assets/js/killnonalphanum.js');?>"></script>
@@ -122,7 +135,18 @@ $(document).ready( function () {
  		],
  		"order": [[0, 'desc']],
 	});
-
+	
+	<?php 
+	//jika admin, parse script modal
+	if ($this->session->userdata('level') == 'admin'){?>
+	$('#cetakModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+	});
+	<?php }?>
+	
 });
 </script>
 

@@ -32,7 +32,7 @@
     					<tr>
     						<td>Kategori</td>
     						<td align="right">:</td>
-    						<td><?php echo $data_pustaka->kode_klasifikasi;?>: <?php echo $data_kategori->nama_kategori;?></td>
+    						<td><?php echo $data_pustaka->kode_klasifikasi;?>: <?php echo $data_kategori->nama_kategori;?> </td>
     					</tr>
     					<tr>
     						<td>Judul Pustaka</td>
@@ -91,12 +91,19 @@
     							</a>
     						</td>
     						<td></td>
-    						<td><?php if($this->session->userdata('level') == 'admin'){?>
+    						<td>
+    							<?php if($this->session->userdata('level') == 'admin'){?>
     							<a href="<?php echo base_url('pustaka/editpustaka/'.$data_pustaka->nomor_panggil);?>">
-    								<button class="form-control btn-primary">
-    									<i class="fa fa-edit"></i> Edit Data
+    								<button class="btn btn-primary">
+    									<i class="fa fa-edit"></i> Edit data
     								</button>
-    							</a><?php }?>
+    							</a>
+    							<a href="<?php echo base_url('pustaka/cetaklabelpustaka/'.$data_pustaka->nomor_panggil);?>" target="_blank">
+    								<button class="btn btn-primary">
+    									<i class="fa fa-edit"></i> Cetak label
+    								</button>
+    							</a>
+    							<?php }?>
 							</td>
     					</tr>
     				</table>

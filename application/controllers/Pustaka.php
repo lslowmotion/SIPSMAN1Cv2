@@ -1,4 +1,6 @@
 <?php
+use Mpdf\Mpdf;
+
 class Pustaka extends CI_Controller{
     public function __construct(){
         parent::__construct();
@@ -296,7 +298,7 @@ class Pustaka extends CI_Controller{
     }
     
     function dataPustaka(){
-        //ambil no induk dari segmen ke 3 URI
+        //ambil nomor panggil dari segmen ke 3 URI
         $nomor_panggil = $this->uri->segment('3');
         //fetch data pustaka
         $data['data_pustaka'] = $this->PustakaM->getDataPustaka($nomor_panggil);
@@ -549,5 +551,71 @@ class Pustaka extends CI_Controller{
             </div>');
             redirect(base_url('pustaka'));
     }
-
+    
+    function cetakLabelPustaka(){
+        //cek otoritas
+        if($this->session->userdata('level') != 'admin'){
+            redirect(base_url('pustaka'));
+        }
+        
+        //pengaturan ukuran kertas dan margin mpdf
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'margin_left' => 10,
+            'margin_top' => 10,
+            'margin_right' => 10,
+            'margin_bottom' => 10
+        ]);
+        
+        //cetak kolektif pustaka
+        if(empty($this->uri->segment('3'))){
+            //mencari jumlah data pustaka
+            $total_data = $this->PustakaM->getJumlahPustaka(null);
+            
+            //fetch daftar pustaka
+            $data_pustaka = $this->PustakaM->getDaftarPustaka($total_data,0,0,'desc',null);
+            $data['data_pustaka'] = $data_pustaka;
+            
+            //melempar data peminjaman ke view FileDaftarPeminjaman dan menyimpannya ke dalam variabel $view
+            $view = $this->load->view('FileLabelPustaka',$data,true);
+            
+            //body file pdf
+            $mpdf->WriteHTML($view);
+            
+            //nama file pdf pada browser
+            $mpdf->SetTitle('Label Koleksi Pustaka');
+            
+            //nama file pdf pada download
+            $mpdf->Output('Label Koleksi Pustaka.pdf','I');
+        }else{ //cetak individu pustaka berdasarkan URI segmen ke-3
+            //ambil nomor panggil dari segmen ke 3 URI
+            $nomor_panggil = $this->uri->segment('3');
+            
+            //fetch data pustaka
+            $data['data_pustaka'] = array(
+                $this->PustakaM->getDataPustaka($nomor_panggil)
+            );
+            //failsafe, jika data pustaka tidak ditemukan lempar ke daftar pustaka
+            if(empty($data['data_pustaka'])){
+                redirect(base_url('pustaka'));
+            }
+            
+            //debug view
+            //$this->load->view('FileLabelPustakaIndividu',$data);
+            
+            
+            //load file view
+            $view = $this->load->view('FileLabelPustaka',$data,true);
+            
+            //body file pdf
+            $mpdf->WriteHTML($view);
+            
+            //nama file pdf pada browser
+            $mpdf->SetTitle('Label Pustaka '.$nomor_panggil);
+            
+            //nama file pdf pada download
+            $mpdf->Output('Label Pustaka '.$nomor_panggil.'.pdf','I');
+        }
+    }
 }

@@ -80,7 +80,7 @@ class Kunjungan extends CI_Controller {
                         $row->id_kunjungan,
                         $row->no_induk,
                         date("d M Y", strtotime($row->tanggal_kunjungan)),
-                        '<a href="'.base_url('anggota/dataanggota/'.$row->no_induk).'"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Data Pengunjung</button></a>'
+                        '<a href="'.base_url('anggota/dataanggota/'.$row->no_induk).'"><button type="button" class="btn btn-primary"><i class="fa fa-list"></i> Data pengunjung</button></a>'
                     );
                 }
             }else{
