@@ -111,7 +111,7 @@ if ($this->session->userdata('level') == 'admin'){?>
 
 <script src="<?php echo base_url('assets/DataTables-1.10.12/js/jquery.dataTables.min.js');?>"></script>
 <script src="<?php echo base_url('assets/DataTables-1.10.12/js/dataTables.bootstrap.min.js');?>"></script>
-
+<script src="<?php echo base_url('assets/js/killnonalphanum.js');?>"></script>
 <script>
 
 
