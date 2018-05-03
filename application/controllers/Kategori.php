@@ -80,7 +80,7 @@ class Kategori extends CI_Controller{
                     $data[] = array(
                         $row->kode_klasifikasi,
                         $row->nama_kategori,
-                        '<a href="'.base_url('pustaka/index/'.$row->kode_klasifikasi).'"><button type="button" class="btn btn-info"><i class="fa fa-search"></i> Cari Koleksi</button></a>'
+                        '<a href="'.base_url('pustaka/index/'.$row->kode_klasifikasi).'"><button type="button" class="btn btn-info"><i class="fa fa-search"></i> Cari koleksi</button></a>'
                         
                     );
                 }

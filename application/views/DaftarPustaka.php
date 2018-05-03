@@ -35,9 +35,11 @@
 						<tfoot>
         					<tr>
             					<td>
-            					<a href="<?php echo base_url('pustaka/tambahpustaka');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah Koleksi</button></a>
+            						<a href="<?php echo base_url('pustaka/tambahpustaka');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah koleksi</button></a>
             					</td>
-            					<td></td>
+            					<td>
+            						<a href="<?php echo base_url('pustaka/cetaklabelpustaka');?>" target="_blank"><button type="button" class="btn btn-primary"><i class="fa fa-print "></i> Cetak label Koleksi Pustaka</button></a>
+        						</td>
             					<td></td>
             					<td></td>
             					<td></td>

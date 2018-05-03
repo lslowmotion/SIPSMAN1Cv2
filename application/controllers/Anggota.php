@@ -67,7 +67,7 @@ class Anggota extends CI_Controller{
                     
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal" data-no-induk="'.$row->no_induk.'" data-nama="'.$row->nama.'"><i class="fa fa-trash"></i> Hapus</button>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#resetModal" data-no-induk="'.$row->no_induk.'" data-nama="'.$row->nama.'"><i class="fa fa-refresh"></i> Reset Password</button>'
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#resetModal" data-no-induk="'.$row->no_induk.'" data-nama="'.$row->nama.'"><i class="fa fa-refresh"></i> Reset password</button>'
                 );
             }
         //jika kosong, kosongi $data

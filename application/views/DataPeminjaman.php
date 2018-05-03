@@ -108,7 +108,9 @@
 
 
 </body>
-<?php if ($data_peminjaman->tanggal_kembali == 'Belum dikembalikan' && $this->session->userdata('level') == 'admin'){?>
+<?php
+//jika admin, parse modal dan script modal
+if ($data_peminjaman->tanggal_kembali == 'Belum dikembalikan' && $this->session->userdata('level') == 'admin'){?>
 <!-- Modal -->
 <div class="modal fade" id="kembalikanModal" tabindex="-1" role="dialog" aria-labelledby="kembalikanModalLabel">
     <div class="modal-dialog" role="document">

@@ -190,44 +190,43 @@ class Peminjaman extends CI_Controller {
         //fetch data peminjaman
         $data['data_peminjaman'] = $this->PeminjamanM->getDataPeminjaman($kode_transaksi);
         
-        //tampilkan data peminjaman
+        //failsafe, jika data peminjaman tidak ditemukan, lempar ke daftar peminjaman
         if(empty($data['data_peminjaman'])){
             redirect(base_url('peminjaman'));
-        }else{
-            //jika pengguna non admin mengakses data peminjaman selain milik sendiri, lempar ke status peminjaman
-            if($this->session->userdata('level') != 'admin' && $data['data_peminjaman']->no_induk != $this->session->userdata('id')){
-                redirect(base_url('peminjaman'));
-            }
-            $data['data_peminjaman']->tanggal_pinjam = date("d M Y", strtotime($data['data_peminjaman']->tanggal_pinjam));
-            $data['data_peminjaman']->tanggal_kembali = $data['data_peminjaman']->tanggal_kembali;
-            $data['data_peminjaman']->denda = $this->hitungDenda($data['data_peminjaman']->tanggal_pinjam,$data['data_peminjaman']->tanggal_kembali);
-            $data['data_pustaka'] = $this->PustakaM->getDataPustaka($data['data_peminjaman']->nomor_panggil);
-            $data['data_anggota'] = $this->AnggotaM->getDataAnggota($data['data_peminjaman']->no_induk);
-            $view = $this->load->view('FileStrukPeminjaman',$data,true);
-            
-            //pengaturan ukuran kertas dan margin mpdf
-            $mpdf = new Mpdf([
-                'mode' => 'utf-8',
-                'format' => 'A6',
-                'margin_left' => 10,
-                'margin_top' => 10,
-                'margin_right' => 10,
-                'margin_bottom' => 10,
-                'default_font_size' => 9
-            ]);
-            
-            //header file pdf
-            $mpdf->WriteHTML('<h3>Bukti Pengembalian Pustaka Perpustakaan SMA N 1 Cilacap</h3>');
-            
-            //body file pdf
-            $mpdf->WriteHTML($view);
-            
-            //nama file pdf pada browser
-            $mpdf->SetTitle('Bukti Pengembalian');
-            
-            //nama file pdf pada download
-            $mpdf->Output('Bukti Pengembalian.pdf','I');
         }
+        
+        //fetch data
+        $data['data_peminjaman']->tanggal_pinjam = date("d M Y", strtotime($data['data_peminjaman']->tanggal_pinjam));
+        $data['data_peminjaman']->tanggal_kembali = $data['data_peminjaman']->tanggal_kembali;
+        $data['data_peminjaman']->denda = $this->hitungDenda($data['data_peminjaman']->tanggal_pinjam,$data['data_peminjaman']->tanggal_kembali);
+        $data['data_pustaka'] = $this->PustakaM->getDataPustaka($data['data_peminjaman']->nomor_panggil);
+        $data['data_anggota'] = $this->AnggotaM->getDataAnggota($data['data_peminjaman']->no_induk);
+        
+        //load file view
+        $view = $this->load->view('FileStrukPeminjaman',$data,true);
+        
+        //pengaturan ukuran kertas dan margin mpdf
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A6',
+            'margin_left' => 10,
+            'margin_top' => 10,
+            'margin_right' => 10,
+            'margin_bottom' => 10,
+            'default_font_size' => 9
+        ]);
+        
+        //header file pdf
+        $mpdf->WriteHTML('<h3>Bukti Pengembalian Pustaka Perpustakaan SMA N 1 Cilacap</h3>');
+        
+        //body file pdf
+        $mpdf->WriteHTML($view);
+        
+        //nama file pdf pada browser
+        $mpdf->SetTitle('Bukti Pengembalian');
+        
+        //nama file pdf pada download
+        $mpdf->Output('Bukti Pengembalian.pdf','I');
     }
     
     function kembali(){

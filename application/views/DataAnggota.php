@@ -56,7 +56,7 @@
     						<td>
     							<a href="<?php echo base_url('anggota/editanggota/'.$data_anggota->no_induk);?>">
     								<button class="form-control btn-primary">
-    									<i class="fa fa-edit"></i> Edit Data
+    									<i class="fa fa-edit"></i> Edit data
     								</button>
     							</a>
 							</td>

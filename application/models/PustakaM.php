@@ -57,7 +57,7 @@ class PustakaM extends CI_Model{
         $this->db->flush_cache();
   
         //set query
-        $this->db->select('nomor_panggil,judul,pengarang,sampul,jumlah_pustaka,jumlah_dipinjam');
+        $this->db->select('nomor_panggil,judul,pengarang,sampul,jumlah_pustaka,jumlah_dipinjam,kode_klasifikasi');
         //filter kode klasifikasi
         if(!empty($kode)){
             $this->db->where('kode_klasifikasi',$kode);
