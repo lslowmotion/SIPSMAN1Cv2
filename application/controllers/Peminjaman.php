@@ -571,7 +571,7 @@ class Peminjaman extends CI_Controller {
                 ),
                 array(
                     'field' => 'tahun',
-                    'label' => 'Tahun pada menu Cetak Status Peminjaman',
+                    'label' => 'Tahun pada menu Cetak Daftar Peminjaman',
                     'rules' => 'numeric|max_length[4]|min_length[4]',
                     'errors' => array(
                         'numeric' => '%s harus berupa angka',

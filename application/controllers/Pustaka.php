@@ -577,7 +577,7 @@ class Pustaka extends CI_Controller{
             $data_pustaka = $this->PustakaM->getDaftarPustaka($total_data,0,0,'desc',null);
             $data['data_pustaka'] = $data_pustaka;
             
-            //melempar data peminjaman ke view FileDaftarPeminjaman dan menyimpannya ke dalam variabel $view
+            //melempar data pustaka ke view FileLabelPustaka dan menyimpannya ke dalam variabel $view
             $view = $this->load->view('FileLabelPustaka',$data,true);
             
             //body file pdf
@@ -601,11 +601,7 @@ class Pustaka extends CI_Controller{
                 redirect(base_url('pustaka'));
             }
             
-            //debug view
-            //$this->load->view('FileLabelPustakaIndividu',$data);
-            
-            
-            //load file view
+            //melempar data pustaka ke view FileLabelPustaka dan menyimpannya ke dalam variabel $view
             $view = $this->load->view('FileLabelPustaka',$data,true);
             
             //body file pdf

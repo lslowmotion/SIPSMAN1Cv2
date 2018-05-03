@@ -35,7 +35,9 @@
             					<td>
             						<a href="<?php echo base_url('anggota/tambahanggota');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah anggota</button></a>
             					</td>
-            					<td></td>
+            					<td>
+            						<a href="<?php echo base_url('anggota/cetakkartuanggota');?>" target="_blank"><button type="button" class="btn"><i class="fa fa-print "></i> Cetak kartu semua anggota</button></a>
+            					</td>
             					<td></td>
             					<td></td>
         					</tr>
