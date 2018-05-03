@@ -228,7 +228,7 @@ class Kategori extends CI_Controller{
                     //jika berhasil memasukkan data ke dalam db
                     if($result=='0'){
                         $this->session->set_flashdata('message',
-                            '<div class="alert alert-success" role="alert">Data kategori dengan kode klasifikasi: '
+                            '<div class="alert alert-success" role="alert">Data kategori dengan kode klasifikasi '
                                 .$kode_klasifikasi.' berhasil diedit
                             </div>');
                         redirect(base_url('kategori'));

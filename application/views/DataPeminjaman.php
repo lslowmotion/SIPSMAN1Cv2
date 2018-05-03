@@ -11,7 +11,7 @@
 			
 			
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-12" style="overflow-x:auto;">
         			<?php 
         				if($this->session->flashdata('message')){
         					echo $this->session->flashdata('message');
