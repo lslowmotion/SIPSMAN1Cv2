@@ -38,8 +38,8 @@
             						<a href="<?php echo base_url('peminjaman/pinjam');?>"><button type="button" class="btn btn-primary"><i class="fa fa-exchange"></i> Peminjaman baru</button></a>
         						</td>
             					<td>
-                					<button class="form-control btn-primary" data-toggle="modal" data-target="#cetakModal">
-                    					<i class="fa fa-print"></i> Cetak
+                					<button type="button" class="btn" data-toggle="modal" data-target="#cetakModal">
+                    					<i class="fa fa-print"></i> Cetak daftar peminjaman
                     				</button>
                 				</td>
             					<td></td>
@@ -99,7 +99,7 @@ if ($this->session->userdata('level') == 'admin'){?>
         			<div class="form-group">
         				<div class="col-md-5 col-md-offset-2">
         					<input type="hidden" value="submit" name="submit">
-        					<button type="submit" id="submit" class="form-control btn-primary"><i class="fa fa-print"></i> Cetak status peminjaman</button>
+        					<button type="submit" id="submit" class="btn"><i class="fa fa-print"></i> Cetak status peminjaman</button>
         				</div>
         			</div>	
             	</form>		
