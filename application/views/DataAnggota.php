@@ -11,7 +11,7 @@
 			
 			
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-12" style="overflow-x:auto;">
         			<?php 
         				if($this->session->flashdata('message')){
         					echo $this->session->flashdata('message');
@@ -20,7 +20,7 @@
         			<?php if (isset($data_anggota)){?>
         			<table class="table">
     					<tr>
-    						<td class="col-md-3">No Induk</td>
+    						<td class="col-md-2">No Induk</td>
     						<td class="col-md-1" align="right">:</td>
     						<td class="col-md-8"><?php echo $data_anggota->no_induk;?></td>
     					</tr>
@@ -47,7 +47,7 @@
     					<tr>
     						<td>
     							<a href="<?php echo base_url('anggota');?>">
-    								<button class="form-control btn-danger">
+    								<button class="btn btn-danger">
     									<i class="fa fa-arrow-left"></i> Kembali ke Daftar Anggota
     								</button>
     							</a>
@@ -55,8 +55,13 @@
     						<td></td>
     						<td>
     							<a href="<?php echo base_url('anggota/editanggota/'.$data_anggota->no_induk);?>">
-    								<button class="form-control btn-primary">
-    									<i class="fa fa-edit"></i> Edit Data
+    								<button class="btn btn-primary">
+    									<i class="fa fa-edit"></i> Edit data
+    								</button>
+    							</a>
+    							<a href="<?php echo base_url('anggota/cetakkartuanggota/'.$data_anggota->no_induk);?>" target="_blank">
+    								<button class="btn">
+    									<i class="fa fa-print"></i> Cetak kartu anggota
     								</button>
     							</a>
 							</td>

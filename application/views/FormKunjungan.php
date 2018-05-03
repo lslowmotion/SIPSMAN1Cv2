@@ -47,7 +47,7 @@
 						</div>
 						<div class="form-group">
 							<input type=hidden name="submit" value=TRUE>
-							<button type="submit" id="submit" class="form-control btn-primary">Masuk</button>
+							<button type="submit" id="submit" class="form-control btn-primary"><i class="fa fa-sign-in "></i> Masuk</button>
 						</div>
 					</form>
 					<?php 

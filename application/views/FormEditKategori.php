@@ -31,7 +31,7 @@
         			<div class="form-group">
         				<div class="col-md-2 col-md-offset-2">
         					<input type="hidden" value="submit" name="submit">
-        					<button type="submit" id="submit" class="form-control btn-primary btn-block"><i class="fa fa-save"></i> Simpan</button>
+        					<button type="submit" id="submit" class="btn btn-primary btn-block"><i class="fa fa-save"></i> Simpan</button>
         				</div>
         				<div class="col-md-2">
         					<button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#hapusModal" data-kode-klasifikasi="<?php echo $data_kategori->kode_klasifikasi?>" data-nama-kategori="<?php echo $data_kategori->nama_kategori?>"><i class="fa fa-trash"></i> Hapus</button>

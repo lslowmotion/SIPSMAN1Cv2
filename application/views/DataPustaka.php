@@ -11,7 +11,7 @@
 			
 			
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-12" style="overflow-x:auto;">
         			<?php 
         				if($this->session->flashdata('message')){
         					echo $this->session->flashdata('message');
@@ -32,7 +32,7 @@
     					<tr>
     						<td>Kategori</td>
     						<td align="right">:</td>
-    						<td><?php echo $data_pustaka->kode_klasifikasi;?>: <?php echo $data_kategori->nama_kategori;?></td>
+    						<td><?php echo $data_pustaka->kode_klasifikasi;?>: <?php echo $data_kategori->nama_kategori;?> </td>
     					</tr>
     					<tr>
     						<td>Judul Pustaka</td>
@@ -85,18 +85,25 @@
     					<tr>
     						<td>
     							<a href="<?php echo base_url('pustaka');?>">
-    								<button class="form-control btn-danger">
+    								<button class="btn btn-danger">
     									<i class="fa fa-arrow-left"></i> Kembali ke Daftar Koleksi
     								</button>
     							</a>
     						</td>
     						<td></td>
-    						<td><?php if($this->session->userdata('level') == 'admin'){?>
+    						<td>
+    							<?php if($this->session->userdata('level') == 'admin'){?>
     							<a href="<?php echo base_url('pustaka/editpustaka/'.$data_pustaka->nomor_panggil);?>">
-    								<button class="form-control btn-primary">
-    									<i class="fa fa-edit"></i> Edit Data
+    								<button class="btn btn-primary">
+    									<i class="fa fa-edit"></i> Edit data
     								</button>
-    							</a><?php }?>
+    							</a>
+    							<a href="<?php echo base_url('pustaka/cetaklabelpustaka/'.$data_pustaka->nomor_panggil);?>" target="_blank">
+    								<button class="btn">
+    									<i class="fa fa-print"></i> Cetak label
+    								</button>
+    							</a>
+    							<?php }?>
 							</td>
     					</tr>
     				</table>

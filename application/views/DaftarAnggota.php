@@ -15,7 +15,7 @@
 			?>
 			
 			<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12" style="overflow-x:auto;">
 					
 					<table class="table table-striped table-bordered table-hover" id="dataTables-anggota">
 						<thead>
@@ -31,15 +31,17 @@
 						
 						</tbody>
 						<tfoot>
-					<tr>
-					<td>
-					<a href="<?php echo base_url('anggota/tambahanggota');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah Anggota</button></a>
-					</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					</tr>
-					</tfoot>
+        					<tr>
+            					<td>
+            						<a href="<?php echo base_url('anggota/tambahanggota');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah anggota</button></a>
+            					</td>
+            					<td>
+            						<a href="<?php echo base_url('anggota/cetakkartuanggota');?>" target="_blank"><button type="button" class="btn"><i class="fa fa-print "></i> Cetak kartu semua anggota</button></a>
+            					</td>
+            					<td></td>
+            					<td></td>
+        					</tr>
+						</tfoot>
 					</table>
 					
 					
@@ -65,7 +67,7 @@
       <form action="<?php echo base_url('anggota/hapusanggota'); ?>" method="post">
       	<input type="hidden" class="no-induk" name="no-induk"/>
         <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus Data</button>
+        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus data</button>
        </form>
       </div>
     </div>
@@ -88,7 +90,7 @@
       <form action="<?php echo base_url('akun/resetpassword'); ?>" method="post">
       	<input type="hidden" class="no-induk" name="id"/>
         <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset Password</button>
+        <button type="submit" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset password</button>
       </form>
       </div>
     </div>

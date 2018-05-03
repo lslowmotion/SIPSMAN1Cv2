@@ -15,7 +15,7 @@
 			?>
 			
 			<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12" style="overflow-x:auto;">
 					
 					<table class="table table-striped table-bordered table-hover" id="dataTables-kategori">
 						<thead>
@@ -35,7 +35,7 @@
 						<tfoot>
         					<tr>
             					<td>
-            					<a href="<?php echo base_url('kategori/tambahkategori');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Kategori</button></a>
+            					<a href="<?php echo base_url('kategori/tambahkategori');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah kategori</button></a>
             					</td>
             					<td></td>
             					<td></td>

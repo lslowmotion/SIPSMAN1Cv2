@@ -39,7 +39,7 @@ class PeminjamanM extends CI_Model{
         //flush
         $this->db->flush_cache();
         //set query
-        $this->db->select('kode_transaksi,no_induk,tanggal_pinjam,tanggal_kembali');
+        $this->db->select('kode_transaksi,no_induk,nomor_panggil,tanggal_pinjam,tanggal_kembali');
         //filter no induk
         if(!empty($no_induk)){
             $this->db->where('no_induk',$no_induk);
@@ -75,7 +75,7 @@ class PeminjamanM extends CI_Model{
         $this->db->flush_cache();
         //set query
         $this->db->group_start();
-        $this->db->select('kode_transaksi,no_induk,tanggal_pinjam,tanggal_kembali');
+        $this->db->select('kode_transaksi,no_induk,nomor_panggil,tanggal_pinjam,tanggal_kembali');
         $this->db->from('peminjaman');
         $this->db->like('kode_transaksi',$search);
         $this->db->or_like('no_induk',$search);

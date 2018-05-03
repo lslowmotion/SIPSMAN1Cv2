@@ -1,4 +1,6 @@
 <?php
+use Mpdf\Mpdf;
+
 class Anggota extends CI_Controller{
     public function __construct(){
         parent::__construct();
@@ -67,7 +69,7 @@ class Anggota extends CI_Controller{
                     
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal" data-no-induk="'.$row->no_induk.'" data-nama="'.$row->nama.'"><i class="fa fa-trash"></i> Hapus</button>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#resetModal" data-no-induk="'.$row->no_induk.'" data-nama="'.$row->nama.'"><i class="fa fa-refresh"></i> Reset Password</button>'
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#resetModal" data-no-induk="'.$row->no_induk.'" data-nama="'.$row->nama.'"><i class="fa fa-refresh"></i> Reset password</button>'
                 );
             }
         //jika kosong, kosongi $data
@@ -332,5 +334,68 @@ class Anggota extends CI_Controller{
                 .$no_induk.'</b> berhasil dihapus
             </div>');
         redirect(base_url('anggota'));
+    }
+    
+    function cetakKartuAnggota(){
+        //cek otoritas
+        if($this->session->userdata('level') != 'admin'){
+            redirect(base_url('anggota'));
+        }
+        
+        //pengaturan ukuran kertas dan margin mpdf
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'margin_left' => 10,
+            'margin_top' => 10,
+            'margin_right' => 10,
+            'margin_bottom' => 10
+        ]);
+        
+        //cetak kolektif anggota
+        if(empty($this->uri->segment('3'))){
+            //mencari jumlah data anggota
+            $total_data = $this->AnggotaM->getJumlahAnggota();
+            
+            //fetch daftar anggota
+            $data_anggota = $this->AnggotaM->getDaftarAnggota($total_data,0,0,'desc');
+            $data['data_anggota'] = $data_anggota;
+            
+            //melempar data anggota ke view FileKartuAnggota dan menyimpannya ke dalam variabel $view
+            $view = $this->load->view('FileKartuAnggota',$data,true);
+            
+            //body file pdf
+            $mpdf->WriteHTML($view);
+            
+            //nama file pdf pada browser
+            $mpdf->SetTitle('Kartu Anggota (lengkap)');
+            
+            //nama file pdf pada download
+            $mpdf->Output('Kartu Anggota (lengkap).pdf','I');
+        }else{ //cetak individu anggota berdasarkan URI segmen ke-3
+            //ambil no induk dari segmen ke 3 URI
+            $no_induk = $this->uri->segment('3');
+            
+            //fetch data anggota
+            $data['data_anggota'] = array(
+                $this->AnggotaM->getDataAnggota($no_induk)
+            );
+            //failsafe, jika data anggota tidak ditemukan lempar ke daftar anggota
+            if(empty($data['data_anggota'])){
+                redirect(base_url('anggota'));
+            }
+            
+            //load file view
+            $view = $this->load->view('FileKartuAnggota',$data,true);
+            
+            //body file pdf
+            $mpdf->WriteHTML($view);
+            
+            //nama file pdf pada browser
+            $mpdf->SetTitle('Kartu Anggota '.$no_induk);
+            
+            //nama file pdf pada download
+            $mpdf->Output('Kartu Anggota '.$no_induk.'.pdf','I');
+        }
     }
 }

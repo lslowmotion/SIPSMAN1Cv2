@@ -12,7 +12,8 @@
 		"email" : "laatansaimroni@gmail.com"
 	},
 	"require" : {
-		"php" : ">=7.0.0"
+		"php" : ">=7.0.0",
+		"mpdf/mpdf": "^7.0"
 	},
 	"suggest" : {
 		"paragonie/random_compat" : "Provides better randomness in PHP 5.x"
@@ -21,12 +22,12 @@
 		"mikey179/vfsStream" : "1.1.*",
 		"phpunit/phpunit" : "4.* || 5.*"
 	},
-	"minimum-stability" : "beta",
+	"minimum-stability" : "alpha",
 	"authors" : [{
 			"name" : "Laatansa",
 			"email" : "laatansaimroni@gmail.com",
-			"homepage" : "hexatekno.com",
-			"role" : "Main developer"
+			"role" : "Main developer",
+			"homepage" : "http://hexatekno.com"
 		}
 	],
 	"keywords" : [

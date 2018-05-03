@@ -15,7 +15,7 @@
 			?>
 			
 			<div class="row">
-			<div class="col-md-12">
+				<div class="col-md-12" style="overflow-x:auto;">
 					
 					<table class="table table-striped table-bordered table-hover" id="dataTables-pustaka">
 						<thead>
@@ -35,9 +35,11 @@
 						<tfoot>
         					<tr>
             					<td>
-            					<a href="<?php echo base_url('pustaka/tambahpustaka');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah Koleksi</button></a>
+            						<a href="<?php echo base_url('pustaka/tambahpustaka');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah koleksi</button></a>
             					</td>
-            					<td></td>
+            					<td>
+            						<a href="<?php echo base_url('pustaka/cetaklabelpustaka');?>" target="_blank"><button type="button" class="btn"><i class="fa fa-print "></i> Cetak label semua Koleksi Pustaka</button></a>
+        						</td>
             					<td></td>
             					<td></td>
             					<td></td>
@@ -49,7 +51,7 @@
 					
 					
 					</div>
-			</div>
+				</div>
 			</div>
 		</div>
 	
@@ -71,7 +73,7 @@
       	<input type="hidden" class="nomor-panggil" name="nomor-panggil"/>
       	<input type="hidden" class="url" name="url"/>
         <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-danger">Hapus Data</button>
+        <button type="submit" class="btn btn-danger">Hapus data</button>
        </form>
       </div>
     </div>

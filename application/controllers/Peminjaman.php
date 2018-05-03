@@ -1,4 +1,6 @@
 <?php
+use Mpdf\Mpdf;
+
 class Peminjaman extends CI_Controller {
     public function __construct()
     {
@@ -13,7 +15,7 @@ class Peminjaman extends CI_Controller {
         //jika bukan admin atau anggota membuka URI lv 3 selain id sendiri, atau tidak ada URI segmen 3, lempar ke daftar peminjaman berdasarkan no induk pengguna menggunakan URI segmen 3
         if($this->session->userdata('level') != 'admin' && (empty($this->uri->segment('3')) || $this->session->userdata('id') != $this->uri->segment('3'))){
             redirect(base_url('peminjaman/index/'.$this->session->userdata('id')));
-        }else{
+        }else{            
             $this->load->view('head');
             $this->load->view('DaftarPeminjaman');
             $this->load->view('foot');
@@ -76,7 +78,7 @@ class Peminjaman extends CI_Controller {
                         $row->kode_transaksi,
                         $row->no_induk,
                         date("d M Y", strtotime($row->tanggal_pinjam)),
-                        $this->convertTanggalKembali($row->tanggal_kembali),
+                        $row->tanggal_kembali,
                         
                         //menghitung denda
                         $this->hitungDenda($row->tanggal_pinjam,$row->tanggal_kembali),
@@ -89,7 +91,7 @@ class Peminjaman extends CI_Controller {
                         $row->kode_transaksi,
                         $row->no_induk,
                         date("d M Y", strtotime($row->tanggal_pinjam)),
-                        $this->convertTanggalKembali($row->tanggal_kembali),
+                        $row->tanggal_kembali,
                         
                         //menghitung denda
                         $this->hitungDenda($row->tanggal_pinjam,$row->tanggal_kembali),
@@ -114,15 +116,15 @@ class Peminjaman extends CI_Controller {
         echo json_encode($json_data);
     }
     
-    //-- fungsi untuk mengubah tanggal kembali menjadi bentuk yang readable
-    private function convertTanggalKembali($tanggal_kembali){
+    //-- fungsi untuk mengubah tanggal kembali menjadi bentuk yang readable (DEPRECATED, bisa dihapus sewaktu-waktu)
+    /* private function convertTanggalKembali($tanggal_kembali){
         if($tanggal_kembali == 'Belum dikembalikan'){
             $status = 'Belum dikembalikan';
         }else{
-            $status = date("d M Y",strtotime($tanggal_kembali));
+            $status = date('d M Y',strtotime($tanggal_kembali));
         }
         return $status;
-    }
+    } */
     
     //-- fungsi untuk menghitung denda berdasarkan tanggal pinjam dan tanggal kembali
     private function hitungDenda($tanggal_pinjam,$tanggal_kembali){
@@ -139,9 +141,9 @@ class Peminjaman extends CI_Controller {
         
         //convert tanggal kembali
         if($tanggal_kembali != 'Belum dikembalikan'){
-            $total_denda = max(0,(((strtotime($tanggal_kembali) - strtotime($tanggal_pinjam)) - $unix_durasi) / 86400) * $denda);
+            $total_denda = max(0,ceil(((strtotime($tanggal_kembali) - strtotime($tanggal_pinjam)) - $unix_durasi) / 86400) * $denda);
         }else{
-            $total_denda = max(0,(((strtotime('today') - strtotime($tanggal_pinjam)) - $unix_durasi) / 86400) * $denda);
+            $total_denda = max(0,ceil(((strtotime('today') - strtotime($tanggal_pinjam)) - $unix_durasi) / 86400) * $denda);
         }
         return $total_denda;
     }
@@ -150,7 +152,7 @@ class Peminjaman extends CI_Controller {
         //load model yang diperlukan
         $this->load->model('PustakaM');
         $this->load->model('AnggotaM');
-        //ambil no induk dari segmen ke 3 URI
+        //ambil kode transaksi dari segmen ke 3 URI
         $kode_transaksi = $this->uri->segment('3');
         //fetch data peminjaman
         $data['data_peminjaman'] = $this->PeminjamanM->getDataPeminjaman($kode_transaksi);
@@ -164,7 +166,7 @@ class Peminjaman extends CI_Controller {
                 redirect(base_url('peminjaman'));
             }
             $data['data_peminjaman']->tanggal_pinjam = date("d M Y", strtotime($data['data_peminjaman']->tanggal_pinjam));
-            $data['data_peminjaman']->tanggal_kembali = $this->convertTanggalKembali($data['data_peminjaman']->tanggal_kembali);
+            $data['data_peminjaman']->tanggal_kembali = $data['data_peminjaman']->tanggal_kembali;
             $data['data_peminjaman']->denda = $this->hitungDenda($data['data_peminjaman']->tanggal_pinjam,$data['data_peminjaman']->tanggal_kembali);
             $data['data_pustaka'] = $this->PustakaM->getDataPustaka($data['data_peminjaman']->nomor_panggil);
             $data['data_anggota'] = $this->AnggotaM->getDataAnggota($data['data_peminjaman']->no_induk);
@@ -172,6 +174,59 @@ class Peminjaman extends CI_Controller {
             $this->load->view('DataPeminjaman',$data);
             $this->load->view('foot');
         }
+    }
+    
+    function cetakStrukPeminjaman(){
+        //jika bukan admin, lempar pengguna
+        if($this->session->userdata('level') != 'admin'){
+            redirect(base_url('peminjaman'));
+        }
+        
+        //load model yang diperlukan
+        $this->load->model('PustakaM');
+        $this->load->model('AnggotaM');
+        //ambil kode transaksi dari segmen ke 3 URI
+        $kode_transaksi = $this->uri->segment('3');
+        //fetch data peminjaman
+        $data['data_peminjaman'] = $this->PeminjamanM->getDataPeminjaman($kode_transaksi);
+        
+        //failsafe, jika data peminjaman tidak ditemukan, lempar ke daftar peminjaman
+        if(empty($data['data_peminjaman'])){
+            redirect(base_url('peminjaman'));
+        }
+        
+        //fetch data
+        $data['data_peminjaman']->tanggal_pinjam = date("d M Y", strtotime($data['data_peminjaman']->tanggal_pinjam));
+        $data['data_peminjaman']->tanggal_kembali = $data['data_peminjaman']->tanggal_kembali;
+        $data['data_peminjaman']->denda = $this->hitungDenda($data['data_peminjaman']->tanggal_pinjam,$data['data_peminjaman']->tanggal_kembali);
+        $data['data_pustaka'] = $this->PustakaM->getDataPustaka($data['data_peminjaman']->nomor_panggil);
+        $data['data_anggota'] = $this->AnggotaM->getDataAnggota($data['data_peminjaman']->no_induk);
+        
+        //load file view
+        $view = $this->load->view('FileStrukPeminjaman',$data,true);
+        
+        //pengaturan ukuran kertas dan margin mpdf
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A6',
+            'margin_left' => 10,
+            'margin_top' => 10,
+            'margin_right' => 10,
+            'margin_bottom' => 10,
+            'default_font_size' => 9
+        ]);
+        
+        //header file pdf
+        $mpdf->WriteHTML('<h3>Bukti Pengembalian Pustaka Perpustakaan SMA N 1 Cilacap</h3>');
+        
+        //body file pdf
+        $mpdf->WriteHTML($view);
+        
+        //nama file pdf pada browser
+        $mpdf->SetTitle('Bukti Pengembalian');
+        
+        //nama file pdf pada download
+        $mpdf->Output('Bukti Pengembalian.pdf','I');
     }
     
     function kembali(){
@@ -477,5 +532,159 @@ class Peminjaman extends CI_Controller {
                 redirect(base_url('peminjaman/pengaturanpeminjaman'));
             }
         }
+    }
+    
+    function showFileDaftarPeminjaman(){
+        
+        $panjang_data = $this->PeminjamanM->getJumlahPeminjaman(null,null,null);
+        
+        $data_peminjaman = $this->PeminjamanM->getDaftarPeminjaman($panjang_data,0,0,'desc',null);
+        
+        foreach ($data_peminjaman as $row){
+            $row->denda = $this->hitungDenda($row->tanggal_pinjam,$row->tanggal_kembali);
+        }
+        
+        $data['data_peminjaman'] = $data_peminjaman;
+        
+        $this->load->view('FileDaftarPeminjaman',$data);
+    }
+    
+    function cetakDaftarPeminjaman(){
+        //cek otoritas
+        if($this->session->userdata('level') != 'admin'){
+            redirect(base_url('peminjaman'));
+        }
+        
+        //load model yang diperlukan
+        $this->load->model('AnggotaM');
+        $this->load->model('PustakaM');
+        
+        //validasi masukan POST untuk pengaturan bulan dan tahun yang dicetak
+        if(!empty($this->input->post('submit'))){
+            //konfigurasi validasi data masukan
+            $config = array(
+                array(
+                    'field' => 'bulan',
+                    'label' => 'Bulan pada menu Cetak Daftar Peminjaman',
+                    'rules' => 'max_length[3]',
+                    'errors' => array('max_length' => '%s harus berupa 3 karakter')
+                ),
+                array(
+                    'field' => 'tahun',
+                    'label' => 'Tahun pada menu Cetak Daftar Peminjaman',
+                    'rules' => 'numeric|max_length[4]|min_length[4]',
+                    'errors' => array(
+                        'numeric' => '%s harus berupa angka',
+                        'max_length' => '%s tidak valid. Tahun harus berupa 4 digit angka',
+                        'min_length' => '%s tidak valid. Tahun harus berupa 4 digit angka'
+                    )
+                )
+            );
+            $this->form_validation->set_rules($config);
+            
+            //validasi form
+            if ($this->form_validation->run() == FALSE){
+                
+                //jika tidak lolos validasi, lempar kembali dengan alert
+                $this->session->set_flashdata('message',
+                    '<div class="alert alert-danger" role="alert">'
+                    .validation_errors().
+                    '</div>');
+                    redirect(base_url('peminjaman'));
+            }
+        }
+        
+        //menerima POST pengaturan bulan dan tahun
+        $bulan = $this->input->post('bulan');
+        $tahun = $this->input->post('tahun');
+        
+        //mengatur search query agar memiliki format yang tepat (contoh: Mar 2018)
+        $filterbulantahun = $bulan.' '.$tahun;
+        
+        //mencari jumlah data peminjaman
+        $panjang_data = $this->PeminjamanM->getJumlahPeminjaman(null,null,null);
+        
+        //fetch data peminjaman berdasarkan search query bulan tahun
+        $data_peminjaman = $this->PeminjamanM->getDaftarPeminjamanbySearch($panjang_data,0,$filterbulantahun,0,'desc',null)['data'];
+        foreach ($data_peminjaman as $row){
+            $row->nama = $this->AnggotaM->getDataAnggota($row->no_induk)->nama;
+            $row->judul = $this->PustakaM->getDataPustaka($row->nomor_panggil)->judul;
+            $row->denda = $this->hitungDenda($row->tanggal_pinjam,$row->tanggal_kembali);
+        }
+        $data['data_peminjaman'] = $data_peminjaman;
+        
+        //melempar data peminjaman ke view FileDaftarPeminjaman dan menyimpannya ke dalam variabel $view
+        $view = $this->load->view('FileDaftarPeminjaman',$data,true);
+        
+        //mengubah format bulan menjadi bentuk panjang untuk digunakan pada header file pdf
+        switch ($bulan) {
+            case "Jan":
+                $bulan = 'Januari';
+                break;
+            case "Feb":
+                $bulan = 'Februari';
+                break;
+            case "Mar":
+                $bulan = 'Maret';
+                break;
+            case "Apr":
+                $bulan = 'April';
+                break;
+            case "May":
+                $bulan = 'Mei';
+                break;
+            case "Jun":
+                $bulan = 'Juni';
+                break;
+            case "Jul":
+                $bulan = 'Juli';
+                break;
+            case "Aug":
+                $bulan = 'Agustus';
+                break;
+            case "Sep":
+                $bulan = 'September';
+                break;
+            case "Oct":
+                $bulan = 'Oktober';
+                break;
+            case "Nov":
+                $bulan = 'November';
+                break;
+            case "Dec":
+                $bulan = 'Desember';
+                break;
+            default:
+                $bulan = '';
+        }
+        
+        //mengubah format tahun menjadi bentuk normal untuk digunakan pada header file pdf
+        if (empty($tahun)){
+            $tahun = '';
+        }else{
+            $tahun = ' '.$tahun;
+        }
+        
+        //pengaturan ukuran kertas dan margin mpdf
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4-L',
+            'margin_left' => 25,
+            'margin_top' => 25,
+            'margin_right' => 25,
+            'margin_bottom' => 25
+        ]);
+        
+        //header file pdf
+        $mpdf->WriteHTML('<h2>Daftar Peminjaman Perpustakaan SMA N 1 Cilacap</h2><h3>'.$bulan.$tahun.'</h3>');
+        
+        //body file pdf
+        $mpdf->WriteHTML($view);
+        
+        //nama file pdf pada browser
+        $mpdf->SetTitle('Daftar Peminjaman Perpustakaan');
+        
+        //nama file pdf pada download
+        $mpdf->Output('Daftar Peminjaman Perpustakaan.pdf','I');
     }
 }
