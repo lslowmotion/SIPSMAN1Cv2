@@ -66,7 +66,7 @@ if ($this->session->userdata('level') == 'admin'){?>
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="cetakModalLabel">Cetak Status Peminjaman</h4>
+                <h4 class="modal-title" id="cetakModalLabel">Cetak Daftar Peminjaman</h4>
             </div>
             <div class="modal-body">
 				<form class="form-horizontal" action="<?php echo base_url('peminjaman/cetakdaftarpeminjaman');?>" method="post" target="_blank">
@@ -99,7 +99,7 @@ if ($this->session->userdata('level') == 'admin'){?>
         			<div class="form-group">
         				<div class="col-md-5 col-md-offset-2">
         					<input type="hidden" value="submit" name="submit">
-        					<button type="submit" id="submit" class="btn"><i class="fa fa-print"></i> Cetak status peminjaman</button>
+        					<button type="submit" id="submit" class="btn"><i class="fa fa-print"></i> Cetak daftar peminjaman</button>
         				</div>
         			</div>	
             	</form>		

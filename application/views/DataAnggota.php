@@ -59,6 +59,11 @@
     									<i class="fa fa-edit"></i> Edit data
     								</button>
     							</a>
+    							<a href="<?php echo base_url('anggota/cetakkartuanggota/'.$data_anggota->no_induk);?>" target="_blank">
+    								<button class="btn">
+    									<i class="fa fa-print"></i> Cetak kartu anggota
+    								</button>
+    							</a>
 							</td>
     					</tr>
     				</table>
