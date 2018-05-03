@@ -15,7 +15,7 @@
 			?>
 			
 			<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12" style="overflow-x:auto;">
 					
 					<table class="table table-striped table-bordered table-hover" id="dataTables-kategori">
 						<thead>
