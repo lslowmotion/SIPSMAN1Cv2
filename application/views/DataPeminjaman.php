@@ -63,7 +63,7 @@
     					<tr>
     						<td>
     							<a href="<?php echo base_url('peminjaman');?>">
-    								<button class="form-control btn-danger">
+    								<button class="btn btn-danger">
     									<i class="fa fa-arrow-left"></i> Kembali ke Status Peminjaman
     								</button>
     							</a>
@@ -72,7 +72,7 @@
     						<td>
     						<?php if ($this->session->userdata('level') == 'admin'){
     						    if ($data_peminjaman->tanggal_kembali == 'Belum dikembalikan' && $this->session->userdata('level') == 'admin'){?>
-        							<button class="form-control btn-primary" data-toggle="modal" data-target="#kembalikanModal"
+        							<button class="btn btn-primary" data-toggle="modal" data-target="#kembalikanModal"
         								data-kode-transaksi="<?php echo $data_peminjaman->kode_transaksi;?>"
         								data-tanggal-pinjam="<?php echo $data_peminjaman->tanggal_pinjam;?>"
         								data-tanggal-kembali="
@@ -86,7 +86,7 @@
     								</button>
 								<?php }else{?>
     								<a href="<?php echo base_url('peminjaman/cetakstrukpeminjaman/'.$data_peminjaman->kode_transaksi);?>" target=_blank>
-    									<button class="form-control btn-primary">
+    									<button class="btn">
     										<i class="fa fa-print"></i> Cetak bukti pengembalian
     									</button>
     								</a>

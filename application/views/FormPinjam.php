@@ -59,7 +59,7 @@
         			<div class="form-group">
         				<div class="col-md-offset-3 col-md-3">
         					<input type="hidden" value="submit" name="submit">
-        					<button type="submit" id="submit" class="form-control btn-primary"><i class="fa fa-exchange"></i> Proses transaksi peminjaman</button>
+        					<button type="submit" id="submit" class="btn btn-primary"><i class="fa fa-exchange"></i> Proses transaksi peminjaman</button>
         				</div>
         			</div>
         			</form>

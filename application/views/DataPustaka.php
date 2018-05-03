@@ -85,7 +85,7 @@
     					<tr>
     						<td>
     							<a href="<?php echo base_url('pustaka');?>">
-    								<button class="form-control btn-danger">
+    								<button class="btn btn-danger">
     									<i class="fa fa-arrow-left"></i> Kembali ke Daftar Koleksi
     								</button>
     							</a>
@@ -99,8 +99,8 @@
     								</button>
     							</a>
     							<a href="<?php echo base_url('pustaka/cetaklabelpustaka/'.$data_pustaka->nomor_panggil);?>" target="_blank">
-    								<button class="btn btn-primary">
-    									<i class="fa fa-edit"></i> Cetak label
+    								<button class="btn">
+    									<i class="fa fa-print"></i> Cetak label
     								</button>
     							</a>
     							<?php }?>

@@ -31,15 +31,15 @@
 						
 						</tbody>
 						<tfoot>
-					<tr>
-					<td>
-					<a href="<?php echo base_url('anggota/tambahanggota');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah anggota</button></a>
-					</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					</tr>
-					</tfoot>
+        					<tr>
+            					<td>
+            						<a href="<?php echo base_url('anggota/tambahanggota');?>"><button type="button" class="btn btn-primary"><i class="fa fa-plus "></i> Tambah anggota</button></a>
+            					</td>
+            					<td></td>
+            					<td></td>
+            					<td></td>
+        					</tr>
+						</tfoot>
 					</table>
 					
 					
@@ -88,7 +88,7 @@
       <form action="<?php echo base_url('akun/resetpassword'); ?>" method="post">
       	<input type="hidden" class="no-induk" name="id"/>
         <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset Password</button>
+        <button type="submit" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset password</button>
       </form>
       </div>
     </div>
