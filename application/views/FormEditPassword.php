@@ -37,7 +37,7 @@
 						<div class="form-group">
 							<input type=hidden name="submit" value=TRUE>
 							<div class="col-md-2 col-md-offset-3">
-								<button type="submit" class="btn btn-primary col-md-6"><i class="fa fa-save"></i> Simpan</button>
+								<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
 							</div>
 						</div>
 					</form>	
