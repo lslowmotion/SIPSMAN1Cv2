@@ -118,7 +118,7 @@ class Kunjungan extends CI_Controller {
         }
         
         //jika post kosong, lempar kembali ke form
-        if(empty($this->input->post('no-induk'))){
+        if(empty($this->input->post('submit'))){
             $this->load->view('FormKunjungan');
         }else{
             $config = array(
