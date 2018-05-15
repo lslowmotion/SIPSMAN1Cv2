@@ -116,7 +116,9 @@ class Kunjungan extends CI_Controller {
         if($this->session->userdata('level') == 'anggota'){
             redirect(base_url());
         }
-        if(empty($this->input->post('no-induk'))){
+        
+        //jika post kosong, lempar kembali ke form
+        if(empty($this->input->post('submit'))){
             $this->load->view('FormKunjungan');
         }else{
             $config = array(
