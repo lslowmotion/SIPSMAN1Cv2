@@ -8,6 +8,7 @@
 					<h1 class="page-header">Status Peminjaman</h1>
 				</div>
 			</div>
+			
 			<?php 
 				if($this->session->flashdata('message')){
 					echo $this->session->flashdata('message');
@@ -31,16 +32,24 @@
 						<tbody>
 						
 						</tbody>
-						<?php if($this->session->userdata('level') == 'admin'){?>
 						<tfoot>
         					<tr>
             					<td>
+        						<?php if($this->session->userdata('level') == 'admin'){?>
             						<a href="<?php echo base_url('peminjaman/pinjam');?>"><button type="button" class="btn btn-primary"><i class="fa fa-exchange"></i> Peminjaman baru</button></a>
+        						<?php }?>
+        						<?php if(($this->session->userdata('level') == 'anggota')){?>
+            						<button type="button" class="btn" data-toggle="modal" data-target="#suratModal">
+            							<i class="fa fa-print"></i> Cetak surat bebas pinjam
+        							</button>
+        						<?php }?>
         						</td>
             					<td>
+            					<?php if($this->session->userdata('level') == 'admin'){?>
                 					<button type="button" class="btn" data-toggle="modal" data-target="#cetakModal">
                     					<i class="fa fa-print"></i> Cetak daftar peminjaman
                     				</button>
+                				<?php }?>
                 				</td>
             					<td></td>
             					<td></td>
@@ -48,7 +57,6 @@
             					<td></td>
         					</tr>
 						</tfoot>
-						<?php }?>
 					</table>
 					
 				</div>
@@ -58,7 +66,7 @@
 </body>
 
 <?php 
-//jika admin, parse modal
+//jika admin, parse modal cetak daftar peminjaman
 if ($this->session->userdata('level') == 'admin'){?>
 <!-- Modal -->
 <div class="modal fade" id="cetakModal" tabindex="-1" role="dialog" aria-labelledby="cetakModalLabel">
@@ -106,6 +114,33 @@ if ($this->session->userdata('level') == 'admin'){?>
             </div>
         </div>
 	</div>
+</div>
+<!-- /.Modal -->
+<?php }?>
+
+<?php 
+//jika anggota, parse modal cetak daftar peminjaman
+if ($this->session->userdata('level') == 'anggota'){?>
+<!-- Modal -->
+<div class="modal fade" id="suratModal" tabindex="-1" role="dialog" aria-labelledby="suratLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="suratModalLabel">Cetak Surat Bebas Pinjam</h4>
+      </div>
+      <div class="modal-body">
+      Apakah anda yakin ingin mencetak surat bebas pinjam?
+      Keanggotaan anda akan diarsipkan, akses login akan ditutup, dan anda tidak akan dapat meminjam lagi.
+      </div>
+      <div class="modal-footer">
+      <form action="<?php echo base_url('peminjaman/cetaksuratbebaspinjam'); ?>">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+        <button type="submit" class="btn"><i class="fa fa-print"></i> Cetak surat</button>
+       </form>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- /.Modal -->
 <?php }?>

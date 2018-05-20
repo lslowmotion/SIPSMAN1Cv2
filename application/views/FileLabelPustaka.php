@@ -26,7 +26,7 @@ th, td {
                     echo '<barcode code="'.$row->nomor_panggil.'" type="QR" error="M" class="barcode" />';
                     echo '</td>';
                     echo '<td width="35%" align="center">';
-                    echo '<b>PERPUSTAKAAN<br>SMA N 1 CILACAP</b><br>';
+                    echo '<b>PERPUSTAKAAN<br>SMA NEGERI 1 CILACAP</b><br>';
                     echo $row->kode_klasifikasi.'<br>';
                     echo substr($row->pengarang,0,3).'<br>';
                     echo strtolower(substr($row->judul,0,1));

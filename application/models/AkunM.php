@@ -20,17 +20,17 @@ class AkunM extends CI_Model{
     
     function tambahAkun($data){
         //cleaning query from XSS
-        $data=$this->security->xss_clean($data);
+        $data = $this->security->xss_clean($data);
         //cleaning query from SQL injection
-        $data=$this->db->escape_str($data);
+        $data = $this->db->escape_str($data);
         //flush
         $this->db->flush_cache();
         //execute query
         if(!$this->db->replace('akun',$data)){
-            $query=$this->db->error();
+            $query = $this->db->error();
             return $query['code'];
         }else {
-            $query='0';
+            $query = '0';
             return $query;
         }
     }
@@ -82,5 +82,20 @@ class AkunM extends CI_Model{
         $this->db->where('id',$id);
         //execute query
         $this->db->delete('akun');
+    }
+    
+    function searchAkun($id){
+        //cleaning query from XSS
+        $id = $this->security->xss_clean($id);
+        //cleaning query from SQL injection
+        $id = $this->db->escape_str($id);
+        //flush
+        $this->db->flush_cache();
+        //set query
+        $this->db->where('id',$id);
+        $this->db->from('akun');
+        //execute query
+        $query = $this->db->get();
+        return $query->result();
     }
 }
