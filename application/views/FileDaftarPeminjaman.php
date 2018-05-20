@@ -13,8 +13,17 @@ th, td {
 th	{
 	background-color: #eee;
 }
+.kop {
+	font-size:20px;
+	text-align:center;
+}
 </style>
 <body>
+	<div class="kop">
+    	<strong>PERPUSTAKAAN SMA NEGERI 1 CILACAP</strong>
+    </div>
+    <hr>
+    <h3>Daftar Peminjaman <?php echo $bulan.$tahun;?></h3>
     <table>
     	<thead>
     		<tr>
@@ -44,13 +53,21 @@ th	{
     	</tbody>
     </table>
     <p align="right">
-    <b>
+    
     	Cilacap,
     	<?php
     	    $now = date('d/m/Y');
     	    echo $now;
         ?>
-    </b>
+    
+    <br>
+    Petugas Perpustakaan SMA N 1 Cilacap
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    (..............................................)
     </p>
 </body>					
 

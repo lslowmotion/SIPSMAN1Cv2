@@ -24,7 +24,7 @@ th, td {
                 
                 //yang dituliskan
                 echo '<td width="50%" align="center">';
-                echo '<b>KARTU ANGGOTA PERPUSTAKAAN<br>SMA N 1 CILACAP</b><br><br>';
+                echo '<b>KARTU ANGGOTA PERPUSTAKAAN<br>SMA NEGERI 1 CILACAP</b><br><br>';
                 echo '<barcode code="'.$row->no_induk.'" type="QR" size="0.7" error="M" class="barcode" /><br><br>';
                 echo 'No Induk: '.$row->no_induk.'<br>';
                 echo 'Nama: '.$row->nama.'<br>';

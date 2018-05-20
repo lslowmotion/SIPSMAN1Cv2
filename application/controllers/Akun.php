@@ -44,6 +44,11 @@ class Akun extends CI_Controller {
                     );
                 redirect(base_url('akun'));
             }else{
+                //jika login id:kunjungan/pass:kunjungan
+                if(($this->input->post('id') == 'kunjungan') && ($this->input->post('password') == 'kunjungan')){
+                    redirect(base_url('kunjungan/tambahkunjungan'));
+                }
+                
                 $login_send = array(
                     'id' => $this->input->post('id'),
                     'password' => $this->input->post('password')

@@ -164,9 +164,9 @@
                             <!-- /.nav-second-level -->
                         </li>
                         
-                        <li>
-                            <a href="<?php echo base_url('kunjungan/tambahkunjungan');?>"><i class="fa fa-edit fa-fw"></i> Mode Catat Kunjungan</a>
-                        </li>
+                        <!-- <li>
+                            <a href="<?php //echo base_url('kunjungan/tambahkunjungan');?>"><i class="fa fa-edit fa-fw"></i> Mode Catat Kunjungan</a>
+                        </li> -->
                         <?php }?>
                         <?php }?>
                     </ul>

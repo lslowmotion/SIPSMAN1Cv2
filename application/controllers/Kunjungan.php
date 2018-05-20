@@ -159,6 +159,17 @@ class Kunjungan extends CI_Controller {
                 redirect(base_url('kunjungan/tambahkunjungan'));
             }
             
+            //cek keaktifan akun dengan mengecek no induk di data akun
+            $this->load->model('AkunM');
+            $cek_akun = $this->AkunM->searchAkun($no_induk);
+            if(empty($cek_akun)){
+                $this->session->set_flashdata('message',
+                    '<div class="alert alert-danger" role="alert">
+                    Anggota dengan no induk <b>'.$no_induk.'</b> sudah bukan anggota perpustakaan aktif.
+                    </div>');
+                redirect(base_url('kunjungan/tambahkunjungan'));
+            }
+            
             //jika pengunjung dengan no induk bersangkutan telah tercatat pada tanggal kunjung sekarang, lempar
             $tanggal_kunjungan = date('d M Y',strtotime('Today'));
             $cek_kunjungan = $this->KunjunganM->getJumlahKunjungan($no_induk,$tanggal_kunjungan);
@@ -273,9 +284,6 @@ class Kunjungan extends CI_Controller {
         }
         $data['data_kunjungan'] = $data_kunjungan;
         
-        //melempar data peminjaman ke view FileDaftarKunjungan dan menyimpannya ke dalam variabel $view
-        $view = $this->load->view('FileDaftarKunjungan',$data,true);
-        
         //mengubah format bulan menjadi bentuk panjang untuk digunakan pada header file pdf
         switch ($bulan) {
             case "Jan":
@@ -325,6 +333,13 @@ class Kunjungan extends CI_Controller {
             $tahun = ' '.$tahun;
         }
         
+        //setup data bulan dan tahun untuk dilempar ke view
+        $data['bulan'] = $bulan;
+        $data['tahun'] = $tahun;
+        
+        //melempar data peminjaman ke view FileDaftarKunjungan dan menyimpannya ke dalam variabel $view
+        $view = $this->load->view('FileDaftarKunjungan',$data,true);
+        
         //pengaturan ukuran kertas dan margin mpdf
         $mpdf = new Mpdf([
             'mode' => 'utf-8',
@@ -334,9 +349,6 @@ class Kunjungan extends CI_Controller {
             'margin_right' => 25,
             'margin_bottom' => 25
         ]);
-        
-        //header file pdf
-        $mpdf->WriteHTML('<h2>Daftar Kunjungan Perpustakaan SMA N 1 Cilacap</h2><h3>'.$bulan.$tahun.'</h3>');
         
         //body file pdf
         $mpdf->WriteHTML($view);

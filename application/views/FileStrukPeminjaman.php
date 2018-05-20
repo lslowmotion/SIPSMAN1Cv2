@@ -12,8 +12,17 @@ th, td {
 th	{
 	background-color: #eee;
 }
+.kop {
+	font-size:20px;
+	text-align:center;
+}
 </style>
 <body>
+	<div class="kop">
+    	<strong>PERPUSTAKAAN<br>SMA NEGERI 1 CILACAP</strong>
+    </div>
+    <hr>
+    <h4>Bukti Pengembalian Pustaka</h4>
     <table>
     	<tbody>
     		<tr>
@@ -49,12 +58,20 @@ th	{
     	</tbody>
     </table>
     <p align="right">
-    <b>
+    
     	Cilacap,
     	<?php
     	    $now = date('d/m/Y');
     	    echo $now;
         ?>
-    </b>
+    
+    <br>
+    Petugas Perpustakaan SMA N 1 Cilacap
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    (..............................................)
     </p>
 </body>
