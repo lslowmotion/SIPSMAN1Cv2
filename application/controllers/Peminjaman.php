@@ -216,9 +216,6 @@ class Peminjaman extends CI_Controller {
             'default_font_size' => 9
         ]);
         
-        //header file pdf
-        $mpdf->WriteHTML('<h3>Bukti Pengembalian Pustaka Perpustakaan SMA N 1 Cilacap</h3>');
-        
         //body file pdf
         $mpdf->WriteHTML($view);
         
@@ -433,7 +430,17 @@ class Peminjaman extends CI_Controller {
             //ambil daftar anggota
             $this->load->model('AnggotaM');
             $jumlah_anggota = $this->AnggotaM->getJumlahAnggota();
-            $data['daftar_anggota'] = $this->AnggotaM->getDaftarAnggota($jumlah_anggota,0,0,'asc');
+            $daftar_anggota = $this->AnggotaM->getDaftarAnggota($jumlah_anggota,0,0,'asc');
+            
+            $this->load->model('AkunM');
+            foreach ($daftar_anggota as $row){
+                if(empty($this->AkunM->searchAkun($row->no_induk))){
+                    $row->akun_kosong = true;
+                }else{
+                    $row->akun_kosong = false;
+                }
+            }
+            $data['daftar_anggota'] = $daftar_anggota;
             
             //ambil daftar pustaka
             $this->load->model('PustakaM');
@@ -613,9 +620,6 @@ class Peminjaman extends CI_Controller {
         }
         $data['data_peminjaman'] = $data_peminjaman;
         
-        //melempar data peminjaman ke view FileDaftarPeminjaman dan menyimpannya ke dalam variabel $view
-        $view = $this->load->view('FileDaftarPeminjaman',$data,true);
-        
         //mengubah format bulan menjadi bentuk panjang untuk digunakan pada header file pdf
         switch ($bulan) {
             case "Jan":
@@ -665,6 +669,13 @@ class Peminjaman extends CI_Controller {
             $tahun = ' '.$tahun;
         }
         
+        //setup data bulan dan tahun untuk dilempar ke view
+        $data['bulan'] = $bulan;
+        $data['tahun'] = $tahun;
+        
+        //melempar data peminjaman ke view FileDaftarPeminjaman dan menyimpannya ke dalam variabel $view
+        $view = $this->load->view('FileDaftarPeminjaman',$data,true);
+        
         //pengaturan ukuran kertas dan margin mpdf
         $mpdf = new Mpdf([
             'mode' => 'utf-8',
@@ -675,9 +686,6 @@ class Peminjaman extends CI_Controller {
             'margin_bottom' => 25
         ]);
         
-        //header file pdf
-        $mpdf->WriteHTML('<h2>Daftar Peminjaman Perpustakaan SMA N 1 Cilacap</h2><h3>'.$bulan.$tahun.'</h3>');
-        
         //body file pdf
         $mpdf->WriteHTML($view);
         
@@ -686,5 +694,70 @@ class Peminjaman extends CI_Controller {
         
         //nama file pdf pada download
         $mpdf->Output('Daftar Peminjaman Perpustakaan.pdf','I');
+    }
+    
+    function cetakSuratBebasPinjam(){
+        //cek otoritas
+        if($this->session->userdata('level') != 'anggota'){
+            redirect(base_url('peminjaman'));
+        }
+        
+        //load model yang diperlukan
+        $this->load->model('PustakaM');
+        $this->load->model('AkunM');
+        
+        //search berdasarkan user id
+        $no_induk = $this->session->userdata('id');
+        $nama = $this->session->userdata('id_name');
+        
+        //mencari jumlah data peminjaman
+        $panjang_data = $this->PeminjamanM->getJumlahPeminjaman(null,null,null);
+        
+        //fetch data peminjaman berdasarkan search query bulan tahun
+        $data_peminjaman = $this->PeminjamanM->getDaftarPeminjamanbySearch($panjang_data,0,$no_induk,0,'desc',null)['data'];
+        
+        foreach ($data_peminjaman as $row){
+            
+            //ketika ada peminjaman belum dikembalikan, lempar pengguna ke daftar peminjaman dan beri peringatan
+            if($row->tanggal_kembali == 'Belum dikembalikan'){
+                $this->session->set_flashdata('message',
+                    '<div class="alert alert-danger" role="alert">
+                        Ada peminjaman yang belum dikembalikan. Tidak dapat mencetak surat bebas pinjam.
+                    </div>');
+                redirect(base_url('peminjaman/index/'.$no_induk));
+            }
+            
+            $row->judul = $this->PustakaM->getDataPustaka($row->nomor_panggil)->judul;
+            $row->denda = $this->hitungDenda($row->tanggal_pinjam,$row->tanggal_kembali);
+        }
+        
+        $data['data_peminjaman'] = $data_peminjaman;
+        $data['no_induk'] = $no_induk;
+        $data['nama'] = $nama;
+        
+        //melempar data peminjaman ke view FileDaftarPeminjaman dan menyimpannya ke dalam variabel $view
+        $view = $this->load->view('FileSuratBebasPinjam',$data,true);
+        
+        //menghapus akun anggota dan mencegahnya untuk kembali login
+        $this->AkunM->hapusAkun($no_induk);
+        
+        //pengaturan ukuran kertas dan margin mpdf
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'margin_left' => 25,
+            'margin_top' => 25,
+            'margin_right' => 25,
+            'margin_bottom' => 25
+        ]);
+        
+        //body file pdf
+        $mpdf->WriteHTML($view);
+        
+        //nama file pdf pada browser
+        $mpdf->SetTitle('Surat Bebas Pinjam '.$no_induk);
+        
+        //nama file pdf pada download
+        $mpdf->Output('Surat Bebas Pinjam '.$no_induk.'.pdf','I');
     }
 }

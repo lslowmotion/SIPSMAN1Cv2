@@ -37,7 +37,9 @@
 								<option selected value="">No induk/Nama peminjam</option>
         						<?php 
         						foreach ($daftar_anggota as $row){
-        						    echo '<option value="'.$row->no_induk.'">'.$row->no_induk.': '.$row->nama.'</option>';
+        						    if($row->akun_kosong == false){
+                                        echo '<option value="'.$row->no_induk.'">'.$row->no_induk.': '.$row->nama.'</option>';
+        						    }
         						}
         						?>
         					</select>
