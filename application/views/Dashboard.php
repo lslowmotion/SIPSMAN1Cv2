@@ -3,7 +3,7 @@
     	<div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="page-header">Sistem Informasi Perpustakaan SMA Negeri 1 Cilacap</h1>
+                    <h1 class="page-header">Sistem Informasi Perpustakaan</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>

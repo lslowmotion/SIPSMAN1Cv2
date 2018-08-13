@@ -6,11 +6,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Sistem Informasi Perpustakaan SMA N 1 Cilacap">
+    <meta name="description" content="Sistem Informasi Perpustakaan">
     <meta name="author" content="Laatansa">
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/ico/sipsman1c.ico');?>" />
 
-    <title>SIPSMAN1C - Sistem Informasi Perpustakaan SMA N 1 Cilacap</title>
+    <title>SIPSMAN1C - Sistem Informasi Perpustakaan</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo base_url('assets/css/bootstrap.min.css');?>" rel="stylesheet">
