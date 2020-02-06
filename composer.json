@@ -1,6 +1,6 @@
 {
 	"description" : "Sistem Informasi Perpustakaan SMA N 1 Cilacap",
-	"name" : "SIPSMAN1Cv2",
+	"name" : "laatansa/sipsman1cv2",
 	"type" : "project",
 	"license" : [
 		"MIT",
@@ -13,21 +13,20 @@
 	},
 	"require" : {
 		"php" : ">=7.0.0",
-		"mpdf/mpdf": "^7.0"
+		"mpdf/mpdf": ">=7.0"
 	},
 	"suggest" : {
 		"paragonie/random_compat" : "Provides better randomness in PHP 5.x"
 	},
 	"require-dev" : {
-		"mikey179/vfsStream" : "1.1.*",
-		"phpunit/phpunit" : "4.* || 5.*"
+		"mikey179/vfsstream" : "1.1.*"
 	},
 	"minimum-stability" : "alpha",
 	"authors" : [{
 			"name" : "Laatansa",
 			"email" : "laatansaimroni@gmail.com",
 			"role" : "Main developer",
-			"homepage" : "http://hexatekno.com"
+			"homepage" : "http://github.com/lslowmotion"
 		}
 	],
 	"keywords" : [
