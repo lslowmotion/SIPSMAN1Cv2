@@ -1,5 +1,5 @@
 ###################
-SISTEM INFORMASI PERPUSTAKAAN SMAN 1 CILACAP
+SISTEM INFORMASI PERPUSTAKAAN
 ###################
 
 Sistem Informasi Perpustakaan yang mendukung pengelolaan anggota, koleksi, dan peminjaman.
